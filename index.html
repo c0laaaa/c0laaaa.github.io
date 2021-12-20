@@ -231,6 +231,766 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/21/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-2-%E6%8E%A7%E5%88%B6%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c0laaaa'blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/12/21/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-2-%E6%8E%A7%E5%88%B6%E6%B5%81/" itemprop="url">C程序设计语言_2_控制流</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-21T00:47:41+08:00">
+                2021-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="C程序设计语言-2"><a href="#C程序设计语言-2" class="headerlink" title="C程序设计语言_2"></a>C程序设计语言_2</h1><h2 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h2><p>​    程序语言中的控制流语句用于控制各计算操作执行的次序。</p>
+<h3 id="语句与程序块"><a href="#语句与程序块" class="headerlink" title="语句与程序块"></a>语句与程序块</h3><p>​    在x = 0, i++, 或printf(…)这样的<em>表达式</em>之后加上一个*分号(;)*，它们就变成了<strong>语句</strong>。在C语言中，分号是语句结束符。</p>
+<p>​    用一对<em>花括号”{}”<em>把一组</em>声明</em>和<em>语句</em>括在一起就构成了一个**复合语句(也叫做程序块)**，<u>复合语句在语法上等价于单条语句</u>。函数体中被花括号括起来的语句便是一个例子。右花括号用于结束程序块，其后不需要分号。</p>
+<h3 id="if-else语句"><a href="#if-else语句" class="headerlink" title="if-else语句"></a>if-else语句</h3><p>​    if-else语句用于条件判定。其语法如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(表达式)</span><br><span class="line">	语句<span class="number">1</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	语句<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>​    其中else部分是可选的。该语句执行时，先计算表达式的值，如果其值为真（即表达式的值为非0），则执行语句1；如果其中为假（即表达式的值为0），并且该语句包含else部分，则执行语句2。</p>
+<p>​    由于if语句只是简单测试表达式的数值，因此可以对某些代码的编写进行简化。最明显的例子是用如下写法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(表达式)</span><br></pre></td></tr></table></figure>
+
+<p>来代替</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(表达式 != <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​    因为if-else语句的else部分是可选的，所以在嵌套的if语句中省略它的else部分将导致歧义。解决的方法是将每个else与最近的前一个没有else配对的if进行匹配。例如在下列语句中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(n &gt; <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span>(a &gt; b)</span><br><span class="line">		z = a;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		z = b;</span><br></pre></td></tr></table></figure>
+
+<p>else部分与内层的if匹配，我们通过程序的缩进结构也可以看出来。如果这不符合我们的意图，则必须使用花括号强制实现正确的匹配关系：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(n &gt; <span class="number">0</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(a &gt; b)</span><br><span class="line">		z = a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	z = b;</span><br></pre></td></tr></table></figure>
+
+<h3 id="else-if语句"><a href="#else-if语句" class="headerlink" title="else-if语句"></a>else-if语句</h3><p>​    在C语言中我们会经常用到下列结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(表达式)</span><br><span class="line">	语句</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(表达式)</span><br><span class="line">	语句</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(表达式)</span><br><span class="line">	语句</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(表达式)</span><br><span class="line">	语句</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	语句</span><br></pre></td></tr></table></figure>
+
+<p>​    因此我们在这里单独说明一下。这种if语句序列是编写多路判定最常用的方法。其中的各表达式将被依次求值，一旦某个表达式结果为真，则执行与之相关的语句，并终止整个语句序列的执行。</p>
+<p>​    最后一个else部分用于处理”上述条件均不成立“的情况或默认情况，也就是当上面各条件都不满足时的情形。有时候不需要针对默认情况执行显示的操作，这种情况下，可以把该结构末尾的else语句省略掉。</p>
+<p>​    这里通过一个折半查找函数说明三路判定程序的用法。该函数用于判定已排序的数组v中是否存在某个特定的值x。数组v的元素必须以升序排列。如果v中包含x，则该函数返回x在v中的位置（介于0~n-1之间的一个整数）；否则，该函数返回-1。</p>
+<p>​    在折半查找时，首先将输入值x与数组v的中间元素进行比较。如果x小于中间元素的值，则在该数组的前半部分查找；否则，在该数组的后半部分查找。在这两种情况下，下一步都是将x与所选部分的中间元素进行比较。这个过程一直进行下去，直到找到指定的值或者查找范围为空。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> low, high, mid;</span><br><span class="line">	</span><br><span class="line">	low = <span class="number">0</span>;</span><br><span class="line">	high = n - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(low &lt;= high)&#123;</span><br><span class="line">		mid = (low+high) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(x &lt; v[mid])</span><br><span class="line">			high = mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(x &gt; v[mid])</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> mid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    该函数的基本判定是：在每一步判断x小于，大于还是等于中间元素v[mid]。使用else-if结构执行这种判定很自然。</p>
+<h4 id="练习："><a href="#练习：" class="headerlink" title="练习："></a>练习：</h4><p>​    在上面有关折半查找的例子中，while循环语句内共执行了两次测试，其实只要一次就够了。重写该函数，并且比较两种版本函数的运行时间。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> low, high, mid;</span><br><span class="line">	</span><br><span class="line">	low = <span class="number">0</span>;</span><br><span class="line">	high = n - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(low &lt;= high)&#123;</span><br><span class="line">		mid = (low+high) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(x &lt; v[mid])</span><br><span class="line">			high = mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x == v[mid])</span><br><span class="line">        <span class="keyword">return</span> mid;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    两种方案的执行时间几乎没有什么差异。我们并没有得到多大的性能改进，反而丢失了代码的可读性。</p>
+<h3 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h3><p>​    switch语句是一种多路判定语句，他测试表达式是否与一些常量整数值中的某一个值匹配，并执行相应的分支动作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (表达式)&#123;</span><br><span class="line">	<span class="keyword">case</span> 常量表达式: 语句序列</span><br><span class="line">	<span class="keyword">case</span> 常量表达式: 语句序列</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">default</span>: 语句序列</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    每一个分支都有一个或多个整数值常量或常量表达式标记。如果某个分支与表达式的值匹配，则从该分支开始执行。各表达式必须互不相同。如果没有哪一分支匹配表达式，则执行default的分支。default分支是可选的，如果没有default分支也没有其他分支与表达式的值匹配，则该switch语句不执行任何动作。各分支及default分支的排列次序是任意的。</p>
+<p>​    break语句将导致程序执行立即从switch语句中退出。在switch语句中，case的作用只是一个标号，因此，某个分支中的代码执行完后，程序将进入下一个分支继续执行，除非在程序中显式地跳转。</p>
+<h4 id="练习：-1"><a href="#练习：-1" class="headerlink" title="练习："></a>练习：</h4><p>​    编写一个函数escape(s, t)，将字符串t复制到字符串a中，并在复制的过程中，将换行符，制表符等不可见字符分别转换为\n, \t等相应的可见转义字符序列。要求使用switch语句。再编写一个具有相反功能的函数，在复制过程中将转义字符序列转换为实际字符。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLENGTH 1000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">escape</span><span class="params">(<span class="keyword">char</span> s[], <span class="keyword">char</span> t[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">noescape</span><span class="params">(<span class="keyword">char</span> s[], <span class="keyword">char</span> t[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> s[MAXLENGTH];</span><br><span class="line">    <span class="keyword">char</span> t[MAXLENGTH];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一组字符:&quot;</span>);</span><br><span class="line">    my_getline(s);</span><br><span class="line">    escape(s, t);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;反转义后字符为:%s\n&quot;</span>, t);</span><br><span class="line">    noescape(t, t);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;转义后的字符为:%s\n&quot;</span>, t);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXLENGTH - <span class="number">1</span> &amp;&amp; (c = getchar()) != <span class="string">&#x27;\n&#x27;</span> &amp;&amp; c != EOF; ++i)</span><br><span class="line">        s[i] = c;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span>)&#123;</span><br><span class="line">        s[i] = c;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">escape</span><span class="params">(<span class="keyword">char</span> s[], <span class="keyword">char</span> t[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, i, j;</span><br><span class="line">    <span class="keyword">for</span>(j = i = <span class="number">0</span>; (c = s[i]) != <span class="string">&#x27;\0&#x27;</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">switch</span> (c)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;\t&#x27;</span>:</span><br><span class="line">                t[j++] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                t[j] = <span class="string">&#x27;t&#x27;</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;\n&#x27;</span>:</span><br><span class="line">                t[j++] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                t[j] = <span class="string">&#x27;n&#x27;</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;\&quot;&#x27;</span>:</span><br><span class="line">                t[j++] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                t[j] = <span class="string">&#x27;\&quot;&#x27;</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;\&#x27;&#x27;</span>:</span><br><span class="line">                t[j++] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                t[j] = <span class="string">&#x27;\&#x27;&#x27;</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;\\&#x27;</span>:</span><br><span class="line">                t[j++] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                t[j] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                t[j] = s[i];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">    t[j] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">noescape</span><span class="params">(<span class="keyword">char</span> s[], <span class="keyword">char</span> t[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = j = <span class="number">0</span>; s[i] != <span class="string">&#x27;\0&#x27;</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="string">&#x27;\\&#x27;</span>)&#123;</span><br><span class="line">            ++i;</span><br><span class="line">            <span class="keyword">switch</span> (s[i])&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;\&#x27;&#x27;</span>:</span><br><span class="line">                    t[j] = <span class="string">&#x27;\&#x27;&#x27;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;\&quot;&#x27;</span>:</span><br><span class="line">                    t[j] = <span class="string">&#x27;\&quot;&#x27;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;n&#x27;</span>:</span><br><span class="line">                    t[j] = <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;t&#x27;</span>:</span><br><span class="line">                    t[j] = <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;\\&#x27;</span>:</span><br><span class="line">                    t[j] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    t[j] = <span class="string">&#x27;\\&#x27;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            t[j] = s[i];</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    t[j] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\<span class="number">14703</span>\Documents\Program Source Code\C&gt; .\a.exe</span><br><span class="line">请输入一组字符:<span class="string">&quot;The file&#x27;s path is C:\User\14703\Documents\Program Source Code\C,       nice!&quot;</span></span><br><span class="line">反转义后字符为:\<span class="string">&quot;The file\&#x27;s path is C:\\User\\14703\\Documents\\Program Source Code\\C,\tnice!\&quot;</span>\n</span><br><span class="line">转义后的字符为:<span class="string">&quot;The file&#x27;s path is C:\User\14703\Documents\Program Source Code\C,       nice!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="while循环与for循环"><a href="#while循环与for循环" class="headerlink" title="while循环与for循环"></a>while循环与for循环</h3><p>while循环语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(表达式)</span><br><span class="line">	语句</span><br></pre></td></tr></table></figure>
+
+<p>for循环语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(表达式<span class="number">1</span>; 表达式<span class="number">2</span>; 表达式<span class="number">3</span>)</span><br><span class="line">	语句</span><br></pre></td></tr></table></figure>
+
+<p>等价于下面的while语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">表达式<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(表达式<span class="number">2</span>)&#123;</span><br><span class="line">	语句</span><br><span class="line">	表达式<span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从语法角度看，for循环语句的3个组成部分都是表达式。最常见的情况是，表达式1于表达式3是赋值表达式或函数调用，表达式2是关系表达式。这3个组成部分都可以省略，但是分号必须保留。如果省略测试条件，即表达式2，则认为其值永远为真值，因此，下列for循环语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>( ; ; )&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>是一个无限循环语句，这种语句需要借助其他手段（如break语句或return语句）才能终止执行。</p>
+<p>​    作为一个较大的例子，我们来重新编写<em><strong>将字符串转换为对应数值的函数atoi</strong></em>。这里编写的函数比<em>C程序设计语言_1</em>中的atoi函数更通用，它可以处理可选的前导空白符以及可选的加(+)或(-)号。</p>
+<p>​    下面是程序的结构，从中可以看出输出的格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果有空白符的话，跳过</span><br><span class="line">如果有符号的话，则读取符号</span><br><span class="line">取整数部分，并执行转换</span><br></pre></td></tr></table></figure>
+
+<p>​    其中的每一步都对输入数据进行相应的处理，并为下一步的执行做好准备。当遇到第一个能转换为数字的字符时，整个处理过程终止。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">atoi</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, n, sign;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 处理前面的空格</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; <span class="built_in">isspace</span>(s[i]); i++)</span><br><span class="line">		;</span><br><span class="line">   	<span class="comment">// 处理正负号，用来处理-号表示负值</span></span><br><span class="line">	sign = (s[i] == <span class="string">&#x27;-&#x27;</span>) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 处理正负号，处理添加了+号的情况</span></span><br><span class="line">	<span class="keyword">if</span>(s[i] == <span class="string">&#x27;+&#x27;</span> || s[i] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">		i++;</span><br><span class="line">    <span class="comment">// 开始处理数字部分</span></span><br><span class="line">	<span class="keyword">for</span>(n = <span class="number">0</span>; <span class="built_in">isdigit</span>(s[i]); i++)</span><br><span class="line">		n = <span class="number">10</span> * n + s([i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> sign * n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    把循环部分集中在一起，对于多重嵌套循环优势更为明显。下面的函数是对整型数组进行排序的Shell排序算法。Shell排序算法的基本思想是先比较距离远的元素，而不是像简单交换排序算法那样先比较相邻的元素。这样可以快速减少大量的无序情况，从而减轻后续的工作。被比较的元素之间的距离逐步减少，直到减小为1，这时排序变成了相邻元素的互换。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里的shell排序就是希尔排序算法，v是数组指针，n是数组的长度</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellsort</span><span class="params">(<span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> gap, i, j, temp;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(gap = n/<span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>)</span><br><span class="line">		<span class="keyword">for</span>(i = gap; i &lt; n; i++)</span><br><span class="line">			<span class="keyword">for</span>(j = i - gap; j &gt;= <span class="number">0</span> &amp;&amp; v[j] &gt; v[j+gap]; j -= gap)&#123;</span><br><span class="line">				temp = v[j];</span><br><span class="line">				v[j] = v[j+gap];</span><br><span class="line">				v[j+gap] = temp;</span><br><span class="line">			&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LENGTH 10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Printf_Array</span><span class="params">(<span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shell_Sort</span><span class="params">(<span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> v[LENGTH];</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置随机数种子</span></span><br><span class="line">    srand(time(<span class="number">0</span>));</span><br><span class="line">    <span class="comment">// 生成一个元素为0~9之间的随机整数组</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; LENGTH; ++i)</span><br><span class="line">        v[i] = (rand() % <span class="number">10</span>);</span><br><span class="line">    Printf_Array(v, LENGTH);</span><br><span class="line">    Shell_Sort(v, LENGTH);</span><br><span class="line">    Printf_Array(v, LENGTH);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Printf_Array</span><span class="params">(<span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">     <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;[&quot;</span>);</span><br><span class="line">     <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; ++i)&#123;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">&quot;%d, &quot;</span>, v[i]);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d]\n&quot;</span>, v[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shell_Sort</span><span class="params">(<span class="keyword">int</span> v[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> gap, i, j, temp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(gap = n/<span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = gap; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (j = i - gap; j &gt;= <span class="number">0</span> &amp;&amp; v[j] &gt; v[j + gap]; j -= gap) &#123;</span><br><span class="line">                temp = v[j];</span><br><span class="line">                v[j] = v[j + gap];</span><br><span class="line">                v[j + gap] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\<span class="number">14703</span>\CLionProjects\Project1\cmake<span class="literal">-build</span><span class="literal">-debug</span>&gt; .\Project1.exe</span><br><span class="line">[<span class="number">7</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+
+<p>​    逗号运算符“,”是c语言中优先级最低的运算符，在for语句中经常用到它。被逗号分隔的一对表达式将按照从左到右的顺序进行求值，<em><strong>表达式右边的操作数的类型和值即为其结果的类型和值。</strong></em></p>
+<h4 id="练习：-2"><a href="#练习：-2" class="headerlink" title="练习："></a>练习：</h4><p>​    编写函数expand(s1, s2)，将字符串s1中类似于a-z一类的速记符号在字符串s2中扩展为等价的完整列表abc…xyz。该函数可以处理大小写字母和数字，并可以处理a-b-c，a-z0-9与-a-z等类似的情况。作为前导和尾随的-字符原样排印。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">expand</span><span class="params">(<span class="keyword">char</span> s1[], <span class="keyword">char</span> s2[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    </span><br><span class="line">    i = j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>((c = s1[i++]) != <span class="string">&#x27;\0&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s1[<span class="number">1</span>] == <span class="string">&#x27;-&#x27;</span> &amp;&amp; s1[i+<span class="number">1</span>] &gt;= c )&#123;</span><br><span class="line">            i++;</span><br><span class="line">            <span class="keyword">while</span>(c &lt; s1[i])</span><br><span class="line">                s2[j++] = c++;</span><br><span class="line">        &#125; <span class="keyword">else</span></span><br><span class="line">            s2[j++] = c;</span><br><span class="line">    &#125;</span><br><span class="line">    s2[j] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do-while循环"></a>do-while循环</h3><p>语法形式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">	语句</span><br><span class="line"><span class="keyword">while</span>(表达式);</span><br></pre></td></tr></table></figure>
+
+<p>在这一结构中，先执行循环体中的语句部分，然后再求表达式的值。如果表达式的值为真，则再次执行语句，依次类推。当表达式的值为假，则循环终止。</p>
+<p>一个例子，函数itoa，将数字转换为字符串。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">itoa</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, sign;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((sign = n) &lt; <span class="number">0</span>)</span><br><span class="line">		n = -n;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">do</span>&#123;</span><br><span class="line">		s[i++] = n % <span class="number">10</span> + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">	&#125; <span class="keyword">while</span>((n /= <span class="number">10</span>) &gt; <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(sign &lt; <span class="number">0</span>)</span><br><span class="line">        s[i++] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">    s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    reverse(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="练习：-3"><a href="#练习：-3" class="headerlink" title="练习："></a>练习：</h4><ul>
+<li>在数的二进制补码表示中，我们编写的itoa函数不能处理最大的负数，即n等于-(2<sup>字长减1</sup>)的情况，修改该函数，使它在任何机器上运行时都能打印出正确的值。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> abs(x) ((x) &lt; 0 ? -(x) : (x))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">itoa</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, sign;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line">	</span><br><span class="line">	sign = n;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		s[i++] = <span class="built_in">abs</span>(n % <span class="number">10</span>) + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">	&#125; <span class="keyword">while</span>((n /= <span class="number">10</span>) != <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(sign &lt; <span class="number">0</span>)</span><br><span class="line">		s[i++] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">	s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">	reverse(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编写函数itob(n, s, b)，将整数n转换为以b为底的数，并将转换结果以字符的形式保存到字符串s中。例如，itob(n, s, 16)把整数n格式化为16进制整数保存在s中。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">itob</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span> s[], <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, sign;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((sign = n) &lt; <span class="number">0</span>)</span><br><span class="line">		n = -n</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">do</span>&#123;</span><br><span class="line">		j = n % b;</span><br><span class="line">		s[i++] = (j &lt;= <span class="number">9</span>) ? j + <span class="string">&#x27;0&#x27;</span> : j + <span class="string">&#x27;a&#x27;</span> - <span class="number">10</span>;</span><br><span class="line">	&#125; <span class="keyword">while</span>((n /= b) &gt; <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span>(sign &lt; <span class="number">0</span>)</span><br><span class="line">		s[i++] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">	s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">	reverse(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改itoa函数，使得该函数可以接收三个参数。其中，第3个参数为最小字段宽度。为了保证转换后所得结果至少具有第3个参数指定的最小宽度，在必要时在左边填充一定的空格。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">itoa</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span> s[], <span class="keyword">int</span> l)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, sign;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((sign = n) &lt; <span class="number">0</span>)</span><br><span class="line">		n = -n;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">do</span>&#123;</span><br><span class="line">		s[i++] = n % <span class="number">10</span> + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">	&#125; <span class="keyword">while</span>((n /= <span class="number">10</span>) &gt; <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(sign &lt; <span class="number">0</span>)</span><br><span class="line">        s[i++] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">   	<span class="keyword">while</span>(i &lt; w)</span><br><span class="line">        s[i++] = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    reverse(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="break语句与continue语句"><a href="#break语句与continue语句" class="headerlink" title="break语句与continue语句"></a>break语句与continue语句</h3><p>​    break语句可用于从for, while，与do-while等循环中提前退出，就如同从switch语句中提前退出一样，break语句能使程序从switch语句或最内层循环中立即跳出。</p>
+<p>​    continue语句与break语句相关联，但是没有break语句常用。continue语句用于使for，while或do-while语句开始下一次循环的执行。在while与do-while语句中，continue语句的执行意味着立即执行测试部分；在for循环中，则意味着使控制转移到递增循环变量部分。<em><strong>continue语句只用于循环语句，不用于switch语句。某个循环包含的switch语句中的continue语句，将导致进入下一次循环。</strong></em></p>
+<h3 id="goto语句与标号"><a href="#goto语句与标号" class="headerlink" title="goto语句与标号"></a>goto语句与标号</h3><p>​    在某些场合下goto语句还是可以用得着。最常见的用法使终止程序在某些深度嵌套的结构中的处理过程。例如一次跳出两层或多层循环。在这种情况下使用break语句使不能达到目的的，它只能从最内层循环退出到上一级循环。下面是一个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(...)</span><br><span class="line">	<span class="keyword">for</span>(...) &#123;</span><br><span class="line">		...</span><br><span class="line">		<span class="keyword">if</span>(disaster)</span><br><span class="line">			<span class="keyword">goto</span> error;</span><br><span class="line">	&#125;</span><br><span class="line">error:</span><br><span class="line">	处理错误情况</span><br></pre></td></tr></table></figure>
+
+<p>​    标号的命名同变量命名的形式相同，标号的后面要紧跟一个冒号。标号可以位于对应的goto语句所在函数的任何语句前面。标号的作用域是整个函数。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/21/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-1-%E7%B1%BB%E5%9E%8B-%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c0laaaa'blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/12/21/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-1-%E7%B1%BB%E5%9E%8B-%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="url">C程序设计语言_1_类型|运算符|表达式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-21T00:45:06+08:00">
+                2021-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="C程序设计语言-1"><a href="#C程序设计语言-1" class="headerlink" title="C程序设计语言_1"></a>C程序设计语言_1</h1><h2 id="类型，运算符与表达式"><a href="#类型，运算符与表达式" class="headerlink" title="类型，运算符与表达式"></a>类型，运算符与表达式</h2><ul>
+<li>变量和常量是程序处理的两种基本数据对象。</li>
+<li>声明语句说明变量的名字与类型，也可以指定变量的初值。</li>
+<li>运算符指定将要进行的操作。</li>
+<li>表达式则把变量与常量组合起来生成新的值。</li>
+<li>对象的类型决定该对象可取值的集合以及可以对该对象执行的操作。</li>
+</ul>
+<h3 id="变量名"><a href="#变量名" class="headerlink" title="变量名"></a>变量名</h3><ol>
+<li><p>变量名是由<strong>字母和数字</strong>组成的序列，<em><strong>但是其第一个字符必须是字母</strong></em>。</p>
+</li>
+<li><p><strong>下划线通常被看作字母</strong>，用于命名较长的变量名。</p>
+</li>
+<li><p>库例程（系统API，服务，库函数）通常以下划线开头，所以变量名不要下划线开头。</p>
+</li>
+<li><p><em><strong>大写字母和小写字母有区别。</strong></em></p>
+</li>
+<li><p>传统的C语言用法中，变量名使用小写字母，符号常量全部使用大写字母。</p>
+</li>
+</ol>
+<h3 id="数据类型以及长度"><a href="#数据类型以及长度" class="headerlink" title="数据类型以及长度"></a>数据类型以及长度</h3><h4 id="基本数据类型："><a href="#基本数据类型：" class="headerlink" title="基本数据类型："></a>基本数据类型：</h4><ul>
+<li><em>char</em>    字符型，占用一个字节，可以存放一个本地字符集中的一个字符</li>
+<li><em>int</em>        整数，通常反映了所用机器中整数的最自然长度（16位/32位，也就是2字节/4字节）</li>
+<li><em>float</em>     单精度浮点数</li>
+<li><em>double</em> 双精度浮点数</li>
+</ul>
+<h4 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h4><ul>
+<li><p><em>short</em>和<em>long</em>限定符可以用于限定整形：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">short</span> <span class="keyword">int</span> sh;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">int</span> counter;</span><br></pre></td></tr></table></figure>
+
+<p><strong><u>关键字<em>int</em>可以省略。</u></strong></p>
+<p><em>*<em>short</em>类型通常为16位，*long</em>类型通常为32位，<em>int</em>类型可以为16位或32位。**</p>
+<p>各编译器可以自主选择合适的类型长度，但是short与int类型至少为16位，而long类型至少位32位，short类型不得长于int类型，int类型不得长于long类型。</p>
+</li>
+<li><p><em>signed</em>和<em>unsigned</em>可以用于限定char类型或任何整数。</p>
+<p>unsigned类型的数总是正值或0，并遵守算数模2<sup>n</sup>定律，其中n是该类型占用的位数。</p>
+<p>如果char对象占8位，那么unsigned char类型变量的取值范围为0<del>255，而signed char类型变量的取值范围则为-128</del>127（采用二进制补码）。</p>
+</li>
+<li><p>long double类型表示高精度的浮点数，参考long int。</p>
+</li>
+</ul>
+<h4 id="练习："><a href="#练习：" class="headerlink" title="练习："></a>练习：</h4><p>​    编写一个程序以确定分别由signed以及unsigned限定的char，short，int与long类型变量的取值范围。采用打印标准头文件中的相应值以及直接计算两种方式实现。</p>
+<ul>
+<li><p>直接打印：</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// sigend types</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed char min    = %d\n&quot;</span>, SCHAR_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed char max    = %d\n&quot;</span>, SCHAR_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed short min   = %d\n&quot;</span>, SHRT_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed short max   = %d\n&quot;</span>, SHRT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed int min     = %d\n&quot;</span>, INT_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed int max     = %d\n&quot;</span>, INT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed long min    = %ld\n&quot;</span>, LONG_MIN);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed long max    = %ld\n&quot;</span>, LONG_MAX);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// unsigned types</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned char max  = %u\n&quot;</span>, UCHAR_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned short max = %u\n&quot;</span>, USHRT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned int max   = %u\n&quot;</span>, UINT_MAX);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned long max  = %lu\n&quot;</span>, ULONG_MAX);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [11:29:32]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span>   </span><br><span class="line">signed char min    = -128</span><br><span class="line">signed char max    = 127</span><br><span class="line">signed short min   = -32768</span><br><span class="line">signed short max   = 32767</span><br><span class="line">signed int min     = -2147483648</span><br><span class="line">signed int max     = 2147483647</span><br><span class="line">signed long min    = -9223372036854775808</span><br><span class="line">signed long max    = 9223372036854775807</span><br><span class="line">unsigned char max  = 255</span><br><span class="line">unsigned short max = 65535</span><br><span class="line">unsigned int max   = 4294967295</span><br><span class="line">unsigned long max  = 18446744073709551615</span><br></pre></td></tr></table></figure></li>
+<li><p>利用按位运算符进行计算：</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// sigend types</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed char min    = %d\n&quot;</span>, -(<span class="keyword">char</span>)((<span class="keyword">unsigned</span> <span class="keyword">char</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed char max    = %d\n&quot;</span>, (<span class="keyword">char</span>)((<span class="keyword">unsigned</span> <span class="keyword">char</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed short min   = %d\n&quot;</span>, -(<span class="keyword">short</span> <span class="keyword">int</span>)((<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed short max   = %d\n&quot;</span>, (<span class="keyword">short</span> <span class="keyword">int</span>)((<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed int min     = %d\n&quot;</span>, -(<span class="keyword">int</span>)((<span class="keyword">unsigned</span> <span class="keyword">int</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed int max     = %d\n&quot;</span>, (<span class="keyword">int</span>)((<span class="keyword">unsigned</span> <span class="keyword">int</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed long min    = %ld\n&quot;</span>, -(<span class="keyword">long</span> <span class="keyword">int</span>)((<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;signed long max    = %ld\n&quot;</span>, (<span class="keyword">long</span> <span class="keyword">int</span>)((<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span>) ~<span class="number">0</span> &gt;&gt; <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// unsigned types</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned char max  = %u\n&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ~<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned short max = %u\n&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span>) ~<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned int max   = %u\n&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>) ~<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;unsigned long max  = %lu\n&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">long</span>) ~<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [15:54:19]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span></span><br><span class="line">signed char min    = -128</span><br><span class="line">signed char max    = 127</span><br><span class="line">signed short min   = -32768</span><br><span class="line">signed short max   = 32767</span><br><span class="line">signed int min     = -2147483648</span><br><span class="line">signed int max     = 2147483647</span><br><span class="line">signed long min    = -9223372036854775808</span><br><span class="line">signed long max    = 9223372036854775807</span><br><span class="line">unsigned char max  = 255</span><br><span class="line">unsigned short max = 65535</span><br><span class="line">unsigned int max   = 4294967295</span><br><span class="line">unsigned long max  = 18446744073709551615</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><h4 id="数字常量"><a href="#数字常量" class="headerlink" title="数字常量"></a>数字常量</h4><ol>
+<li>类似于1234的整数常量属于int类型。</li>
+<li><em>long</em>类型的常量以字母l或L结尾，如12345678L。</li>
+<li>如果一个整数太大以至于无法用<em>int</em>类型表示，也将被当作<em>long</em>类型处理。</li>
+<li>无符号常量以字母<strong>u</strong>或<strong>U</strong>结尾。后缀<strong>ul</strong>或<strong>UL</strong>表示<em>unsigned long</em>类型。</li>
+<li>浮点数常量中包含一个小数点（如123.4）或一个指数（如1e-2），也可以两者都有。</li>
+<li>没有后缀的浮点数常量为<em>double</em>类型。后缀<strong>f</strong>或<strong>F</strong>表示<em>float</em>类型，而后缀<strong>l</strong>或<strong>L</strong>则表示<em>long double</em>类型。</li>
+<li>整型数除了用十进制表示外，还可以用八进制或十六进制表示。带前缀0的整型常量表示它为八进制形式，前缀<strong>0x</strong>或<strong>0X</strong>，则表示它为十六进制形式。</li>
+<li>八进制与十六进制的常量也可以使用后缀<strong>L</strong>表示<em>long</em>类型，使用后缀<strong>U</strong>表示<em>unsigned</em>类型。</li>
+</ol>
+<h4 id="字符常量（含转义字符常量）"><a href="#字符常量（含转义字符常量）" class="headerlink" title="字符常量（含转义字符常量）"></a>字符常量（含转义字符常量）</h4><ul>
+<li><p><em><strong>一个字符常量是一个整数</strong></em>，书写时将一个字符括在单括号中，例如’x’。</p>
+</li>
+<li><p><strong>字符在机器字符集中的数值就是字符常量的值。</strong></p>
+<p>例如，在ASCII字符集中，字符’0’的值为48，它与数值0没有关系。</p>
+<p>如果用字符’0’代替这个与具体字符集有关的值，那么，程序员就无须关心该字符对应的具体值，增加了程序的易读性。</p>
+</li>
+<li><p>字符常量一般用来与其他字符进行比较，<strong>但也可以像其他整数一样参与数值运算。</strong></p>
+</li>
+<li><p>某些字符可以通过转义字符序列表示为字符和字符串常量。<strong>转义字符序列看起来像两个字符，但只表示一个字符。</strong></p>
+</li>
+<li><p>另外，我们可以用***’\ooo’<em><strong>表示任意的字节大小的位模式。其中ooo代表1~3个</strong>八进制数</em>*。</p>
+<p>这种位模式还可以用***‘\xhh’<em><strong>表示，其中hh是一个或多个</strong>十六进制数</em>*（0<del>9，a</del>f，A~F）。</p>
+<p>因此，我们可以按照下列形式书写语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> VTAB <span class="meta-string">&#x27;\013&#x27;</span>		<span class="comment">// ASCII纵向制符表</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> VTAB <span class="meta-string">&#x27;\xb&#x27;</span>		<span class="comment">// ASCII纵向制附表</span></span></span><br></pre></td></tr></table></figure>
+
+<p>ANSI C语言中的全部转移字符序列如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>转义含义</th>
+<th>字符</th>
+<th>转义含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\a</td>
+<td>响铃符</td>
+<td>\\</td>
+<td>反斜杠</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>回退符</td>
+<td>?</td>
+<td>问号</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>换页符</td>
+<td>\‘</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行符</td>
+<td>\“</td>
+<td>双引号</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车符</td>
+<td>\ooo</td>
+<td>八进制数</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>横向制表符</td>
+<td>\xhh</td>
+<td>十六进制数</td>
+</tr>
+<tr>
+<td>\v</td>
+<td>纵向制表符</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>字符常量’\0’表示<em>值为0</em>的字符，也就是空字符(null)。</strong></p>
+</li>
+<li><p><em>常量表达式</em>是仅仅包含常量的表达式。<em>这种表达式在编译时求值，而不在运行时求值。</em>它可以出现在常量可以出现的任何位置。</p>
+</li>
+</ul>
+<h4 id="字符串常量"><a href="#字符串常量" class="headerlink" title="字符串常量"></a>字符串常量</h4><ul>
+<li><p>字符串常量也叫字符串字面值，是用双引号括起来的0个或多个字符组成的字符序列。</p>
+<p>例如”I am a string”，或””(空字符串)。都是字符串。</p>
+</li>
+<li><p>双引号不是字符串的一部分，它只用于限定字符串。</p>
+</li>
+<li><p>字符常量中使用的转义字符序列同样可以用在字符串中。</p>
+<p>在字符串中使用\“表示双引号字符。</p>
+</li>
+<li><p>编译时可以将多个字符串常量连接起来，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">”hello,&quot; &quot;world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>等价于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;hello, world&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>​    从技术角度看，字符串常量就是字符数组。字符串的内部表示使用一个空字符’\0’，作为串的结尾，因此，存储字符串的物理存储单元数比括在双引号中的字符数多一个。这种表示方法也说明，C语言对字符串的长度没有限制，但程序必须扫描完整个字符串后才能确定字符串的长度。</p>
+<p>​    <em><strong>‘x’和”x”是不同的，前者是一个整数，其值是字母x在机器字符集中对应的数值；后者是一个包含一个字符以及一个结束符’\0’的字符数组。</strong></em></p>
+<h4 id="枚举常量"><a href="#枚举常量" class="headerlink" title="枚举常量"></a>枚举常量</h4><ul>
+<li><p>枚举常量是另一种类型的常量。枚举是一个常量整型值的列表。例如：<code>enum boolean &#123; NO, YES &#125;;</code></p>
+</li>
+<li><p><strong>在没有显示说明的情况下，enum类型中第一个枚举名的值为0，第二个为1，以此类推。</strong></p>
+</li>
+<li><p>如果只指定了部分枚举名的值，那么未指定的枚举名的值将会依着最后一个指定值向后递增，参考下面两个例子中的第二个例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">escapes</span> &#123;</span>BELL = <span class="string">&#x27;\a&#x27;</span>, BACKSPACE = <span class="string">&#x27;\b&#x27;</span>, TAB = <span class="string">&#x27;\t&#x27;</span>, NEWLINE = <span class="string">&#x27;\n&#x27;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">months</span> &#123;</span>JAN = <span class="number">1</span>, FEB, MAR, APR, JUN, JUL, AUG, SEP, OCT, NOV, DEC&#125;;</span><br><span class="line"><span class="comment">// 其中FEB的值为2，MAR的值为3，</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>不同枚举中的名字必须互不相同，同一枚举中不同的名字可以具有相同的值。</strong></p>
+</li>
+</ul>
+<h3 id="声明-const限定符，初始化值"><a href="#声明-const限定符，初始化值" class="headerlink" title="声明(const限定符，初始化值)"></a>声明(const限定符，初始化值)</h3><p>​    所有变量都必须先声明后使用，尽管某些变量可以通过上下文隐式地声明。一个声明指定一种变量类型，后面所带的变量表可以包含一个或多个该类型的变量。还可以在声明的同时对变量进行初始化。在声明中，如果变量名的后面紧跟一个等号以及一个表达式，该表达式就充当对变量进行初始化的初始化表达式。</p>
+<p>​    如果变量不是自动变量，则只能进行一次初始化操作。<em><strong>每次进入函数或程序块时，显式初始化的自动变量都将被初始化一次，</strong></em>其初始化表达式可以是任何表达式。<em><strong>默认情况下，外部变量与静态变量都将被初始化为0。未经显式初始化的自动变量的值为未定义值。</strong></em></p>
+<p>​    <strong>任何变量的声明都可以使用const限定符限定。该限定符指定的变量的值不能修改。对数组而言，const限定符指定数组所有元素的值都不能被修改。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> e = <span class="number">2.7128182845905</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> msg[] = <span class="string">&quot;warning: &quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​    const限定符也可以配合数组参数使用，它表明函数不能修改数组元素的值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strlen</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>[])</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h3><ul>
+<li><p>二元算术运算符包括：**+, -, *, /, %**。整数除法会截断结果中的小数部分。</p>
+</li>
+<li><p>取模运算符%不能应用于float或double类型。在有负操作数的情况下，整数除法截取的方向以及取模运算结果的符号取决于具体机器的实现。</p>
+</li>
+<li><p>算术运算符采用从左到右的结合规则。</p>
+</li>
+<li><p>优先级：<b>一元+, -    &gt;     *, /, %     &gt;     二元+, - </b></p>
+</li>
+</ul>
+<h3 id="关系运算符与逻辑运算符"><a href="#关系运算符与逻辑运算符" class="headerlink" title="关系运算符与逻辑运算符"></a>关系运算符与逻辑运算符</h3><ul>
+<li><p>关系运算符包括下面几个运算符：**&gt;, &gt;=, &lt;, &lt;=**。</p>
+<p>它们具有相同的优先级。优先级仅此于它们的是相等性运算符：**==, !=**。</p>
+<p>关系运算符的优先级比算术运算符低。因此表达式 i &lt; lim - 1等价与i &lt; (lim - 1)。</p>
+</li>
+<li><p>逻辑运算符**&amp;&amp;<strong>与</strong>||**连接的表达式按从左到右的顺序进行求值，</p>
+<p>并且，在知道结果值的真假后立即停止计算。</p>
+<p>运算符&amp;&amp;的优先级比||的优先级高，但两者都比关系运算符和相等性运算符的优先级低。</p>
+</li>
+<li><p>逻辑非运算符 <strong>!</strong> 的作用是将<strong>非0操作数转换为0,将操作数0转换为1</strong>。</p>
+</li>
+</ul>
+<h4 id="练习：-1"><a href="#练习：-1" class="headerlink" title="练习："></a>练习：</h4><p>​    在不使用运算符&amp;&amp;或||的条件下编写一个与下面的for循环语句等价的循环语句。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; lim - <span class="number">1</span> &amp;&amp; (c = getchar()) != <span class="string">&#x27;\n&#x27;</span> &amp;&amp; c != EOF; ++i)</span><br><span class="line">	s[i] = c;</span><br></pre></td></tr></table></figure>
+
+<p>​    源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(i &lt; lim - <span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>((c = getchar()) == <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (c == EOF)</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	s[i] = c;</span><br><span class="line">	++i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ul>
+<li><p>当一个运算符的几个操作数类型不同时，就需要通过一些规则把它们转换为某种共同的类型。</p>
+</li>
+<li><p>自动转换是指把“比较窄的”操作数转换为“比较宽的”操作数，并且不丢失信息的转换。</p>
+</li>
+<li><p>针对可能导致信息丢失的表达式，编译器可能会给出警告信息，比如把较长的整型值赋给较短的整型变量，但这些表达式并不非法。</p>
+</li>
+</ul>
+<hr>
+<p>​    由于char类型就是较小的整型，因此在算术表达式中可以自由使用char类型的变量，这就为实现某些字符转换提供了很大的灵活性。比如，下面的函数atoi就是一例，它将一串数字转换为相应的数值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">atoi</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, n;</span><br><span class="line">	</span><br><span class="line">	n = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; s[i] &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; s[i] &lt;= <span class="string">&#x27;9&#x27;</span>; ++i)</span><br><span class="line">		n = <span class="number">10</span> * n + (s[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    将字符类型转换为整型时，我们需要注意一点。C语言没有指定char类型的变量时无符号变量还是带符号变量。当把一个char类型的值转换为int类型的值时，其结果也可能为负整数，这取决于与机器的类型。在某些机器中，如果char类型值的最左一边为1，则转换为负整数（进行“符号扩展”）。而在另一些机器中，把char类型值转换为int类型值时，在char类型值的左边添加0，这样转换的结果值总是正值。</p>
+<p>​    C语言的定义保证了机器的标准打印字符集中的字符不会是负值，因此，在表达式中的这些字符总是正值。但是，存储在字符变量中的位模式在某些机器中可能是负的，而在另一些机器中可能是正的。为了保证程序的可移植性，<strong>如果要在char类型的变量中存储非字符数据，最好指定signed或unsigned限定符。</strong></p>
+<hr>
+<p>​    C语言中很多情况下会进行隐式的算术类型转换。一般来说，如果二元运算符的两个操作数具有不同的类型，那么在进行运算之前，要先把较低的类型提升为较高的类型。运算的结果为较高的类型。但是float类型的操作数不会自动转换为double类型，这与最初的定义不同，一般来说数学函数使用双精度类型的变量。使用float类型主要为了在使用较大的数组时节省存储空间，有时也为了节省机器执行时间。</p>
+<hr>
+<p>​    当表达式中包含unsigned类型的操作数时，转换规则要复杂一些。主要原因在于，带符号值与无符号值之间的比较运算是机器相关的，因为它们取决于机器中不同整数类型的大小。例如，假定int类型占16位，long类型占32位，那么，-1L &lt; 1U，这是因为unsigned int 类型的1U将被提升为signed long类型；但是-1L &gt; 1UL，这是因为-1L将被提升为unsigned long类型，因而成为一个较大的正数。</p>
+<hr>
+<p>​    赋值时也要进行类型转换。赋值运算符右边的值需要转换为左边变量的类型，左边变量的类型即赋值表达式结果的类型。</p>
+<hr>
+<p>​    无论是否进行符号扩展，字符型变量都将被转换位整型变量。当把较长的整数转换为较短的整数或char类型时，超出的高位部分将被丢弃。</p>
+<hr>
+<p>​    由于函数调用的参数是表达式，所以在把参数传递给函数时也可能进行类型转换。在没有函数原型的情况下，char与short类型都将被转换为int类型，float类型将被转换为double类型。因此，即使调用函数的参数为char或float类型，我们也把函数参数声明为int或double类型。</p>
+<hr>
+<p>​    最后，在任何表达式中都可以使用一个称为强制类型转换的一元运算符强制进行显示类型转换。在下列语句中，表达式将按照上述转换规则被转换为类型名指定的类型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(类型名) 表达式</span><br></pre></td></tr></table></figure>
+
+<p>​    在上述语句中，表达式首先被赋值给类型指定的类型的某个变量，然后再用该变量替换上述整条语句。</p>
+<p>​    注意，强制类型转换只是生成一个指定类型的n的值，n的值并没有改变。</p>
+<h4 id="练习：-2"><a href="#练习：-2" class="headerlink" title="练习："></a>练习：</h4><p>​    编写函数htoi(s)，把由十六进制数字组成的字符串（包含可选前缀0x或0X）转换为与之等价的整型值。字符串中允许包含的数字包括：0<del>9，a</del>f以及A~F。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLENGTH 10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">my_htoi</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> value;</span><br><span class="line">    <span class="keyword">char</span> s[MAXLENGTH];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入要转换的十六进制数:&quot;</span>);</span><br><span class="line">    len = my_getline(s);</span><br><span class="line">    <span class="keyword">if</span>((value = my_htoi(s)) != <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;转换为十进制数为:%lld\n&quot;</span>, value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;你输入的十六进制数的格式不对\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXLENGTH - <span class="number">1</span> &amp;&amp; (c = getchar()) != <span class="string">&#x27;\n&#x27;</span> &amp;&amp; c != EOF; ++i)</span><br><span class="line">        s[i] = c;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span>)&#123;</span><br><span class="line">        s[i] = c;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">my_htoi</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, p, v;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> R;</span><br><span class="line">    R = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(s[<span class="number">0</span>] != <span class="string">&#x27;0&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(s[<span class="number">1</span>] != <span class="string">&#x27;X&#x27;</span> &amp;&amp; s[<span class="number">1</span>] != <span class="string">&#x27;x&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">2</span>; s[i] != <span class="string">&#x27;\n&#x27;</span>; ++i)</span><br><span class="line">            ;</span><br><span class="line">        --i;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; i - j &gt;= <span class="number">2</span>; ++j)&#123;</span><br><span class="line">            p = i - j;</span><br><span class="line">            <span class="keyword">if</span>(s[p] &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; s[p] &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">                v = s[p] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[p] &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; s[p] &lt;= <span class="string">&#x27;f&#x27;</span>)</span><br><span class="line">                v = s[p] - <span class="string">&#x27;a&#x27;</span> + <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s[p] &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; s[p] &lt;= <span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">                v = s[p] - <span class="string">&#x27;A&#x27;</span> + <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            v = v &lt;&lt; (j * <span class="number">4</span>);</span><br><span class="line">            R += v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> R;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [1:45:28]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span>   </span><br><span class="line">请输入要转换的十六进制数:0x12cf</span><br><span class="line">转换为十进制数为:4815</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [1:45:54]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span></span><br><span class="line">请输入要转换的十六进制数:0xCF12</span><br><span class="line">转换为十进制数为:53010</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [1:46:03]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span></span><br><span class="line">请输入要转换的十六进制数:1234</span><br><span class="line">你输入的十六进制数的格式不对</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [1:46:13]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span></span><br><span class="line">请输入要转换的十六进制数:0x12ag</span><br><span class="line">你输入的十六进制数的格式不对</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [1:46:24]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span>           </span><br><span class="line">请输入要转换的十六进制数:0x1A2B3C4F</span><br><span class="line">转换为十进制数为:439041103</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu @ VM-0-12-ubuntu <span class="keyword">in</span> ~/C++/C [1:46:42]</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> ./a.out</span></span><br><span class="line">请输入要转换的十六进制数:0x1a2b3c4f</span><br><span class="line">转换为十进制数为:439041103</span><br></pre></td></tr></table></figure>
+
+<h3 id="自增运算符与自减运算符"><a href="#自增运算符与自减运算符" class="headerlink" title="自增运算符与自减运算符"></a>自增运算符与自减运算符</h3><p>​     C语言提供了两个用于变量递增与递减的特殊运算符。自增运算符**++<strong>使其操作数递增1，自减运算符</strong>–**使其操作数递减1。</p>
+<p>​    <strong>++<strong>与</strong>–<strong>这两个运算符特殊的地方主要表现在，它们既可以用作前缀运算符（++n）,也可以用作后缀运算符（–n）。在这两种情况下，其效果都是将变量n的值加1。但是，它们之间有一点不同。</strong>表达式++n先将n的值递增1，然后再使用变量n的值，而表达式n++则是先使用变量n的值，然后再将n的值递增1。</strong></p>
+<p>​    下面是一个例子，函数squeeze(s, c)，它删除字符串s中出现的所有字符c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">squeeze</span><span class="params">(<span class="keyword">char</span> s[], <span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i = j = <span class="number">0</span>; s[i] != <span class="string">&#x27;\0&#x27;</span>; i++)</span><br><span class="line">		<span class="keyword">if</span>(s[i] != c)</span><br><span class="line">			s[j++] = s[i];</span><br><span class="line">	s[j] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    另一个例子，标准函数strcat(s, t)，它将字符串t连接到字符串s的尾部。函数strcat假定字符串s中有足够的空间保存这两个字符串连接的结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">strcat</span><span class="params">(<span class="keyword">char</span> s[], <span class="keyword">char</span> t[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	</span><br><span class="line">	i = j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(s[i] != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		i++;</span><br><span class="line">	<span class="keyword">while</span>((s[i++] = t[j++]) != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="练习：-3"><a href="#练习：-3" class="headerlink" title="练习："></a>练习：</h4><ul>
+<li><p>重新编写squeeze(s1, s2)，将字符串s1中任何与字符串s2中的字符匹配的字符都删除。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLENGTH 20</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">squeeze</span><span class="params">(<span class="keyword">char</span> s1[], <span class="keyword">char</span> s2[])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> value;</span><br><span class="line">    <span class="keyword">char</span> s1[MAXLENGTH];</span><br><span class="line">    <span class="keyword">char</span> s2[MAXLENGTH];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串:&quot;</span>);</span><br><span class="line">    my_getline(s1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入你希望去除的字符:&quot;</span>);</span><br><span class="line">    my_getline(s2);</span><br><span class="line">    squeeze(s1, s2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;处理后的字符串为:%s\n&quot;</span>, s1);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXLENGTH - <span class="number">1</span> &amp;&amp; (c = getchar()) != <span class="string">&#x27;\n&#x27;</span> &amp;&amp; c != EOF; ++i)</span><br><span class="line">        s[i] = c;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span>)&#123;</span><br><span class="line">        s[i] = c;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">void squeeze(char s[], char c)&#123;</span></span><br><span class="line"><span class="comment">    int i, j;</span></span><br><span class="line"><span class="comment">    for(i = 0; s[i] != &#x27;\0&#x27;; ++i)&#123;</span></span><br><span class="line"><span class="comment">        // 如果是重复的话，j就不会增加，那么重复的字符就会被覆盖。</span></span><br><span class="line"><span class="comment">        if(s[i] != c)</span></span><br><span class="line"><span class="comment">            s[j++] = s[i];</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">squeeze</span><span class="params">(<span class="keyword">char</span> s1[], <span class="keyword">char</span> s2[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(n = <span class="number">0</span>; s2[n] != <span class="string">&#x27;\0&#x27;</span>; ++n)&#123;</span><br><span class="line">        <span class="keyword">for</span>(i = j = <span class="number">0</span>; s1[j] != <span class="string">&#x27;\0&#x27;</span>; ++i)</span><br><span class="line">            <span class="keyword">if</span>(s1[i] != s2[n] )</span><br><span class="line">                s1[j++] = s1[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ubuntu @ VM-0-12-ubuntu in ~/C++/C [19:17:20] </span></span><br><span class="line">$ ./a.out   </span><br><span class="line">请输入一个字符串:abcdefg1234</span><br><span class="line">请输入你希望去除的字符:ceg3</span><br><span class="line">处理后的字符串为:abdf124</span><br><span class="line"></span><br><span class="line"><span class="comment"># ubuntu @ VM-0-12-ubuntu in ~/C++/C [19:17:37] </span></span><br><span class="line">$ ./a.out</span><br><span class="line">请输入一个字符串:1234</span><br><span class="line">请输入你希望去除的字符:2134</span><br><span class="line">处理后的字符串为:</span><br><span class="line"></span><br><span class="line"><span class="comment"># ubuntu @ VM-0-12-ubuntu in ~/C++/C [19:17:50] </span></span><br><span class="line">$ ./a.out</span><br><span class="line">请输入一个字符串:aabbcc</span><br><span class="line">请输入你希望去除的字符:abc</span><br><span class="line">处理后的字符串为:</span><br></pre></td></tr></table></figure></li>
+<li><p>编写函数any(s1, s2)，将字符串s2中的任一字符在s1中第一次出现的位置作为结果返回。如果s1中不包含s2中的字符，则返回-1。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLENGTH 1000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">any</span><span class="params">(<span class="keyword">char</span> s1[], <span class="keyword">char</span> s2[])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len, i;</span><br><span class="line">    <span class="keyword">int</span>* index;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> value;</span><br><span class="line">    <span class="keyword">char</span> s1[MAXLENGTH];</span><br><span class="line">    <span class="keyword">char</span> s2[MAXLENGTH];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串:&quot;</span>);</span><br><span class="line">    my_getline(s1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入你希望定位的字符串:&quot;</span>);</span><br><span class="line">    len = my_getline(s2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;它们的位置为:&quot;</span>);</span><br><span class="line">    index = any(s1, s2);</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;= len - <span class="number">2</span>; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%2d &quot;</span>, index[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXLENGTH - <span class="number">1</span> &amp;&amp; (c = getchar()) != <span class="string">&#x27;\n&#x27;</span> &amp;&amp; c != EOF; ++i)</span><br><span class="line">        s[i] = c;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span>)&#123;</span><br><span class="line">        s[i] = c;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    s[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">any</span><span class="params">(<span class="keyword">char</span> s1[], <span class="keyword">char</span> s2[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> place[MAXLENGTH];</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; s2[i] != <span class="string">&#x27;\n&#x27;</span>; ++i)&#123;</span><br><span class="line">        place[i] = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; s1[j] != <span class="string">&#x27;\n&#x27;</span>; ++j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s2[i] == s1[j])&#123;</span><br><span class="line">                place[i] = j + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> place;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\<span class="number">14703</span>\Documents\Program Source Code\C&gt; .\test.exe</span><br><span class="line">请输入一个字符串:<span class="number">1234</span>cdaf</span><br><span class="line">请输入你希望定位的字符串:a2fh</span><br><span class="line">它们的位置为: <span class="number">7</span>  <span class="number">2</span>  <span class="number">8</span> <span class="literal">-1</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><ul>
+<li><p>C语言提供了6个位操作运算符。这些运算符只能作用于整型操作数，即只能作用于带符号或无符号的char，short，int与long类型：**&amp;, |, ^, &lt;&lt;, &gt;&gt;, ~**。</p>
+</li>
+<li><p><strong>按位与运算符&amp;经常用于屏蔽某些二进制位，例如：<em>n = n &amp; 0177;</em> 该语句将n中除了7个低位二进制位外的其他各位均置为0。</strong></p>
+</li>
+<li><p><strong>按位或运算符|经常用于将某些二进制位置为1，例如：<em>x = x | SET_ON</em>该语句将x中对应于SET_ON中为1的那些二进制位置为1。</strong></p>
+</li>
+<li><p>按位异或运算符&amp;用于当两个操作数的对应位不相同时将该位置为1，否则，将该位置为0。</p>
+</li>
+<li><p>一个例子：函数getbits(x, p, n)，它返回x中从右边第p位开始向右数n位的字段。这里假定最右边的一位是第0位，n与p都是合理的正值。例如，getbits(x, 4, 3)返回x中第4，3，2三位的值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">getbits</span><span class="params">(<span class="keyword">unsigned</span> x, <span class="keyword">int</span> p, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &gt;&gt; (p+<span class="number">1</span>-n) &amp; ~(~<span class="number">0</span> &lt;&lt; n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="练习：-4"><a href="#练习：-4" class="headerlink" title="练习："></a>练习：</h4><ul>
+<li><p>编写一个函数setbits(x, p, n, y)，该函数返回对x执行下列操作后的结果值：将x中从第p位开始的n个（二进制位）位设置为y中最右边n位的值，x的其余各位保持不变。</p>
+<p><strong>分析：</strong></p>
+<p>0 1 1 0 | 1 0 1 0 | 1 0 0 0 | 0 1 1 0   x</p>
+<p>1 1 1 0 | 0 1 1 1 | 1 1 0 1 | 0 0 1 1   y</p>
+<p>将x中从第p = 7位开始的n = 5个位设置为y中的最右边的n = 5位</p>
+<p>也就是最后要得到:</p>
+<p>0 1 1 0 | 1 0 1 0 | 1 0 0 1 | 1 1 1 0</p>
+<hr>
+<p>处理x中要改变的位为0:<br>首先得到屏蔽码：<br>~0 &lt;&lt; n =<br>1 1 1 1 | 1 1 1 1 | 1 1 1 0 | 0 0 0 0</p>
+<p>~(0 &lt;&lt; n) =<br>0 0 0 0 | 0 0 0 0 | 0 0 0 1 | 1 1 1 1</p>
+<p>~(0 &lt;&lt; n) &lt;&lt; (p + 1 - n) =<br>0 0 0 0 | 0 0 0 0 | 1 1 1 1 | 1 0 0 0</p>
+<p><del>(</del>(0 &lt;&lt; n) &lt;&lt; (p + 1 - n)) =<br>1 1 1 1 | 1 1 1 1 | 0 0 0 0 | 0 1 1 1</p>
+<p>然后使用&amp;屏蔽：<br>x &amp; (<del>(</del>(0 &lt;&lt; n) &lt;&lt; (p + 1 - n))) =<br>0 1 1 0 | 1 0 1 0 | 0 0 0 0 | 0 1 1 0</p>
+<hr>
+<p>得到y中要改变为的目标值:<br>y &amp; (~(0 &lt;&lt; n)) =<br>0 0 0 0 | 0 0 0 0 | 0 0 0 1 | 0 0 1 1</p>
+<p>将要要改变的目标值移动到对应的位置：<br>(y &amp; (~(0 &lt;&lt; n))) &lt;&lt; (p + 1 - n) =<br>0 0 0 0 | 0 0 0 0 | 1 0 0 1 | 1 0 0 0</p>
+<hr>
+<p>然后将屏蔽对应位后的x和要到改变的值进行或处理：0 | 1 = 1，0 | 0 = 0，这样就可以变为对应的值<br>(x &amp; (<del>(</del>(0 &lt;&lt; n) &lt;&lt; (p + 1 - n)))) | ((y &amp; (~(0 &lt;&lt; n))) &lt;&lt; (p + 1 - n)) =<br>0 1 1 0 | 1 0 1 0 | 1 0 0 1 | 1 1 1 0</p>
+<p>这样就完成了。</p>
+<p><strong>源代码：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">setbits</span><span class="params">(<span class="keyword">unsigned</span> x, <span class="keyword">int</span> p, <span class="keyword">int</span> n, <span class="keyword">unsigned</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (x &amp; (~(~(<span class="number">0</span> &lt;&lt; n) &lt;&lt; (p + <span class="number">1</span> - n)))) | ((y &amp; (~(<span class="number">0</span> &lt;&lt; n))) &lt;&lt; (p + <span class="number">1</span> - n));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>编写一个函数invert(x, p, n)，该函数返回对x执行下列操作后的结果值：将x中从第p位开始的n个（二进制）位求反（即1变为0，0变为1），x的其余位保持不变。</p>
+<p><strong>分析：</strong></p>
+<p>1 ^ 1 = 1, 0 ^ 1 = 0；    保持不变</p>
+<p>1 ^ 0 = 0, 0 ^ 0 = 1;        取反</p>
+<p>所以我们设置屏蔽位为0，其余位为1的屏蔽码，</p>
+<p><del>(</del>(0 &lt;&lt; n) &lt;&lt; (p + 1 - n))</p>
+<p>然后将其和x异或就可以得到屏蔽位取反的值</p>
+<p>x ^ (<del>(</del>(0 &lt;&lt; n) &lt;&lt; (p + 1 - n)))</p>
+<p><strong>源代码：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">invert</span><span class="params">(<span class="keyword">unsigned</span> x, <span class="keyword">int</span> p, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x ^ (~(~(<span class="number">0</span> &lt;&lt; n) &lt;&lt; (p + <span class="number">1</span> - n)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>编写一个函数rightrot(x, n)，该函数返回将x循环右移（即从最右端移出的位将从最左端移入）n（二进制）位后所得到的值。</p>
+<p><strong>分析：</strong></p>
+<p>这里n的大小是有可能大于x所占的字长的，所以，不能简单的将x直接右移然后将被移动的位补充到左边。</p>
+<p><strong>源代码：</strong></p>
+<p>方案一</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">rightrot</span><span class="params">(<span class="keyword">unsigned</span> x, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">wordlength</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line">	<span class="keyword">unsigned</span> rbit;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(n-- &gt; <span class="number">0</span>)&#123;</span><br><span class="line">		rbit = x &lt;&lt; (wordlength() - <span class="number">1</span>);</span><br><span class="line">		x = x &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		x = x | rabit;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">wordlength</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">unsigned</span> v = (<span class="keyword">unsigned</span>) ~<span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">1</span>; ( v = v &gt;&gt; <span class="number">1</span>) &gt; <span class="number">0</span>; i++)</span><br><span class="line">		;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 方案二</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">rightrot</span><span class="params">(<span class="keyword">unsigned</span> x, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">wordlength</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line">	<span class="keyword">unsigned</span> rbits;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((n = n % wordlength()) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">		rbits = ~(~<span class="number">0</span> &lt;&lt; n) &amp; x;</span><br><span class="line">		</span><br><span class="line">		rbits = rbits &lt;&lt; (wordlength() - n);</span><br><span class="line">		x = x &gt;&gt; n;</span><br><span class="line">		x = x | rbits;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">wordlength</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">unsigned</span> v = (<span class="keyword">unsigned</span>) ~<span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">1</span>; ( v = v &gt;&gt; <span class="number">1</span>) &gt; <span class="number">0</span>; i++)</span><br><span class="line">		;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="赋值运算符与表达式"><a href="#赋值运算符与表达式" class="headerlink" title="赋值运算符与表达式"></a>赋值运算符与表达式</h3><p>​    在赋值表达式中，如果表达式左边的变量重复出现在表达式的右边，比如：<em>i = i + 2;</em> 则可以将这种表达式缩写为下列形式：<em>i += 2</em>。其中的运算符+=称为赋值运算符。</p>
+<p>​    大多数二元运算符都有一个相应的赋值运算符<em>op=<em>，其中，</em>op</em>可以是下面这些运算符之一：**+    -    *    /    %    &lt;&lt;    &gt;&gt;    &amp;    ^    |**。</p>
+<p>​    如果expr1和expr2是表达式，那么：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expr1 op= expr2</span><br></pre></td></tr></table></figure>
+
+<p>等价于：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expr1 = (expr1) op (expr2)</span><br></pre></td></tr></table></figure>
+
+<p>比如：<b>x *= y + 1</b>的含义是<b>x = x * (y + 1)</b>。而不是x = x * y + 1。</p>
+<p>​    再举一个例子，函数bitcount统计其整型参数的值为1的二进制位的个数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitcount</span><span class="params">(<span class="keyword">unsigned</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> b;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(b = <span class="number">0</span>; x != <span class="number">0</span>; x &gt;&gt; <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">if</span>(x &amp; <span class="number">01</span>)</span><br><span class="line">			b++;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    在所有的单独赋值表达式中，赋值表达式的类型是它的左操作数的类型，值是赋值操作完成后的值。</p>
+<h4 id="练习：-5"><a href="#练习：-5" class="headerlink" title="练习："></a>练习：</h4><p>​    在求二进制补码时，表达式x&amp;=(x-1)可以删除x中最右值为1的一个二进制位，请解释这样所的道理。用这一方法重写bitcount函数，以加快其执行速度。</p>
+<p>​    答：x - 1之后会导致最右边为1的位会变为0，然后右边其余位为0的变为1，x &amp; (x - 1)之后，x最右边为1的位会和0进行&amp;操作，变为0，而右边其余为0的位进行&amp;操作之后仍然为0，所以x &amp;= (x - 1)可以删除x中最右值为1的一个二进制位。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitcount</span><span class="params">(<span class="keyword">unsigned</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> b;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(b = <span class="number">0</span>; x != <span class="number">0</span>; x &amp;=(x<span class="number">-1</span>))</span><br><span class="line">		++b;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件表达式"><a href="#条件表达式" class="headerlink" title="条件表达式"></a>条件表达式</h3><p>​    条件表达式使用三元运算符 **?:**，形式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expr1 ? expr2 : expr3</span><br></pre></td></tr></table></figure>
+
+<p>​    表达式首先计算expr1，如果其值不等于0，则计算expr2的值，并以该值作为条件表达式的值，否则计算expr3的值，并以该值作为条件表达式的值。expr2与expr3中只能有一个表达式被计算。</p>
+<p>​    应该注意，条件表达式实际上就是一种表达式，它可以用在其他表达式可以使用的任何地方。</p>
+<h4 id="练习：-6"><a href="#练习：-6" class="headerlink" title="练习："></a>练习：</h4><p>重新编写将大写字母转换为小写字母的函数lower，并用条件表达式代替if-else结构。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lower</span><span class="params">(<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (c &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;Z&#x27;</span>) ? (c + <span class="string">&#x27;a&#x27;</span> - <span class="string">&#x27;A&#x27;</span>) : c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运算符优先级与求值次序"><a href="#运算符优先级与求值次序" class="headerlink" title="运算符优先级与求值次序"></a>运算符优先级与求值次序</h3><p>​    下表总结了所有运算符的优先性和结合性，其中的一些规则我们还没有讲述。同一行的各个运算符具有相同的优先级，各行间从上往下优先级逐渐降低。</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>结合性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>() [] -&gt; .</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>! - ++ – + - * &amp; (type) sizeof</td>
+<td>从右至左</td>
+</tr>
+<tr>
+<td>+ -</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>&lt;&lt; &gt;&gt;</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>&lt; &lt;= &gt; &gt;=</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>== !=</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>^</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>|</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>||</td>
+<td>从左至右</td>
+</tr>
+<tr>
+<td>?:</td>
+<td>从右至左</td>
+</tr>
+<tr>
+<td>^= += -= *= /= %= &amp;=</td>
+<td>从右至左</td>
+</tr>
+<tr>
+<td>,</td>
+<td>从左至右</td>
+</tr>
+</tbody></table>
+<p>​    同大多数编程语言一样，C语言没有指定同一运算符中多个操作数的计算顺序（&amp;&amp;, ||, ?,和“,”运算符除外。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/21/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-0-%E5%BA%8F%E8%A8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -302,7 +1062,7 @@
       
         
           
-            <h1 id="C程序设计语言"><a href="#C程序设计语言" class="headerlink" title="C程序设计语言"></a>C程序设计语言</h1><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><h3 id="打印温度对照表"><a href="#打印温度对照表" class="headerlink" title="打印温度对照表"></a>打印温度对照表</h3><p>使用公式*℃ = （5/9) (°F-32)*打印下列华氏温度与摄氏温度对照表：</p>
+            <h1 id="C程序设计语言-0"><a href="#C程序设计语言-0" class="headerlink" title="C程序设计语言_0"></a>C程序设计语言_0</h1><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><h3 id="打印温度对照表"><a href="#打印温度对照表" class="headerlink" title="打印温度对照表"></a>打印温度对照表</h3><p>使用公式*℃ = （5/9) (°F-32)*打印下列华氏温度与摄氏温度对照表：</p>
 <p><img src="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/image-20211106171239524.png" alt="image-20211106171239524"></p>
 <h4 id="初版："><a href="#初版：" class="headerlink" title="初版："></a>初版：</h4><h5 id="源代码："><a href="#源代码：" class="headerlink" title="源代码："></a>源代码：</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lower = <span class="number">0</span>, upper = <span class="number">300</span>, step = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">int</span> celsius, fahr;</span><br><span class="line"></span><br><span class="line">    fahr = lower;</span><br><span class="line">    <span class="keyword">while</span>(fahr &lt;= upper)&#123;</span><br><span class="line">        celsius = (<span class="number">5</span> / <span class="number">9</span>) * (fahr - <span class="number">32</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\t%d\n&quot;</span>, fahr, celsius);</span><br><span class="line">        fahr += step;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -581,7 +1341,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
