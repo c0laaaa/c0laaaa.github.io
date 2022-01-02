@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C语言,学习笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="《C程序设计语言》第五章指针的阅读笔记 讲述了指针的概念，以及一些常见的使用方法 包括指向函数的指针，命令行参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C程序设计语言_4_指针">
+<meta property="og:url" content="https://c0laaaa.github.io/2022/01/02/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-4-%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="c0laaaa&#39;blogs">
+<meta property="og:description" content="《C程序设计语言》第五章指针的阅读笔记 讲述了指针的概念，以及一些常见的使用方法 包括指向函数的指针，命令行参数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-02T10:41:51.000Z">
+<meta property="article:modified_time" content="2022-01-02T10:44:48.076Z">
+<meta property="article:author" content="c0laaaa">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://c0laaaa.github.io/2022/01/02/C程序设计语言-4-指针/"/>
+
+
+
+
+
+  <title>C程序设计语言_4_指针 | c0laaaa'blogs</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">c0laaaa'blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">热爱生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://c0laaaa.github.io/2022/01/02/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-4-%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c0laaaa'blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C程序设计语言_4_指针</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-02T18:41:51+08:00">
+                2022-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>《C程序设计语言》第五章指针的阅读笔记</li>
+<li>讲述了指针的概念，以及一些常见的使用方法</li>
+<li>包括指向函数的指针，命令行参数</li>
+</ul>
+<hr>
+<span id="more"></span>
+
+
+
+<h1 id="C程序设计语言-4"><a href="#C程序设计语言-4" class="headerlink" title="C程序设计语言_4"></a>C程序设计语言_4</h1><h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><p><em><strong>指针是一种保存变量地址的变量。</strong></em></p>
+<h3 id="指针与地址"><a href="#指针与地址" class="headerlink" title="指针与地址"></a>指针与地址</h3><p>通常的机器都有一系列连续编号或编址的存储单元，这些存储单元可以单个进行操纵，也可以以连续的方式操纵。</p>
+<p>通常情况下，机器的一个字节可以存放一个char类型的数据，两个相邻的字节存储单元一个short int类型的数据，而4个相邻的字节存储单元可存储一个long（长整型）类型的数据。</p>
+<p>指针是一个能够存放一个地址的一组存储单元（通常是2个或4个字节。）</p>
+<p>一元运算符&amp;可用于取一个对象的地址，因此，下列语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p = &amp;c;</span><br></pre></td></tr></table></figure>
+
+<p>将把c的地址赋值给变量p，我们称p为”指向“c的指针。</p>
+<p>地址运算符&amp;只能应用于内存中的对象，即变量与数组元素。它不能作用于表达式，常量或register类型的变量。</p>
+<p>一元运算符*是间接寻址或间接引用运算符。当它作用于指针时，将访问指针所指向的对象。</p>
+<p>我们在这里假定x与y是整数，而ip是指向int类型的指针。下面的代码段说明了如何在程序中声明指针以及如何使用运算符&amp;和*：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1</span>, y = <span class="number">2</span>, z[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> *ip;		<span class="comment">/* ip是指向int类型的指针 */</span></span><br><span class="line"></span><br><span class="line">ip = &amp;x;		<span class="comment">/* ip现在指向x */</span></span><br><span class="line">y = *ip;		<span class="comment">/* y的值现在为1 */</span></span><br><span class="line">*ip = <span class="number">0</span>;		<span class="comment">/* x的值现在为0 */</span></span><br></pre></td></tr></table></figure>
+
+<p>指针ip的声明为<code>int *ip</code>这样是为了方便记忆。</p>
+<p>该声明语句表明表达式*ip的结果是int类型的。同样的，我们也可以这样声明函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> *dp, atof(<span class="keyword">char</span> *);</span><br></pre></td></tr></table></figure>
+
+<p>上面的声明语句表明，*dp和atof(s)的值都是double类型，且atof的参数是一个指向char类型的指针。</p>
+<p>指针只能指向某种特定类型的对象，也就是说，每个指针都必须指向某种特定的数据类型（一个例外情况是指向void类型的指针可以存放指向任何类型的指针，但它不能间接引用自身。）</p>
+<p>指针也是变量，所以在程序中可以直接使用，而不必通过间接引用的方法使用。</p>
+<p>例如，如果iq是另一个指向整型的指针，那么语句</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iq = ip</span><br></pre></td></tr></table></figure>
+
+<p>将把ip中的值拷贝到iq中，这样，指针iq也将指向ip指向的对象。</p>
+<h3 id="指针与函数参数"><a href="#指针与函数参数" class="headerlink" title="指针与函数参数"></a>指针与函数参数</h3><p>由于C语言是以值传递的方式将参数值传递给被调用函数的，因此，被调用函数不能直接修改主调函数中变量的值。</p>
+<p>如果我们想要使被调函数改变主调函数中变量的值，可以将主调函数中的变量的指针作为参数传递给被调用函数。</p>
+<p>比如一个交换两个数的值的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	*a = temp;</span><br><span class="line">	*a = *b;</span><br><span class="line">	*b = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们想要交换x和y的值，可以使用swap(&amp;x, &amp;y);</p>
+<p><em><strong>指针参数使得被调用函数能够访问和修改主调函数中对象的值。</strong></em></p>
+<p>我们来看这样一个例子：</p>
+<p>函数getint接收自由格式的输入，并执行转换，将输入的字符流分解为整数，且每次调用得到一个整数。getint需要返回转换后得到的整数，并且，在到达输入结尾时要返回文件结束标记。</p>
+<p>下面的循环语句调用getint函数给一个整型数组赋值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n, <span class="built_in">array</span>[SIZE], getint(<span class="keyword">int</span> *);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(n = <span class="number">0</span>; n &lt; SIZE &amp;&amp; getint(&amp;<span class="built_in">array</span>[n]) != EOF; n++)</span><br><span class="line">	;</span><br></pre></td></tr></table></figure>
+
+<p>每次调用getint时，输入流中的下一个整数将被赋值给数组元素array[n]，同时，n的值将增加1。</p>
+<p>下面版本的getint函数在到达文件结尾时返回EOF，当下一个输入不是数字时返回0，当输入中包含一个有意义的数字时返回一个正值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">geth</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getint</span><span class="params">(<span class="keyword">int</span> *pn)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> c, sign;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">isspace</span>(c = getch())))</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">if</span>(!<span class="built_in">isdigit</span>(c) &amp;&amp; c != EOF &amp;&amp; c != <span class="string">&#x27;+&#x27;</span> &amp;&amp; c != <span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">		ungetch(c);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	sign = (c == <span class="string">&#x27;-&#x27;</span>) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">		c = getch();</span><br><span class="line">	<span class="keyword">for</span>(*pn = <span class="number">0</span>; <span class="built_in">isdigit</span>(c); c = getch())</span><br><span class="line">		*pn = <span class="number">10</span> * *pn + (c - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	*pn *= sign;</span><br><span class="line">	ungetch(c);</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="练习："><a href="#练习：" class="headerlink" title="练习："></a>练习：</h4><ul>
+<li>在上面的例子中，如果符号+或-的后面紧跟的不是数字，getint函数把符号视为0的有效表达方式。修改该函数，将这种形式的+或-符号重新写回到输入流中。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getch</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getint</span><span class="params">(<span class="keyword">int</span> *pn)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> c, sign;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">isspace</span>(c = getch()))</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">if</span>(!<span class="built_in">isdigit</span>(c) &amp;&amp; c != EOF &amp;&amp; c != <span class="string">&#x27;+&#x27;</span> &amp;&amp; c != <span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">		ungetch(c);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    sign = (c == <span class="string">&#x27;-&#x27;</span>) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">        d = c</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">isdigit</span>(c = getch())&#123;</span><br><span class="line">           	ungetch(c);</span><br><span class="line">        	ungetch(d);</span><br><span class="line">            <span class="keyword">return</span> d;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(*pn = <span class="number">0</span>; <span class="built_in">isdigit</span>(c); c = getch())</span><br><span class="line">        *pn = <span class="number">10</span> * *pn + (c - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    *pn *= sign;</span><br><span class="line">    <span class="keyword">if</span>(c != EOF)</span><br><span class="line">        ungetch(c);</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>模仿函数getline的实现方法，编写一个读取浮点数的函数getfloat。getfloat函数的返回值应该是什么类型？</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getfloat</span><span class="params">(<span class="keyword">double</span> *pf)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> c;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">isspace</span>(c = getch()))</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">if</span>(!<span class="built_in">isdigit</span>(c) &amp;&amp; c != EOF &amp;&amp; c != ‘+’ &amp;&amp; c != <span class="string">&#x27;-&#x27;</span> &amp;&amp; c != <span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">		ungetch(c);</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">	sign = (c == <span class="string">&#x27;-&#x27;</span>) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(c == <span class="string">&#x27;+&#x27;</span> || c == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">		c = getch();</span><br><span class="line">	<span class="keyword">for</span>(*pf = <span class="number">0</span>; <span class="built_in">isdigit</span>(c); c = getch())</span><br><span class="line">		*pf = <span class="number">10.0</span> * *pn + (c - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(c == <span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">        c = getch();</span><br><span class="line">    <span class="keyword">for</span>(power = <span class="number">1.0</span>; <span class="built_in">isdigit</span>(c); c = getch())&#123;</span><br><span class="line">        *pn = <span class="number">10.0</span> * *pn + (c - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        power *= <span class="number">10.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    *pn *= sign / power;</span><br><span class="line">    <span class="keyword">if</span>(c != EOF)</span><br><span class="line">        ungetch(c);</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    返回值应该是int类型，因为要返回字符和EOF标识符。</p>
+<h3 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h3><p>声明<code>int a[10];</code>定义了一个长度为10的数组a。换句话说，它定义了一个由10个对象组成的集合，这10个对象存储在相邻的内存区域中，名字分别为a[0]，a[1]，…，a[9]。</p>
+<p>a[i]表示指向该数组的第i个元素。</p>
+<p>如果pa的声明为<code>int *pa;</code>则说明它是一个指向整型对象的指针，那么，赋值语句<code>pa = &a[0]</code>则可以将指针pa指向数组a的第0个元素，也就是说，pa的值为数组元素a[0]的地址。</p>
+<p>如果pa指向数组中的某个特定元素，那么，根据指针运算的定义，<code>pa+i</code>将指向pa所指向数组元素之后的第i个元素，而<code>pa-i</code>将指向数组元素之前的第i个元素。</p>
+<p>因此，如果指针pa指向a[0]，那么<code>*(pa+1)</code>将指向数组元素a[1]的内容。</p>
+<p><code>pa+i</code>是数组元素a[i]的地址，<code>*(pa+i)</code>引用的是数组元素a[i]的内容。</p>
+<p>无论数组a中元素的类型或数组长度是什么，上面的结论都成立。</p>
+<p>数组名代表的就是该数组最开始的一个元素的地址，所以赋值语句<code>pa = &a[0]</code>也可以写成下列形式<code>pa = a</code>。</p>
+<p>对数组元素a[i]的引用也可以写成<code>*(a + i)</code>这种形式。</p>
+<p>但是，数组名和指针有一点不同，指针是一个变量，所以对指针的赋值是合法的，但是数组名不是变量，不能对数组名赋值。</p>
+<p>当把数组名传递给一个函数时，实际上传递的是该数组第一个元素的地址。</p>
+<p>在被调用函数中，该参数是一个局部变量，因此，数组名参数必须是一个指针，也就是一个存储地址值的变量。</p>
+<p>我们可以利用这一特性编写strlen函数的另一个版本：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strlen</span><span class="params">(<span class="keyword">char</span> *s)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(n = <span class="number">0</span>; *s != <span class="string">&#x27;\0&#x27;</span>; s++)</span><br><span class="line">		n++;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为s是一个指针，所以对其执行自增运算是合法的。执行s++运算不会影响到strlen函数的调用者中的字符串，它仅对该指针在strlen函数中的私有副本进行自增运算。</p>
+<p>因此，类似于下面这样的函数调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strlen</span>(<span class="string">&quot;hello, world&quot;</span>);	<span class="comment">/* 字符串常量 */</span></span><br><span class="line"><span class="built_in">strlen</span>(<span class="built_in">array</span>);			<span class="comment">/* 字符数组array有100个元素 */</span></span><br><span class="line"><span class="built_in">strlen</span>(ptr);			<span class="comment">/* ptr是一个指向char类型对象的指针 */</span></span><br></pre></td></tr></table></figure>
+
+<p>都可以正确执行。</p>
+<p>在函数定义中，形式参数<code>char s[]</code>和<code>char *s</code>是等价的。我们通常更习惯于使用后一种形式，因为它比前者更直观的表明了该参数是一个指针。</p>
+<p>也可以将指向子数组起始位置的指针传递给函数，这样，就将数组的一部分传递给了函数。、</p>
+<p>例如，如果a是一个数组，那么下面两个函数调用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(&amp;a[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p>与</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(a+<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>都将把起始于a[2]的子数组的地址传递给函数f。在函数f中，参数的声明形式可以为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span> arr[])&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span> *arr)&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于函数f来说，它并不关心所引用的是否只是一个更大数组的部分元素。</p>
+<p>如果确信相应的元素存在，也可以通过下标访问数组第一个元素之前的元素。类似p[-1]，p[-2]这样的表达式在语法上都是合法的，它们分别引用位于p[0]之前的两个元素。当然，引用数组边界之外的对象是非法的。</p>
+<h3 id="地址算术运算"><a href="#地址算术运算" class="headerlink" title="地址算术运算"></a>地址算术运算</h3><p>如果p是一个指向数组中某个元素的指针，那么p++将对p进行自增运算并指向下一个元素，而p+=i将对p进行加i的增量运算，使其指向指针p当前指向的元素之后的第i个元素。这类运算是指针或地址算术运算中最简单的形式。</p>
+<p>我们来看一个不完善的存储分配程序。它由两个函数组成。</p>
+<p>第一个函数alloc(n)返回一个指向n个连续字符存储单元的指针，alloc函数的调用者可利用该指针存储字符序列。</p>
+<p>第二个函数afree(p)释放已分配的存储空间，以便以后重用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALLOCSIZE 10000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> allocbuf[ALLOCSIZE];</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> *allocp = allocbuf;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">alloc</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(allocbuf + ALLOCSIZE - allocp &gt;= n)&#123;</span><br><span class="line">		allocp += n;</span><br><span class="line">		<span class="keyword">return</span> allocp - n;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">afree</span><span class="params">(<span class="keyword">char</span> *p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p &gt;= allocbuf &amp;&amp; p &lt; allocbuf + ALLOCSIZE)</span><br><span class="line">		allocp = p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里我们使用了一个全局变量allocp，这是指向存储空间<strong>分配后的剩余区域</strong>的指针。</p>
+<p>然后，函数alloc返回的是指向<strong>已分配的区域</strong>的指针。</p>
+<p>然后这里我们调用afree函数时，传入的是<strong>指向已分配区域</strong>的指针，也就是alloc函数返回的指针。指针allocp实际上对调用这两个函数的调用函数不可见。</p>
+<p>C语言保证，0永远不是有效的数据地址，因此，返回值0可用来表示发生了异常事件。在本例中，返回值0表示没有足够的空闲空间可供分配。</p>
+<p>指针与整数之间不能相互转换，但0是唯一的例外：常量0可以赋值给指针，指针也可以和常量0进行比较。程序中经常用符号常量NULL代替常量0，这样便于更清晰地说明常量0是指针的一个特殊值。符号常量NULL定义在标准头文件&lt;stddef.h&gt;中。</p>
+<p>类似于</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (allocbuf + ALLOCSIZE - allocp &gt;= n)</span><br></pre></td></tr></table></figure>
+
+<p>以及</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (p &gt;= allocbuf &amp;&amp; p &lt; allocbuf + ALLCOSIZE)</span><br></pre></td></tr></table></figure>
+
+<p>的条件测试语句表明指针算术运算有以下几个重要特点：</p>
+<ul>
+<li><p>首先，在某些情况下对指针可以进行比较运算，比如，如果指针p和q是指向同一数组的成员，那么它们之间就可以进行类似于==，!=, &lt;, &gt;=的关系比较运算。</p>
+<p>如果p指向的元素的位置在q指向的数组元素位置之前，那么关系表达式p &lt; q的值为真。</p>
+<p>任何指针与0进行相等或不等的比较运算都有意义。</p>
+<p>但是指向不同数组的元素的指针之间的算术或比较运算没有定义。（这里有一个特例，指针的算术运算中可使用数组最后一个元素的下一个元素的地址。）</p>
+</li>
+<li><p>其次，指针可以和整数进行相加或相减运算。例如，结构p+n表示指针p当前指向的对象之后第n个对象的地址。在计算p+n时，n将根据p指向的对象的长度按比例缩放，而p指向的对象的长度则取决于p的声明。</p>
+</li>
+<li><p>指针的减法运算也是有意义的，如果p和q指向相同数组中的元素，且p&lt;q，那么q-p+1就是位于p和q指向的元素之间的元素数目，我们可以由此编写出函数strlen的另一个版本，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strlen</span><span class="params">(<span class="keyword">char</span> *s)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *p = s;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(*p != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		p++;</span><br><span class="line">	<span class="keyword">return</span> p - s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>指针的算术运算具有一致性，如果处理的数据类型是比字符型占据更多存储空间的浮点类型，并且p是一个指向浮点类型的指针，那么在执行p++后，p将指向下一个浮点数的地址。因此，只需要将alloc和afree函数中所有的char类型替换为float类型，就可以得到一个适用于浮点类型而非字符类型的内存分配函数。</p>
+<p>所有的指针运算都会自动考虑它所指向的对象的长度。</p>
+<p>有效的指针运算包括相同类型指针之间的赋值运算：指针同整数之间的加法或减法运算；指向相同数组中元素的两个指针之间的减法运算或比较运算；将指针赋值为0或指针与0之间的比较运算。其它所有形式的指针运算都是非法的，例如两个指针之间的加法，乘法，除法，移位或屏蔽运算；指针float或double类型之间的加法运算；不经强制类型转换而直接将指向一种类型对象的指针赋值给指向另一种类型对象的指针的运算（除非其中之一是void *）。</p>
+<h3 id="字符指针与函数"><a href="#字符指针与函数" class="headerlink" title="字符指针与函数"></a>字符指针与函数</h3><p>字符串常量是一个字符数组，例如：”I am a string”在字符串的内部表示中，字符数组以空字符’\0’结尾，所以，程序可以通过检查空字符找到字符数组的结尾。字符串常量占据的存储单元数也因此比双引号内的字符数大1。</p>
+<p>字符串常量最常见的用法也许是作为函数参数，例如：</p>
+<p>printf(“hello, world\n”);</p>
+<p>当类似于这样的一个字符串出现在程序中时，实际上是通过字符指针访问该字符串的。在上述语句中，printf接受的是一个指向字符数组第一个字符的指针。也就是说，字符串常量可以通过一个指向其第一个元素的指针访问。</p>
+<p>除了作为函数参数外，字符串常量还有其他用法。假定指针pmessage的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *pmessage;</span><br></pre></td></tr></table></figure>
+
+<p>那么，语句</p>
+<p>pmessage = “now is the time”;</p>
+<p>将把一个指向该字符数组的指针赋值给pmessage。该过程并没有字符串的复制，而只是涉及到指针的操作。C语言没有提供将整个字符串作为一个整体进行处理的运算符。</p>
+<p>下面两个定义之间有很大的差别：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> amessage[] = <span class="string">&quot;now is the time&quot;</span>;	<span class="comment">// 定义一个数组</span></span><br><span class="line"><span class="keyword">char</span> *pmessage[] = <span class="string">&quot;now is the time&quot;</span>;	<span class="comment">// 定义一个指针</span></span><br></pre></td></tr></table></figure>
+
+<p>上述声明中，amessage是一个仅仅足以存放初始化字符串以及空字符’\0’的一维数组。数组中的单个字符可以进行修改，但是amessage始终指向同一存储位置。另一方面，pmessage是一个指针，其初值指向一个字符串，之后它可以被修改以指向其他地址，但如果试图修改字符串的内容，结果是没有定义的。</p>
+<p>下面我们用来两个函数为例，来研究下上面说的定义的区别。</p>
+<p>函数strcpy(s, t)将指针t指向的字符串复制到指针s指向的位置。</p>
+<p>如果只是单纯的使用s = t，那仅仅只是将s指向了t所指向的位置，s原来指向的位置的值并没有改变。</p>
+<p>版本1，通过数组方法实现函数strcpy(s,t):</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">strcpy</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; t[i] != <span class="string">&#x27;\0&#x27;</span>; ++i)</span><br><span class="line">		s[i] = t[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>版本2，通过指针方法实现函数strcpy(s,t):</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">strcpy</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>((*s++ = *t++) != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数strcmp(s,t)。该函数比较字符串s和t，并且根据s按照字典顺序小于，等于或大于t的结果分别返回负整数，0或正整数。该返回值是s和t由前向后逐字符比较时遇到的第一个不相等字符处的字符的差值。</p>
+<p>版本1，数组版本：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strcmp</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; s[i] == t[i]; ++i)</span><br><span class="line">		<span class="keyword">if</span>(s[i] == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> s[i] - t[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>版本2，指针版本：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strcmp</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(*s++ == *t++)</span><br><span class="line">		<span class="keyword">if</span>(*s == <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> *s-*t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于++和–既可以作为前缀运算符，也可以作为后缀运算符，所以还可以将运算符*与运算符++和–按照其它方式组合使用，但这些用法并不多见。</p>
+<p>事实上，下面的两个表达式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*p++ = val;</span><br><span class="line">val = *--p;</span><br></pre></td></tr></table></figure>
+
+<p>是进栈和出栈的标准用法。</p>
+<h4 id="练习：-1"><a href="#练习：-1" class="headerlink" title="练习："></a>练习：</h4><p>用指针实现函数strcat。函数strcat(s, t)将t指向的字符串复制到s指向的字符串尾部。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">strcat</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(*s++ != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">while</span>((*s++ = *t++) != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		;</span><br><span class="line">    *s = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写函数strend(s, t)。如果字符串t出现在字符串s的尾部，该函数返回1，否则返回0。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strend</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *lt = t;</span><br><span class="line">	<span class="keyword">while</span>(*s++ != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">while</span>(*t++ != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">while</span>((*s-- == *t--) &amp;&amp; t &gt;= lt)</span><br><span class="line">		;</span><br><span class="line">	<span class="keyword">if</span>(t+<span class="number">1</span> == lt)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现库函数strncpy，strncat和strncmp。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将字符串ct中最多n个字符复制到字符串s中，并返回s。</span></span><br><span class="line"><span class="comment">// 如果ct中少于n个字符，则用&#x27;\0&#x27;填充</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">my_strncpy</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *ct, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n &amp;&amp; *ct != <span class="number">0</span>; ++i)</span><br><span class="line">		*s++ = *ct++;</span><br><span class="line">	<span class="keyword">while</span>(i &lt; n)</span><br><span class="line">		*s++ = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> s - n - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符串ct中最多前n个字符连接到字符串s的尾部，并以&#x27;\0&#x27;结束，然后返回s</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">my_strncat</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *ct, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">char</span> *r = s;</span><br><span class="line">    <span class="keyword">while</span>(*s++ != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">        ;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>, s--; i &lt; n &amp;&amp; *ct != <span class="string">&#x27;\0&#x27;</span>; ++i)</span><br><span class="line">        *s++ = *ct++;</span><br><span class="line">    *s = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符串cs中至多前n个字符与字符串ct相比较。</span></span><br><span class="line"><span class="comment">// 当cs&lt;ct时，返回一个负数；当cs==ct时，返回0；当cs&gt;ct时，返回一个正数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_strncmp</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *ct, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(; *s == *t; s++, t++)</span><br><span class="line">        <span class="keyword">if</span>(*s == <span class="string">&#x27;\0&#x27;</span> || --n &lt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> *s - *t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指针数组以及指向指针的指针"><a href="#指针数组以及指向指针的指针" class="headerlink" title="指针数组以及指向指针的指针"></a>指针数组以及指向指针的指针</h3><p>由于指针本身也是变量，所以它们也可以像其他变量一样存放在数组中。</p>
+<p>下面通过编写UNIX程序sort的简化版本说明这一点。该程序按字母顺序对文本行组成的集合进行排序。</p>
+<p>如果待排序的文本行首尾相连地存储在一个长字符数组中，那么每个文本行可通过指向它的第一个字符的指针来访问。这些指针本身可以存储在一个数组。这样将指向两个文本行的指针传递给函数strcmp就可以实现对这两个文本行的比较。当交换次序颠倒的两个文本行时，实际上交换的是指针数组中与这两个文本行相对应的指针，而不是这两个文本行本身。</p>
+<p>排序的过程包括下列3个步骤：</p>
+<ol>
+<li>读取所有输入行</li>
+<li>对文本行进行排序</li>
+<li>按次序打印文本行</li>
+</ol>
+<p>通常情况下，最好将程序划分成若干个与问题的自然划分相一致的函数，并通过主函数控制其他函数的执行。</p>
+<p>现在我们首先考虑数据结构以及输入和输出的函数。</p>
+<p>输入函数必须收集和保存每个文本行中的字符，并建立一个指向这些文本行的指针的数组。同时还必须统计输入的行数，因为打印和排序的时候要使用。由于输入函数只能处理有限数目的输入行，所以在输入行数过多而超过限定的最大行数时，该函数返回某个用于表示非法行数的数值，例如-1。</p>
+<p>输出函数只需要按照指针数组中的次序依次打印这些文本即可。</p>
+<hr>
+<p>首先确定main函数的流程以及需要用到的功能和对应的函数：</p>
+<ul>
+<li><p>读取所有行 </p>
+<p>readlines函数，读取所有行，并将指向每行的指针存放在一个数组中，如果读取行数超过规定的最大行，返回-1，如果读取成功，返回读取的行数。</p>
+</li>
+<li><p>然后对文本行进行排序</p>
+<p>现在，我们已经有了指向所有文本行的指针，我们可以通过这些指针访问这些文本行。</p>
+<p>那如果我们要排序一个整数数组中的元素，如何排序？</p>
+<p>通过排序算法，比较算法中的两个元素的大小。</p>
+<p>现在我们要对文本行排序，比较的是字符串，使用strcmp函数，对字符串进行比较。</p>
+<p>所以，我们改写传统的排序算法中的整数数组为指向字符串的指针的数组。</p>
+<p>lines_qsort函数，采用快速排序算法对文本行进行排序。</p>
+</li>
+<li><p>打印文本行</p>
+<p>writelines函数，根据行数打印文本行。</p>
+</li>
+</ul>
+<p>然后我们看readline函数的具体实现：</p>
+<p>​    循环读取每一行，然后每次读取一行就向内存申请空间用来存放这一行，然后将指向这一行的指针存放到lineptr数组中。</p>
+<p>源代码如下：</p>
+<p>头文件head.h:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINES 1000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">readlines</span><span class="params">(<span class="keyword">char</span> **, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">lines_sort</span><span class="params">(<span class="keyword">char</span> **, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writelines</span><span class="params">(<span class="keyword">char</span> **, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLEN 1000</span></span><br><span class="line"><span class="keyword">char</span> line[MAXLEN];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">alloc</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">afree</span><span class="params">(<span class="keyword">char</span> *)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>主功能main.c:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;head.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* lineptr是一个数组</span></span><br><span class="line"><span class="comment"> * 什么类型的数组？</span></span><br><span class="line"><span class="comment"> * 存放指针的数组</span></span><br><span class="line"><span class="comment"> * 存放的指针是char类型的指针 */</span></span><br><span class="line"><span class="keyword">char</span> *lineptr[MAXLINES];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nlines;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((nlines = readlines(lineptr, MAXLINES)) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">        lines_sort(lineptr, nlines);</span><br><span class="line">        writelines(lineptr, nlines);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;too many lines\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入输出功能io.c:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;head.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">readlines</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> maxlines)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nlines, line_len;</span><br><span class="line">    <span class="keyword">char</span> *p;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(nlines = <span class="number">0</span>; (line_len = my_getline(line, MAXLEN)) &gt; <span class="number">0</span>; ++nlines)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nlines &gt;= maxlines || (p = alloc(line_len)) == <span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            line[line_len - <span class="number">1</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">            <span class="built_in">strcpy</span>(p, line);</span><br><span class="line">            *lineptr++ = p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> nlines;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writelines</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> nlines)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; nlines; ++i)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, lineptr[i]);</span><br><span class="line">        afree(lineptr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> line[],<span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, c;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim - <span class="number">1</span> &amp;&amp; (c = getchar()) != EOF &amp;&amp; c != <span class="string">&#x27;\n&#x27;</span>; ++i)</span><br><span class="line">        line[i] = c;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span>)&#123;</span><br><span class="line">        line[i] = c;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    line[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>内存分配功能buffalloc.c:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;head.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFSIZE 10000</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> allocbuff[BUFFSIZE];</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> *allocp = allocbuff;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">alloc</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(allocp + n &lt;= allocbuff + BUFFSIZE)&#123;</span><br><span class="line">        allocp += n;</span><br><span class="line">        <span class="keyword">return</span> allocp-n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">afree</span><span class="params">(<span class="keyword">char</span> *p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p &gt;= allocbuff &amp;&amp; p &lt; allocbuff + BUFFSIZE)</span><br><span class="line">        allocp = p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>排序函数sort.c:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;head.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">lines_sort</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j = i; j &lt; len; j++)</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">strcmp</span>(lineptr[i], lineptr[j]) &gt; <span class="number">0</span>)</span><br><span class="line">                swap(lineptr, i, j);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *temp;</span><br><span class="line"></span><br><span class="line">    temp = lineptr[i];</span><br><span class="line">    lineptr[i] = lineptr[j];</span><br><span class="line">    lineptr[j] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ./sort.exe &lt; test.txt</span><br><span class="line">Animal Farm</span><br><span class="line">As soon as the light in the bedroom went out there was a stirring and a fluttering all through the farm buildings. </span><br><span class="line">Chapter I</span><br><span class="line">It had been agreed that they should all meet in the big barn as soon as Mr. Jones was safely out of the way.</span><br><span class="line">Mr. Jones, of the Manor Farm,</span><br><span class="line">Old Major (so he was always called,</span><br><span class="line">Word had gone round during 733he day that old Major,</span><br><span class="line">and made his way up to bed, where Mrs. Jones was already snoring.</span><br><span class="line">drew himself a last glass of beer from the barrel in the scullery,</span><br><span class="line">had had a strange dream on the previous night and wished to communicate it to the other animals.</span><br><span class="line">had locked the hen-houses for the With the ring light from his lantern dancing from side to side,</span><br><span class="line">he lurched across the yard, kicked off his boots at the back door,</span><br><span class="line">that everyone was quite ready to lose an hour&#x27;s sleep in order to hear what he had to say.</span><br><span class="line">the prize Middle Whiter boar,</span><br><span class="line">though the name under which he has been exhibited was Willingdon Beauty) was so highly regarded on the farm</span><br></pre></td></tr></table></figure>
+
+<p>test.txt文本内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Animal Farm</span><br><span class="line">Chapter I</span><br><span class="line">Mr. Jones, of the Manor Farm, </span><br><span class="line">had locked the hen-houses for the With the ring light from his lantern dancing from side to side, </span><br><span class="line">he lurched across the yard, kicked off his boots at the back door, </span><br><span class="line">drew himself a last glass of beer from the barrel in the scullery, </span><br><span class="line">and made his way up to bed, where Mrs. Jones was already snoring.</span><br><span class="line">As soon as the light in the bedroom went out there was a stirring and a fluttering all through the farm buildings. </span><br><span class="line">Word had gone round during 733he day that old Major, </span><br><span class="line">the prize Middle Whiter boar, </span><br><span class="line">had had a strange dream on the previous night and wished to communicate it to the other animals.</span><br><span class="line">It had been agreed that they should all meet in the big barn as soon as Mr. Jones was safely out of the way. </span><br><span class="line">Old Major (so he was always called, </span><br><span class="line">though the name under which he has been exhibited was Willingdon Beauty) was so highly regarded on the farm </span><br><span class="line">that everyone was quite ready to lose an hour&#x27;s sleep in order to hear what he had to say.</span><br></pre></td></tr></table></figure>
+
+<h3 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h3><p>C语言提供了类似于矩阵的多维数组。</p>
+<p>我们考虑一个日期转换的问题：把某月某日这种日期表示形式转换为某年中第几天的表示形式，反之亦然。</p>
+<p>例如，3月1日是非闰年的第60天，是闰年的第61天。</p>
+<p>在这里，我们定义两个函数进行日期转换，函数day_of_year将某月某日的日期表示形式转换为某一年中第几天的表示形式，而函数month_day则进行相反的转换。因为month_day要同时返回日和月两个值，所以在函数month_day中，我们不采用返回值的 方式获取数据，而是采取传递给函数两个指针，让函数对这两个指针所指对象赋值来获取数据。</p>
+<p>例如，<code>month_day(1988, 60, &m, &d)</code>，将把m的值设置为2，将把d的值设置为29。</p>
+<p>这些函数都要用到一张记录每月天数的表，对于闰年和非闰年来说，每个月的天数不同，所以，将这些天数分别存放在一个二维数组的两行中比在计算过程中判断2月有多少天更加容易。该数组以及执行日期转换的函数如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 闰年和普通年份2月天数不同</span></span><br><span class="line"><span class="comment">// 我们为了方便，直接用一个二维数组来存放每个月的天数</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> daytab[<span class="number">2</span>][<span class="number">13</span>] = &#123;</span><br><span class="line">	<span class="comment">// 不是闰年</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">31</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>&#125;,</span><br><span class="line">	<span class="comment">// 是闰年</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">31</span>, <span class="number">29</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将某年某月某日这种日期形式转换为某年中第几天的表示形式</span></span><br><span class="line"><span class="comment">// 接收年，月，日，返回天数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">day_of_year</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 判断是否是闰年</span></span><br><span class="line">	leap = year%<span class="number">4</span> == <span class="number">0</span> &amp;&amp; y != <span class="number">100</span> || year %<span class="number">400</span> == <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 加到当前月的前一个月，然后加上这个月的天数</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; month; i++)</span><br><span class="line">		day += daytab[leap][i];</span><br><span class="line">	<span class="keyword">return</span> day;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将某年中第几天，转换为这年中某月某天</span></span><br><span class="line"><span class="comment">// 接收年数，天数，返回月数和天数</span></span><br><span class="line"><span class="comment">// 无法一次返回两个值，我们就让函数接收两个指针，改变两个指针指向的值</span></span><br><span class="line"><span class="comment">// 这样就变向的“返回了两个值”</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">month_day</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> yearday, <span class="keyword">int</span> *pmonth, <span class="keyword">int</span> *pday)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, leap;</span><br><span class="line">	<span class="comment">// 判断是否是闰年</span></span><br><span class="line">	leap = year%<span class="number">4</span> == <span class="number">0</span> &amp;&amp; year%<span class="number">100</span> != <span class="number">0</span> || year % <span class="number">400</span> == <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 其实是day_of_year函数的反向操作</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">1</span>; yearday &gt; daytab[leap][i]; i--)</span><br><span class="line">		yearday -= daytab[leap][i];</span><br><span class="line"></span><br><span class="line">	*pday = yearday;</span><br><span class="line">	*pmonth = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在C语言中，二维数组实际上是一种特殊的一维数组，它的每个元素也是一个一位数组。因此，数组下标应该写成：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daytab[i][j];	<span class="comment">/* [行][列] */</span></span><br></pre></td></tr></table></figure>
+
+<p>而不能写成</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daytab[i, j];	<span class="comment">/* 错误的形式 */</span></span><br></pre></td></tr></table></figure>
+
+<p>数组按行存储，因此，当按存储顺序访问数组时，最右边的数组下标变化得最快。</p>
+<p>数组可以用花括号括起来的初值表进行初始化，二维数组的每一行由相应的子列表进行数组化。</p>
+<p>如果将二维数组作为参数传递给函数，那么在函数的参数声明中必须指明数组的列数。数组的行数没有太大关系，因为前面已经讲过了，函数调用时传递的是一个指针，它指向由行向量构成的一维数组，其中每个行向量是具有13个整型元素的一维数组。</p>
+<p>因此，如果将数组daytab作为参数传递给函数f，那么f的声明应该写成下列形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span> daytab[<span class="number">2</span>][<span class="number">3</span>])&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以写成</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span> daytab[][<span class="number">13</span>])&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为数组的行数无关紧要，该声明也可以写成</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span> (*daytab)[<span class="number">13</span>])&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种声明形式表明参数是一个指针，它指向具有13个整型元素的一维数组。</p>
+<p>因为<code>[]</code>的优先级高于<code>*</code>的优先级，所以上述声明中必须使用圆括号。</p>
+<p><em><strong>一般来说，除数组的第一维可以不指定大小外，其余各维都必须明确指定大小。</strong></em></p>
+<h4 id="练习：-2"><a href="#练习：-2" class="headerlink" title="练习："></a>练习：</h4><p>函数day_of_year和month_day中没有进行错误检查，解决该问题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">day_of_year</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> leap, yearday, m;</span><br><span class="line"></span><br><span class="line">	leap = year%<span class="number">4</span> == <span class="number">0</span> &amp;&amp; year%<span class="number">100</span> != <span class="number">0</span> || year%<span class="number">400</span> == <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(m &lt; <span class="number">1</span> || m &gt; <span class="number">12</span> || day &lt; <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(day &gt; daytab[leap][month])</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(m = <span class="number">1</span>; m &lt; month; m++)</span><br><span class="line">		day += daytab[leap][month];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> day;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">month_day</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> yearday, <span class="keyword">int</span> *pmonth, <span class="keyword">int</span> *day)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, leap;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(year &lt; <span class="number">1</span>)&#123;</span><br><span class="line">		*pmonth = <span class="number">-1</span>;</span><br><span class="line">		*pday = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	leap = year%<span class="number">4</span> == <span class="number">0</span> &amp;&amp; year%<span class="number">100</span> != <span class="number">0</span> || year%<span class="number">400</span> == <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; <span class="number">13</span> &amp;&amp; yearday &gt; daytab[leap][i]; i++)</span><br><span class="line">		yearday -= daytab[leap][i];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(i == <span class="number">13</span> &amp;&amp; yearday &gt; daytab[leap][<span class="number">12</span>])&#123;</span><br><span class="line">		*pmonth = <span class="number">-1</span>;</span><br><span class="line">		*day = <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		*pmonth = i;</span><br><span class="line">		*day = yearday;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指针数组的初始化"><a href="#指针数组的初始化" class="headerlink" title="指针数组的初始化"></a>指针数组的初始化</h3><p>编写一个函数month_name(n)，它返回一个指向第n个月名字的字符串的指针。这是内部变量static类型数组的一种理想的应用。month_name函数中包含一个私有的字符串数组，当它被调用时，返回一个指向正确元素的指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">month_name</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">char</span> *name[] = &#123;</span><br><span class="line">		<span class="string">&quot;Illegal month&quot;</span>,</span><br><span class="line">		<span class="string">&quot;January&quot;</span>, <span class="string">&quot;Februry&quot;</span>, <span class="string">&quot;March&quot;</span>,</span><br><span class="line">		<span class="string">&quot;April&quot;</span>, <span class="string">&quot;May&quot;</span>, <span class="string">&quot;June&quot;</span>,</span><br><span class="line">		<span class="string">&quot;July&quot;</span>, <span class="string">&quot;August&quot;</span>, <span class="string">&quot;September&quot;</span>,</span><br><span class="line">		<span class="string">&quot;October&quot;</span>, <span class="string">&quot;November&quot;</span>, <span class="string">&quot;December&quot;</span></span><br><span class="line">	&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> (n &lt; <span class="number">1</span> || n &gt; <span class="number">12</span>) ? name[<span class="number">0</span>] : name[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="练习：-3"><a href="#练习：-3" class="headerlink" title="练习："></a>练习：</h4><p>用指针方式代替数组下标方式改写函数day_of_year和month_day。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dayofyear</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> leap;</span><br><span class="line">	<span class="keyword">char</span> *p;</span><br><span class="line"></span><br><span class="line">	leap = year%<span class="number">4</span> == <span class="number">0</span> &amp;&amp; year%<span class="number">100</span> != <span class="number">0</span> || year%<span class="number">400</span> == <span class="number">0</span>;</span><br><span class="line">	p = daytab[leap];</span><br><span class="line">	<span class="keyword">while</span>(--month)</span><br><span class="line">		day += *++p;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> day;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">month_day</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> yearday, <span class="keyword">int</span> *pmonth, <span class="keyword">int</span> *day)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> leap;</span><br><span class="line">	<span class="keyword">char</span> *p;</span><br><span class="line"></span><br><span class="line">	leap = year%<span class="number">4</span> == <span class="number">0</span> &amp;&amp; year%<span class="number">100</span> != <span class="number">0</span> || year%<span class="number">400</span> == <span class="number">0</span>;</span><br><span class="line">	p = daytab[leap];</span><br><span class="line">	<span class="keyword">while</span>(yearday &gt; *++p)</span><br><span class="line">		yearday -= *p;</span><br><span class="line">	*pmonth = p - *(daytab + leap);</span><br><span class="line">	*pday = yearday;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h3><p>在支持C语言的环境中，可以在程序开始执行时将命令行参数传递给程序。调用主函数main时，它带有两个参数。第一个参数（习惯上称为argc，用于参数计数）的值表示运行程序时命令行中参数的数目；第二个参数是一个指向字符串数组的指针，其中，每个字符串对应一个参数。</p>
+<p>按照C语言约定，argv[0]的值是启动该程序的程序名，因此argc的值至少为1。另外，ANSI标准要求argv[argc]的值必须为一空指针，也就是0。</p>
+<p>比如程序echo，它将命令行参数回显在屏幕中的一行中，其中命令行个参数之间用空格隔开。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	for(i = 1; i &lt; argc; i++)</span></span><br><span class="line"><span class="comment">		printf(&quot;%s%s&quot;, argv[i], (i &lt; argc - 1) ? &quot; &quot; : &quot;&quot;);</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="keyword">while</span>(--argc &gt; <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s%s&quot;</span>, *++argv, (argc &gt; <span class="number">1</span>) ? <span class="string">&quot; &quot;</span> : <span class="string">&quot;&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>接下来我们来看另一个例子，改写查找程序，通过命令行的第一个参数指定待匹配的模式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINE 1000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> line[MAXLINE];</span><br><span class="line">	<span class="keyword">int</span> found = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(argc != <span class="number">2</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Usage: find patten\n&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">while</span>(getline(line, MAXLINE) &gt; <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">strstr</span>(line, argv[<span class="number">1</span>]) != <span class="literal">NULL</span>)&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, line);</span><br><span class="line">				found++;</span><br><span class="line">			&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> found;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>标准库函数strstr(s, t)返回一个指针，该指针指向字符串t在字符串s中第一次出现的位置；如果字符串t没有在字符串s中出现，函数返回NULL（空指针）。该函数声明在头文件&lt;string.h&gt;中。</p>
+<p>下面我们来改进模式查找程序，假定允许程序带两个可选参数。其中一个参数表示“打印匹配模式之外的所有行”，另一个参数表示“每个打印的文本行前面加上相应的行号”。</p>
+<p>Unix系统中的C语言程序有一个公共的约定：以负号开头的参数表示一个可选标志或参数。假定用-x表示打印所有与模式不匹配的文本行，用-n表示打印行号，那么下列命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -x -n 模式</span><br></pre></td></tr></table></figure>
+
+<p>将打印所有与模式不匹配的行，并在每个打印行的前面加上行号。</p>
+<p>可选参数应该允许以任意次序出现，同时，程序的其余部分应该与命令行中参数的数目无关。此外如果可选参数能够组合使用，将会给使用者带来更大的方便，比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -nx 模式</span><br></pre></td></tr></table></figure>
+
+<p>改写后的模式查找程序如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINE 1000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number = <span class="number">0</span>, except = <span class="number">0</span>, found = <span class="number">0</span>, c;</span><br><span class="line">    <span class="keyword">int</span> lineno = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">char</span> line[MAXLINE];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取可选的参数选项</span></span><br><span class="line">    <span class="comment">// --argc &gt; 0判断是否含有参数，必须至少含有两个参数</span></span><br><span class="line">    <span class="comment">// ++argv使得argv指向第二个字符串参数</span></span><br><span class="line">    <span class="comment">// *(++argv)是第二个字符串参数的值</span></span><br><span class="line">    <span class="comment">// *(++argv)[0] == &#x27;-&#x27;判断第二个字符串参数是否以-开头</span></span><br><span class="line">    <span class="keyword">while</span>(--argc &gt; <span class="number">0</span> &amp;&amp; *(++argv)[<span class="number">0</span>] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">        <span class="comment">// 读取-后的所有选项</span></span><br><span class="line">        <span class="comment">// *argv指向的是以-开头的字符串</span></span><br><span class="line">        <span class="comment">// 然后读取参数列表，知道字符串结尾&#x27;\0&#x27;</span></span><br><span class="line">        <span class="keyword">while</span>(c = *++(*argv))</span><br><span class="line">            <span class="keyword">switch</span>(c)&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;x&#x27;</span>:</span><br><span class="line">                    except = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;n&#x27;</span>:</span><br><span class="line">                    number = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;find illegal optional %c\n&quot;</span>, c);</span><br><span class="line">                    argc = <span class="number">0</span>;</span><br><span class="line">                    found = <span class="number">-1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 因为每次读取可选选项或选项列表时候，都会将argc减一</span></span><br><span class="line">    <span class="comment">// 默认的模式是find 选项/选项列表 模式</span></span><br><span class="line">    <span class="comment">// 将选项/选项列表的数目减去后，剩下的参数数目为2</span></span><br><span class="line">    <span class="comment">// 但是判断的时候将argc减一了，所以这个时候</span></span><br><span class="line">    <span class="comment">// 正确的情况下argc的数目是1，不然就是错误的</span></span><br><span class="line">    <span class="comment">// 然后每次将argv都增加了一个，最后argv指向的就是模式的字符串了</span></span><br><span class="line">    <span class="comment">// 这里argv不会加一是因为先执行了argc的判断，到达后就直接退出循环了</span></span><br><span class="line">    <span class="keyword">if</span>(argc != <span class="number">1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Usage: find -x -n patten\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">while</span>(my_getline(line, MAXLINE) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            lineno++;</span><br><span class="line">            <span class="comment">// 如果line中含有argv，my_strstr函数返回值不为空</span></span><br><span class="line">            <span class="comment">// my_strstr() != NULL的值为1</span></span><br><span class="line">            <span class="comment">// 如果line中不含有argv</span></span><br><span class="line">            <span class="comment">// my_strstr() != NULL的值为0</span></span><br><span class="line">            <span class="comment">// 如果except为1，则说明要打印不含有模式的行</span></span><br><span class="line">            <span class="comment">// 如果except为0，就是正常打印</span></span><br><span class="line">            <span class="comment">// 1 != 0 -&gt; 1</span></span><br><span class="line">            <span class="comment">// 0 != 0 -&gt; 0</span></span><br><span class="line">            <span class="comment">// 1 != 1 -&gt; 0</span></span><br><span class="line">            <span class="comment">// 0 != 0 -&gt; 1</span></span><br><span class="line">            <span class="keyword">if</span>(((<span class="built_in">strstr</span>(line, *argv)) != <span class="literal">NULL</span>) != except)&#123;</span><br><span class="line">                <span class="keyword">if</span>(number)</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;%02d:&quot;</span>, lineno);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, line);</span><br><span class="line">                found++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> found;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_getline</span><span class="params">(<span class="keyword">char</span> *line, <span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; lim<span class="number">-1</span> &amp;&amp; (c = getchar()) != EOF &amp;&amp; c != <span class="string">&#x27;\n&#x27;</span>; ++i)</span><br><span class="line">        line[i] = c;</span><br><span class="line">    <span class="keyword">if</span>(c == <span class="string">&#x27;\n&#x27;</span>)&#123;</span><br><span class="line">        line[i] = c;</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    line[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="练习：-4"><a href="#练习：-4" class="headerlink" title="练习："></a>练习：</h4><p>编写程序expr，以计算从命令行输入的逆波兰表达式的值，其中每个运算符或操作数用一个单独的参数表示。例如，命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expr 2 3 4 + *</span><br></pre></td></tr></table></figure>
+
+<p>将计算表达式2 x ( 3 + 4)的值。</p>
+<p>源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXOP 1000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUMBER <span class="meta-string">&#x27;0&#x27;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXVAL 100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">pop</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">double</span> f)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getop</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">char</span> **)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> type, i;</span><br><span class="line">    <span class="keyword">double</span> op2;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; argc; ++i)&#123;</span><br><span class="line">        type = getop(i, argv);</span><br><span class="line">        <span class="keyword">switch</span>(type)&#123;</span><br><span class="line">            <span class="keyword">case</span> NUMBER:</span><br><span class="line">                push(atof(argv[i]));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">                push(pop() + pop());</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">                op2 = pop();</span><br><span class="line">                push(pop() - op2);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                push(pop() * pop());</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;/&#x27;</span>:</span><br><span class="line">                op2 = pop();</span><br><span class="line">                <span class="keyword">if</span>(op2 != <span class="number">0.0</span>)</span><br><span class="line">                    push(pop() / op2);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;error: zero divisor\n&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;\n&#x27;</span>:</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%.8g\n&quot;</span>, pop());</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;error op %s\n&quot;</span>, argv[i]);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.8f\n&quot;</span>, pop());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> sp = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">double</span> val[MAXVAL];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">pop</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(sp &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> val[--sp];</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error: stack empty\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">double</span> f)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(sp &lt; MAXVAL)</span><br><span class="line">        val[sp++] = f;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error: stack full\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getop</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">isdigit</span>(argv[i][<span class="number">0</span>]))&#123;</span><br><span class="line">        <span class="keyword">return</span> NUMBER;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> argv[i][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指向函数的指针"><a href="#指向函数的指针" class="headerlink" title="指向函数的指针"></a>指向函数的指针</h3><p>在C语言中，可以定义指向函数的指针，这种类型的指针可以被赋值，存放在数组中，传递给函数以及作为函数的返回值等等。</p>
+<p>下面我们用一个例子来说明：</p>
+<p>排序程序通常包括3部分：</p>
+<ol>
+<li>判断两个对象之间的次序的比较操作</li>
+<li>颠倒对象次序的交换操作</li>
+<li>用于比较和交换对象直到所有对象都按正确次序排列的排序算法。</li>
+</ol>
+<p>由于排序算法与比较，交换操作无关，因此，<em><strong>通过在排序算法中调用不同的比较和交换函数，便可以实现按照不同的标准排序。</strong></em></p>
+<p>现在我们希望my_sort函数可以通过传递给它的参数不同实现的排序标准，比如之前我们使按照strcmp函数对字符串的比较实现的排序，我们希望增加一种，比如输入行全是数组字符组成，我们希望按照数组字符的数字意义大小排序，我们设计一种新的比较函数numcmp。</p>
+<p>现在我们的my_sort函数有两个可以用于比较的函数，strcmp函数和numcmp函数，这两个函数在main之前声明，因为在main函数中要以函数指针的方式将其中一个函数的指针传递给my_sort函数。</p>
+<p>因为新的my_sort函数需要接收一个函数指针，所以新的my_sort函数定义为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_sort</span><span class="params">(<span class="keyword">void</span> *lineptr[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> (*comp)(<span class="keyword">void</span> *, <span class="keyword">void</span> *))</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, last;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">void</span> *v[], <span class="keyword">int</span>, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(left &gt;= right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    swap(v, left, (left+right) / <span class="number">2</span>);</span><br><span class="line">    last = left;</span><br><span class="line">    <span class="keyword">for</span>(i = left+<span class="number">1</span>; i &lt; = right; i++)</span><br><span class="line">        <span class="keyword">if</span>(*comp)(v[i], v[left]) &lt; <span class="number">0</span>)</span><br><span class="line">            swap(v, ++last, i);</span><br><span class="line">    swap(v, left, last);</span><br><span class="line">    my_sort(v, left, last<span class="number">-1</span>, comp);</span><br><span class="line">    my_sort(v, last+<span class="number">1</span>, right, comp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们注意参数列表中的这个参数：**<code>int (*comp)(void <em>, void <em>)</code></em></em></p>
+<p><u>它表明comp是一个指向函数的指针，该函数具有两个void * 类型的参数，其返回值类型为int。</u></p>
+<p>在下列语句中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((*comp)(v[i], v[left]) &lt; <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p><b>comp的使用和其声明是一致的，comp是一个指向函数的指针，* comp代表一个函数。<code>(* comp)(v[i], v[left])</code>是对该函数的调用。</b></p>
+<p>然后我们来看main函数中my_sort函数的调用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINES 5000</span></span><br><span class="line"><span class="keyword">char</span> *lineptr[MAXLINES];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">readlines</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> nlines)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writelines</span><span class="params">(<span class="keyword">char</span> *lineptr[], <span class="keyword">int</span> nlines)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_sort</span><span class="params">(<span class="keyword">void</span> *lineptr[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> (*comp)(<span class="keyword">void</span> *, <span class="keyword">void</span> *))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">numcmp</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">char</span> *)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对输入的文本行进行排序</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nlines;</span><br><span class="line">    <span class="keyword">int</span> numeric = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc &gt; <span class="number">1</span> &amp;&amp; <span class="built_in">strcmp</span>(argv[<span class="number">1</span>], <span class="string">&quot;-n&quot;</span>) == <span class="number">0</span>)</span><br><span class="line">        numeric = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>((nlines = readlines(lineptr, MAXLINES)) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">        my_sort((<span class="keyword">void</span> **) lineptr, <span class="number">0</span>, nlines<span class="number">-1</span>, (<span class="keyword">int</span> (*)(<span class="keyword">void</span> *, <span class="keyword">void</span> *))(numeric ? numcmp : <span class="built_in">strcmp</span>));</span><br><span class="line">        writelines(lineptr, nlines);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;input too big to sort\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_sort</span><span class="params">(<span class="keyword">void</span> *lineptr[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> (*comp)(<span class="keyword">void</span> *, <span class="keyword">void</span> *))</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, last;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">void</span> *v[], <span class="keyword">int</span>, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(left &gt;= right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    swap(v, left, (left+right) / <span class="number">2</span>);</span><br><span class="line">    last = left;</span><br><span class="line">    <span class="keyword">for</span>(i = left+<span class="number">1</span>; i &lt; = right; i++)</span><br><span class="line">        <span class="keyword">if</span>(*comp)(v[i], v[left]) &lt; <span class="number">0</span>)</span><br><span class="line">            swap(v, ++last, i);</span><br><span class="line">    swap(v, left, last);</span><br><span class="line">    my_sort(v, left, last<span class="number">-1</span>, comp);</span><br><span class="line">    my_sort(v, last+<span class="number">1</span>, right, comp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag"># C语言</a>
+          
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/12/23/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-3-%E5%87%BD%E6%95%B0/" rel="next" title="C程序设计语言_3_函数">
+                <i class="fa fa-chevron-left"></i> C程序设计语言_3_函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-4"><span class="nav-text">C程序设计语言_4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E%E5%9C%B0%E5%9D%80"><span class="nav-text">指针与地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="nav-text">指针与函数参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-text">练习：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E%E6%95%B0%E7%BB%84"><span class="nav-text">指针与数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="nav-text">地址算术运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E6%8C%87%E9%92%88%E4%B8%8E%E5%87%BD%E6%95%B0"><span class="nav-text">字符指针与函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A-1"><span class="nav-text">练习：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84%E4%BB%A5%E5%8F%8A%E6%8C%87%E5%90%91%E6%8C%87%E9%92%88%E7%9A%84%E6%8C%87%E9%92%88"><span class="nav-text">指针数组以及指向指针的指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-text">多维数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A-2"><span class="nav-text">练习：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">指针数组的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A-3"><span class="nav-text">练习：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0"><span class="nav-text">命令行参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A-4"><span class="nav-text">练习：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E5%87%BD%E6%95%B0%E7%9A%84%E6%8C%87%E9%92%88"><span class="nav-text">指向函数的指针</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c0laaaa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
