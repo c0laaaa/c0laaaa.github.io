@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C语言,学习笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="《C程序设计语言》第六章结构的阅读笔记 介绍了结构这一特性 介绍了二叉树，哈希链表两种数据结构和使用 介绍了typedef和位字段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C程序设计语言_5_结构">
+<meta property="og:url" content="https://c0laaaa.github.io/2022/01/07/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-5-%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="c0laaaa&#39;blogs">
+<meta property="og:description" content="《C程序设计语言》第六章结构的阅读笔记 介绍了结构这一特性 介绍了二叉树，哈希链表两种数据结构和使用 介绍了typedef和位字段">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/image-20220105085643736.png">
+<meta property="article:published_time" content="2022-01-07T01:04:51.000Z">
+<meta property="article:modified_time" content="2022-01-07T01:08:09.332Z">
+<meta property="article:author" content="c0laaaa">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/image-20220105085643736.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://c0laaaa.github.io/2022/01/07/C程序设计语言-5-结构/"/>
+
+
+
+
+
+  <title>C程序设计语言_5_结构 | c0laaaa'blogs</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">c0laaaa'blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">热爱生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://c0laaaa.github.io/2022/01/07/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-5-%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c0laaaa'blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C程序设计语言_5_结构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-07T09:04:51+08:00">
+                2022-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>《C程序设计语言》第六章结构的阅读笔记</li>
+<li>介绍了结构这一特性</li>
+<li>介绍了二叉树，哈希链表两种数据结构和使用</li>
+<li>介绍了typedef和位字段</li>
+</ul>
+<hr>
+<span id="more"></span>
+
+<h1 id="C程序设计语言-5"><a href="#C程序设计语言-5" class="headerlink" title="C程序设计语言_5"></a>C程序设计语言_5</h1><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><ul>
+<li>结构是一个或多个变量的集合，这些变量可能为不同类型，为了处理方便而将这些变量组织在一个名字之下。</li>
+<li>由于结构将一组相关的变量看作一个单元而不是各自独立的实体，因此有助于组织复杂的数据。</li>
+<li>结构可以拷贝，赋值，传递给函数，函数也可以返回结构类型的返回值。</li>
+</ul>
+<h3 id="结构的基本知识"><a href="#结构的基本知识" class="headerlink" title="结构的基本知识"></a>结构的基本知识</h3><p>假定我们用x与y坐标表示一个点，且x，y的坐标值都为整数。</p>
+<p>我们可以采用结构存放这两个坐标，其声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关键字struct引入结构声明。</p>
+<p>结构声明由包含在花括号内的一系列声明组成。</p>
+<p>关键字struct后面的名字是可选的，称为结构标记。</p>
+<p>结构标记用于为结构命名，在定义之后，结构标记就代表花括号内的声明，可以用它作为该声明的简写形式。</p>
+<p>结构中定义的变量称为成员。</p>
+<p>结构成员，结构标记和普通变量可以采用相同的名字，并不会冲突，因为通过上下文分析可以区分。</p>
+<p>另外，不同结构中的成员也可以采用相同的名字。</p>
+<p>struct声明定义了一种数据类型。在标志结构成员表结束的右花括号之后可以跟一个变量表，这与其他基本类型的变量声明式相同的。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span> ... &#125; x, y, z;</span><br></pre></td></tr></table></figure>
+
+<p>从语法角度来说，这种方式的声明与声明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x, y, z;</span><br></pre></td></tr></table></figure>
+
+<p>具有类似的意义。这两个声明都将x，y，z声明为指定类型的变量，并分配存储空间。</p>
+<p>如果结构声明中带有了标记，那么在以后定义结构实例时便可以使用该标记定义。</p>
+<p>例如，对于上面给出的结构声明point，语句</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">pt</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>定义了一个struct point类型的变量pt。</p>
+<p>结构的初始化可以在定义的后面使用初值表进行。初值表中同每个成员对应的初值必须是常量表达式。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">maxpt</span> =</span> &#123;<span class="number">320</span>, <span class="number">200</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>自动结构也可以通过赋值初始化，还可以通过调用返回相应类型结构的函数进行初始化。</p>
+<p>在表达式中，可以通过下列形式引用某个特定结构中的成员：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">结构名.成员</span><br></pre></td></tr></table></figure>
+
+<p>其中的结构成员运算符”.”将结构名与成员名连接起来。</p>
+<p>例如可以用下列语句打印点pt的坐标：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d,%d&quot;</span>, pt.x, pt.y);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>结构可以嵌套，我们可以用对角线上的两个点来定义矩形，相应的结构定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rect</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">pt1</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">pt2</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结构rect包含两个point类型的成员。如果按照下列方式声明screen变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rect</span> <span class="title">screen</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以用语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen.pt1.x;</span><br></pre></td></tr></table></figure>
+
+<p>引用screen的成员pt1的x坐标。</p>
+<h3 id="结构与函数"><a href="#结构与函数" class="headerlink" title="结构与函数"></a>结构与函数</h3><p>结构的合法操作只有几种：</p>
+<ul>
+<li>作为一个整体赋值和复制。</li>
+<li>通过&amp;运算符取地址</li>
+<li>访问其成员</li>
+</ul>
+<p>其中，复制和赋值包括向函数传递参数以及从函数返回值。</p>
+<p>结构之间不可以进行比较。</p>
+<p>可以用一个常量成员值列表初始化结构，也可以通过赋值进行初始化。</p>
+<p>函数makepoint，带有两个整型参数，并返回一个point类型的结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">struct point <span class="title">makepoint</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">temp</span>;</span></span><br><span class="line">	</span><br><span class="line">	temp.x = x;</span><br><span class="line">	temp.y = y;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里参数名和结构名都使用相同的名字，并不会引起同名冲突。</p>
+<p>如果传递给函数的结构很大，使用指针方式的效率通常比复制整个结构的效率要高。结构指针类似于普通变量指针。</p>
+<p>声明</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">pp</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>将pp定义为一个指向struct point类型对象的指针。如果pp指向一个point结构，那么*pp即为该结构，而 ( *pp ).x和（ *pp ).y则是结构成员。( *pp ).x中的圆括号是必须的，因为结构成员运算符”.”的优先级比” * “的优先级要高。</p>
+<p>同时，我们可以使用<code>pp -> 结构成员</code>来引用相应的结构成员。</p>
+<p>在所有运算符中，下面4个运算符的优先级最高：结构运算符”.”和”-&gt;”，用于函数调用的”()”以及用于下标的”[]”，因此，它们同操作数之间的结合也最紧密。</p>
+<p>例如，对于下面的结构声明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> len;</span><br><span class="line">	<span class="keyword">char</span> *str;</span><br><span class="line">&#125; *p;</span><br></pre></td></tr></table></figure>
+
+<p>表达式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">++p-&gt;len</span><br></pre></td></tr></table></figure>
+
+<p>将增加len的值，而不是增加p的值，这是因为，其中隐含括号关系是++(p-&gt;len)。可以使用括号改变结合次序。</p>
+<p>同样的道理，*p-&gt;str读取的是指针str所指向的对象的值;； *p-&gt;str++将先读取指针str所指向的值，然后将str加1。</p>
+<h3 id="结构数组"><a href="#结构数组" class="headerlink" title="结构数组"></a>结构数组</h3><p>考虑编写这样一个程序，它用来统计输入中各个C语言关键字出现的次数。</p>
+<p>我们需要用<strong>一个字符串数组存放关键名</strong>，一个<strong>整型数组存放相应关键字的出现次数。</strong></p>
+<p>一种实现方法是，使用两个独立的数组keyword和keycount分别存放它们，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *keyword[NKEYS];</span><br><span class="line"><span class="keyword">int</span> keycount[NKEYS];</span><br></pre></td></tr></table></figure>
+
+<p>我们注意到这两个数组的大小相同，考虑到该特点，可以采用另一种不同的组织方式，也就是结构数组。每个关键字项包括一对变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *word;</span><br><span class="line"><span class="keyword">int</span> <span class="built_in">cout</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这样的多个变量对共同构成了一个数组。</p>
+<p>我们来看下面的声明：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">key</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> *word;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line">&#125; keytab[NKEYS];</span><br></pre></td></tr></table></figure>
+
+<p>它声明了一个结构类型key，并定义了该类型的结构数组keytab，同时为其分配存储空间。</p>
+<p>因为keytab结构包含了一个固定的名字集合，所以，最好将它声明为外部变量，这样只需要初始化一次，所有的地方都可以使用。</p>
+<p>初始化方法如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">key</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> *word;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line">&#125; keytab[] = &#123;</span><br><span class="line">	<span class="string">&quot;auto&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;break&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;case&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;char&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;continue&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;default&quot;</span>, <span class="number">0</span>,</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">	<span class="string">&quot;unsigned&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;void&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;volatile&quot;</span>, <span class="number">0</span>,</span><br><span class="line">	<span class="string">&quot;while&quot;</span>, <span class="number">0</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>与结构成员相对应，初值也要按照成对的方式列出。</p>
+<p>更精确的方式是，将每一行的初值都括在花括号中，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;auto&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="string">&quot;break&quot;</span>，<span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="string">&quot;case&quot;</span>, <span class="number">0</span>&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>但是，如果初值是简单变量或字符串，并且其中的任何值都不为空，则内层的花括号可以省略。</p>
+<p>通常情况下，如果初值存在并且方括号[]中没有数值，编译程序将计算数组keytab中的项数。</p>
+<p>具体程序如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXWORD 100</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">key</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *word;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">&#125; keytab[] = &#123;</span><br><span class="line">        <span class="string">&quot;char&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;for&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;if&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;int&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;while&quot;</span>, <span class="number">0</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NKEYS (sizeof keytab / sizeof(struct key))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getword</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">char</span> *, struct key *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">char</span> word[MAXWORD];</span><br><span class="line"></span><br><span class="line">   	<span class="comment">// 不断地从输入流中读取关键字</span></span><br><span class="line">    <span class="comment">// getword每次返回一个字符，然后将关键字读入到word数组中</span></span><br><span class="line">    <span class="keyword">while</span>(getword(word, MAXWORD) != EOF)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">isalpha</span>(word[<span class="number">0</span>]))</span><br><span class="line">            <span class="keyword">if</span>((n = binsearch(word, keytab, NKEYS)) &gt;= <span class="number">0</span>)</span><br><span class="line">                keytab[n].count++;</span><br><span class="line">    <span class="keyword">for</span>(n = <span class="number">0</span>; n &lt; NKEYS; n++)</span><br><span class="line">        <span class="keyword">if</span>(keytab[n].count &gt; <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%4d %s\n&quot;</span>, keytab[n].count, keytab[n].word);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">char</span> *word, struct key tab[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cond;</span><br><span class="line">    <span class="keyword">int</span> low, high, mid;</span><br><span class="line"></span><br><span class="line">    low = <span class="number">0</span>;</span><br><span class="line">    high = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(low &lt;= high)&#123;</span><br><span class="line">        mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>((cond = <span class="built_in">strcmp</span>(word, tab[mid].word)) &lt; <span class="number">0</span>)</span><br><span class="line">            high = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(cond &gt; <span class="number">0</span>)</span><br><span class="line">            low = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getword</span><span class="params">(<span class="keyword">char</span> *word, <span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, getch(<span class="keyword">void</span>);</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line">    <span class="keyword">char</span> *w = word;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isspace</span>(c = getch()))</span><br><span class="line">        ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(c != EOF)</span><br><span class="line">        *w++ = c;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">isalpha</span>(c))&#123;</span><br><span class="line">        *w = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(; --lim &gt; <span class="number">0</span>; w++)</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">isalnum</span>(*w = getch()))&#123;</span><br><span class="line">            ungetch(*w);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    *w = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> word[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buff[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> bp = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getch</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(bp &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> buff[--bp];</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> getchar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(bp &lt; <span class="number">10</span>)</span><br><span class="line">        buff[bp] = c;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;buff full\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指向结构的指针"><a href="#指向结构的指针" class="headerlink" title="指向结构的指针"></a>指向结构的指针</h3><p>重新编写关键字统计程序，采用指针，而不使用数组下标：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXWORD 100</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">key</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *word;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">&#125; keytab[] = &#123;</span><br><span class="line">        <span class="string">&quot;char&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;for&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;if&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;int&quot;</span>, <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;while&quot;</span>, <span class="number">0</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NKEYS (sizeof keytab / sizeof(struct key))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getword</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function">struct key *<span class="title">binsearch</span><span class="params">(<span class="keyword">char</span> *, struct key *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> word[MAXWORD];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">key</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(getword(word, MAXWORD) != EOF)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">isalpha</span>(word[<span class="number">0</span>]))</span><br><span class="line">            <span class="keyword">if</span>((p = binsearch(word, keytab, NKEYS)) != <span class="literal">NULL</span>)</span><br><span class="line">                p-&gt;count++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(p = keytab; p &lt; keytab + NKEYS; p++)</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;count &gt; <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%4d, %s&quot;</span>, p-&gt;count, p-&gt;word);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">struct key *<span class="title">binsearch</span><span class="params">(<span class="keyword">char</span> *word, struct key tab[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cond;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">key</span> *<span class="title">high</span> =</span> &amp;tab[n<span class="number">-1</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">key</span> *<span class="title">low</span> =</span> &amp;tab[<span class="number">0</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">key</span> *<span class="title">middle</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(low &lt;= high)&#123;</span><br><span class="line">        middle = low + (high - low) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>((cond = <span class="built_in">strcmp</span>(word, middle-&gt;word)) &lt; <span class="number">0</span>)</span><br><span class="line">            high = middle - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(cond &gt; <span class="number">0</span>)</span><br><span class="line">            low = middle + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getword</span><span class="params">(<span class="keyword">char</span> *word, <span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, getch(<span class="keyword">void</span>);</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line">    <span class="keyword">char</span> *w = word;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isspace</span>(c = getch()))</span><br><span class="line">        ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(c != EOF)</span><br><span class="line">        *w++ = c;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">isalpha</span>(c))&#123;</span><br><span class="line">        *w = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(; --lim &gt; <span class="number">0</span>; w++)</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">isalnum</span>(*w = getch()))&#123;</span><br><span class="line">            ungetch(*w);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    *w = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> word[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buff[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> bp = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getch</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(bp &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> buff[--bp];</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> getchar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(bp &lt; <span class="number">10</span>)</span><br><span class="line">        buff[bp] = c;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;buff full\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自引用结构（二叉树）"><a href="#自引用结构（二叉树）" class="headerlink" title="自引用结构（二叉树）"></a>自引用结构（二叉树）</h3><p>假定我们需要处理一个更一般化的问题：统计输入中所有单词的出现次数。</p>
+<p>因为预先不知道出现的单词列表，所以无法方便地排序，并使用折半查找，</p>
+<p>也不能分别对输入中的每个单词都执行一次线性查找，看它在前面是否已经出现，这样做，程序的执行将花费太长的时间。</p>
+<p>那我们该如何组织这些数据，才能有效地处理一系列任意的单词呢？</p>
+<p>一种解决办法是，在读取输入中任意单词的同时，就将它放到正确的位置上，从而始终保证所有的单词都是顺序排列的。</p>
+<p>这里我们可以每次读取了单词就将它放在一个线性数组中，每次放置的时候，移动这个位置之后的所有单词，但是，这样也会花费很长的时间。</p>
+<p>所以我们使用一种新的数据结构二叉树存放单词，方便每次将单词放在正确位置上的时候，程序的开销很小。</p>
+<p>在二叉树中，每个不同的单词有一个节点，每个节点包含：</p>
+<ul>
+<li>一个指向单词文本的指针</li>
+<li>单词出现的数目</li>
+<li>一个指向左子节点的指针</li>
+<li>一个指向右子节点的指针</li>
+</ul>
+<p>没有一个节点有超过两个子节点，但是可能只有一个或没有节点。</p>
+<p>这些节点需要保证所有节点的左子节点只包含字典顺序比自己包含的单词小的单词，右子节点只包含字典顺序比自己包含的单词大的单词。</p>
+<p>比如下面是句子</p>
+<p>“now is the time for all good men to come to the aid of their party”</p>
+<p>的二叉树，通过插入遇到的每个单词建立。</p>
+<p><img src="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/image-20220105085643736.png" alt="image-20220105085643736"></p>
+<p>为了发现一个新读取的单词是否已经在树结构里面了，从根节点开始，比较新读取的单词和存取在节点中的单词，如果它们比配，就已经在了，如果新读取的单词比已经存储的单词小，继续在左边子树中搜索，否则在右边子树中搜索。如果没有在给定方向的子树中找到，那么说明这个单词不在树中，并且最后一个比较的空节点就是该新单词应该在树中添加的位置。并且这个过程是递归的，因为从任意节点出发的查找都要按照同样的方式查找它的要给子树。</p>
+<p>下面我们来看树中每个节点的描述，最方便的表示方法是表示为4个成员的结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tnode</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> *word;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">right</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>下面是主程序的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tnode</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *word;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">left</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">right</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXWORD 15</span></span><br><span class="line"><span class="function">struct tnode *<span class="title">addtree</span><span class="params">(struct tnode *, <span class="keyword">char</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">treeprint</span><span class="params">(struct tnode *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getword</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">root</span>;</span></span><br><span class="line">    <span class="keyword">char</span> word[MAXWORD];</span><br><span class="line"></span><br><span class="line">    root = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">while</span>(getword(word, MAXWORD) != EOF)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">isalpha</span>(word[<span class="number">0</span>]))</span><br><span class="line">            root = addtree(root, word);</span><br><span class="line">    treeprint(root);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">struct tnode *<span class="title">talloc</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">my_strdup</span><span class="params">(<span class="keyword">char</span> *)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">struct tnode *<span class="title">addtree</span><span class="params">(struct tnode *p, <span class="keyword">char</span> *w)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(p == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        p = talloc();</span><br><span class="line">        p-&gt;word = my_strdup(w);</span><br><span class="line">        p-&gt;count = <span class="number">1</span>;</span><br><span class="line">        p-&gt;left = p-&gt;right = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>((cond = <span class="built_in">strcmp</span>(w, p-&gt;word)) == <span class="number">0</span>)</span><br><span class="line">        p-&gt;count++;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cond &lt; <span class="number">0</span>)</span><br><span class="line">        p-&gt;left = addtree(p-&gt;left, w);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        p-&gt;right = addtree(p-&gt;right, w);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">treeprint</span><span class="params">(struct tnode *p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        treeprint(p-&gt;left);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%4d %s\n&quot;</span>, p-&gt;count, p-&gt;word);</span><br><span class="line">        treeprint(p-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">struct tnode *<span class="title">talloc</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (struct tnode *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct tnode));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">my_strdup</span><span class="params">(<span class="keyword">char</span> *s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *p;</span><br><span class="line"></span><br><span class="line">    p = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="built_in">strlen</span>(s) + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(p != <span class="literal">NULL</span>)</span><br><span class="line">        <span class="built_in">strcpy</span>(p, s);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getword</span><span class="params">(<span class="keyword">char</span> *word, <span class="keyword">int</span> lim)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c, getch(<span class="keyword">void</span>);</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line">    <span class="keyword">char</span> *w = word;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isspace</span>(c = getch()))</span><br><span class="line">        ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(c != EOF)</span><br><span class="line">        *w++ = c;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">isalpha</span>(c))&#123;</span><br><span class="line">        *w = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(; --lim &gt; <span class="number">0</span>; w++)</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">isalnum</span>(*w = getch()))&#123;</span><br><span class="line">            ungetch(*w);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    *w = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> word[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buff[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> bp = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getch</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(bp &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> buff[--bp];</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> getchar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ungetch</span><span class="params">(<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(bp &lt; <span class="number">10</span>)</span><br><span class="line">        buff[bp] = c;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;buff full\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>创造树的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tnode</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> *word;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">pleft</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">pright</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">struct tnode *<span class="title">addtree</span><span class="params">(struct tnode *p, <span class="keyword">char</span> *word)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cond;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(p == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        p = talloc();</span><br><span class="line">        p-&gt;word = strdup(word);</span><br><span class="line">        p-&gt;count = <span class="number">1</span>;</span><br><span class="line">        p-&gt;pleft = <span class="literal">NULL</span>;</span><br><span class="line">        p-&gt;pright = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>((cond = <span class="built_in">strcmp</span>(p-&gt;word, word)) == <span class="number">0</span>)</span><br><span class="line">        p-&gt;count++;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cond &gt; <span class="number">0</span>)</span><br><span class="line">        p-&gt;pleft = addtree(p, word);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        p-&gt;pright = addtree(p, word);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">struct tnode *<span class="title">talloc</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (struct tnode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct tnode));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印树的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">treeprint</span><span class="params">(struct tnode *p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p != <span class="literal">NULL</span>)&#123;</span><br><span class="line">		treeprint(p-&gt;left);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%4d %s\n&quot;</span>, p-&gt;count, p-&gt;word);</span><br><span class="line">		treeprint(p-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="表查找-哈希表"><a href="#表查找-哈希表" class="headerlink" title="表查找(哈希表)"></a>表查找(哈希表)</h3><p>以下两个函数用来处理名字和替换文本。</p>
+<p>install(s, t)函数将名字s和替换文本t记录到某个表中，其中s和t是字符串。</p>
+<p>lookup(s,t)函数在表中查找到s，若找到，则返回指向该处的指针。</p>
+<p>散列查找方法：</p>
+<p>将输入的名字转换为一个小的非负整数，该整数随后将作为一个指针数组的下标。</p>
+<p>数组的每个元素都指向某个链表的表头，链表中的各个块用于描述具有该散列值的名字。</p>
+<p>如果没有名字散列到该值，则数组元素的值为NULL。</p>
+<p>链表中的每个块都是一个结构，它包含一个指向名字的指针，一个指向替换文本的指针以及一个指向链接后续块的指针。如果指向链表后续块的指针为NULL，则表示链表结束。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlist</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">nlist</span> *<span class="title">next</span>;</span></span><br><span class="line">    <span class="keyword">char</span> *name;</span><br><span class="line">    <span class="keyword">char</span> *defn;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 哈希散列表</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HASHSIZE 101</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">nlist</span> *<span class="title">hashtab</span>[<span class="title">HASHSIZE</span>];</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符串的值转换为对应的哈希值</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">hash</span><span class="params">(<span class="keyword">char</span> *s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> hashval;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(hashval = <span class="number">0</span>; *s != <span class="string">&#x27;\0&#x27;</span>; s++)</span><br><span class="line">        hashval = *s + <span class="number">31</span> * hashval;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>  hashval % HASHSIZE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获得一个字符串，然后再哈希散列表中找到对应的链表头</span></span><br><span class="line"><span class="comment">// 然后找到对应的链表元素</span></span><br><span class="line"><span class="function">struct nlist *<span class="title">lookup</span><span class="params">(<span class="keyword">char</span> *s)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">nlist</span> *<span class="title">np</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(np = hashtab[hash(s)]; np != <span class="literal">NULL</span>; np = np-&gt;next)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(s, np-&gt;name) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> np;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="comment">// 获得一个字符串和对应转换值</span></span><br><span class="line"><span class="comment">// 如果已经被定义，就释放原来的转换值，写入新的值</span></span><br><span class="line"><span class="comment">// 如果没有定义，那么就新建一个链表节点，将这个节点放入链表</span></span><br><span class="line"><span class="comment">// hashtab指向的是链表的头部，但每次也是在链表的头部添加节点</span></span><br><span class="line"><span class="function">struct nlist *<span class="title">install</span><span class="params">(<span class="keyword">char</span> *name, <span class="keyword">char</span> *defn)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">nlist</span> *<span class="title">np</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> hashval;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((np = lookup(name)) == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        np = (struct nlist *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(*np));</span><br><span class="line">        <span class="keyword">if</span>(np == <span class="literal">NULL</span> || (np-&gt;name = strdup(name)) == <span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        hashval = hash(name);</span><br><span class="line">        np-&gt;next = hashtab[hashval];</span><br><span class="line">        hashtab[hashval] = np;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">free</span>((<span class="keyword">void</span> *)np-&gt;defn);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((np-&gt;defn = strdup(defn)) == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> np;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型定义-typedef"><a href="#类型定义-typedef" class="headerlink" title="类型定义(typedef)"></a>类型定义(typedef)</h3><p>C语言提供了typedef操作符，用来创造新的数据类型名字。</p>
+<p>例如，下面的定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Length;</span><br></pre></td></tr></table></figure>
+
+<p>将Length定义为与int具有同等意义的名字。</p>
+<p>类型Length可用于类型声明，类型转换等，它和类型int完全相同。</p>
+<p>类似地，声明</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span>* String;</span><br></pre></td></tr></table></figure>
+
+<p>将String定义为与char *或字符指针同义，此后，便可以在类型声明和类型转换中使用String，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String p, lineptr[MAXLINES], alloc(<span class="keyword">int</span>);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strcmp</span><span class="params">(String, String)</span></span>;</span><br><span class="line">p = (String) <span class="built_in">malloc</span>(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意，typedef中声明的类型在变量名的位置出现，而不是紧接在关键字typedef之后。</p>
+<p>我们一般用大写字母作为typedef定义的类型名的首字母，以示区别。</p>
+<p>更复杂的例子是，用typedef定义本章前面介绍的树节点。如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">Treeptr</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> *word;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">tnode</span> *<span class="title">right</span>;</span></span><br><span class="line">&#125; Treenode;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里需要特别说明，typedef并没有创建一个新的类型，它只是为某个已存在的类型增加一个新的名称。</p>
+<p>typedef也没有增加任何新的语义，通过这种方式声明的变量与通过普通声明方式声明的变量具有完全相同的属性。</p>
+<p>实际上，typedef类似于#define语句，但是由于typedef是由编译器解释的，因此它的文本替换功能要超过预处理器的能力。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(*PFI)</span><span class="params">(<span class="keyword">char</span> *, <span class="keyword">char</span> *)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>该语句定义了类型PFI是一个”指向函数的指针，该函数具有两个char *类型的参数，返回值类型为int”，它可以用于某些上下文中，例如，可以用在第5章的排序程序中，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PFI <span class="built_in">strcmp</span>, numcmp;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>除了表达方式更简洁之外，使用typedef还有两个另外重要原因。</p>
+<p>首先，它可以使程序参数化，以提高程序的可移植性。如果typedef声明的数据类型同机器有关，那么，当程序移植到其它机器上时，只需要改变typedef类型定义就可以了。</p>
+<p>然后，它可以为程序提供更好的说明性。</p>
+<h3 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h3><p>联合是可以保存不同类型和长度的对象的变量，编译器负责跟踪对象的长度和对齐要求。联合提供了一种方式，以在单块存储区中管理不同类型的数据，而不需要在程序中嵌入任何同机器有关的信息。</p>
+<p>我们来看一个例子。假设一个常量可能是int，float，或字符指针。特定类型的常量必须保存在合适类型的变量中，然而，如果该常量的不同类型占据相同大小的存储空间，且保存在同一个地方的话，表管理将最方便。</p>
+<p>这就是联合的目的，一个变量可以合法地保存多种数据类型中任何一种类型的对象。其语法基于结构，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">u_tag</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> ival;</span><br><span class="line">	<span class="keyword">float</span> fval;</span><br><span class="line">	<span class="keyword">char</span> *sval;</span><br><span class="line">&#125; u;</span><br></pre></td></tr></table></figure>
+
+<p>变量u必须足够大，以保存这3中类型中最大的一种，具体长度同具体的实现有关。这些类型中的任何一种类型的对象都可以赋值给u，且可使用在随后的表达式中。</p>
+<p>可以通过下列语法访问联合中的成员：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">联合名.成员</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">联合指针.成员</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果用变量utype跟踪保存在u中的当前数据类型，则可以像下面这样使用联合：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(utype == INT)</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, u.ival);</span><br><span class="line"><span class="keyword">if</span>(utype == FLOAT)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%f\n&quot;</span>, u.fval);</span><br><span class="line"><span class="keyword">if</span>(utype == STRING)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, u.sval);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;bad type %d in utype\n&quot;</span>, utype);</span><br></pre></td></tr></table></figure>
+
+<p>联合可以使用在结构和数组中，同样的也可以在联合中包含结构和数组。</p>
+<p>实际上，联合就是一个结构，它的所有成员相对于基地址的偏移量都为0，此结构空间要大到足够容纳最宽的成员，并且，其对齐方式要适合于联合中所有类型的成员。</p>
+<p>联合只能用其第一个成员类型的值进行初始化。</p>
+<h3 id="位字段"><a href="#位字段" class="headerlink" title="位字段"></a>位字段</h3><p>存储空间比较宝贵的情况下，有可能需要将多个对象保存在要给机器字中。一种常用的方法是，使用类似于编译器符号表的单个二进制位标志集合。</p>
+<p>通常采用的方法是，定义一个与相关位的位置对应的“屏蔽码”集合，如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> KEYWORD 01</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXTRENAL 02</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STATIC 04</span></span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span>&#123;</span>KEYWORD = <span class="number">01</span>, EXTERNAL = <span class="number">02</span>, STATIC = <span class="number">04</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这些数字是2的幂，这样访问这些位就可以使用移位运算，屏蔽运算，以及补码运算进行简单的位操作。</p>
+<p>下列语句在程序中经常出现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flags |= EXTERNAL | STATIC;</span><br></pre></td></tr></table></figure>
+
+<p>该语句将flags中的EXTERNAL和STATIC位置都置为1，而下列语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag &amp;= ~(EXTERNAL | STATIC);</span><br></pre></td></tr></table></figure>
+
+<p>则将它们置为0。</p>
+<p>并且，当这两位都为0时，下列表达式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((flag &amp; (EXTERNAL | STATIC)) == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>的值为真。</p>
+<p>C语言提供了另外一种操纵位字段的方法，就是直接定义和方位一个字中的位字段，而不需要使用逻辑运算符。</p>
+<p>例如上述符号表中的多个#define语句可用下列3个字段的定义来代替：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> is_keyword : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> is_extern : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> is_static : <span class="number">1</span>;</span><br><span class="line">&#125; flags;</span><br></pre></td></tr></table></figure>
+
+<p>这里定义了一个变量flags，它包含3个一位的字段，冒号后的数字表示字段的宽度（用二进制位数表示）。</p>
+<p>字段被声明为unsigned int类型，以保证它们是无符号变量。</p>
+<p>单个字段的引用方式与其它成员结构相同，例如：flags.is_keyword，flags.is_extern等等。</p>
+<p>字段的作用与小整数相似。同其它整数一样，字段可以出现在算术表达式中，因此，上面的例子可用更自然的方式表达为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flag.is_extern = flag.is_static = <span class="number">1</span>;</span><br><span class="line">flag.is_extern = flag.is_static = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span>(flag.is_extern == <span class="number">0</span> &amp;&amp; flag.is_static == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag"># C语言</a>
+          
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/01/02/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-4-%E6%8C%87%E9%92%88/" rel="next" title="C程序设计语言_4_指针">
+                <i class="fa fa-chevron-left"></i> C程序设计语言_4_指针
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-5"><span class="nav-text">C程序设计语言_5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84"><span class="nav-text">结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="nav-text">结构的基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%B8%8E%E5%87%BD%E6%95%B0"><span class="nav-text">结构与函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E6%95%B0%E7%BB%84"><span class="nav-text">结构数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E7%BB%93%E6%9E%84%E7%9A%84%E6%8C%87%E9%92%88"><span class="nav-text">指向结构的指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%BC%95%E7%94%A8%E7%BB%93%E6%9E%84%EF%BC%88%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%89"><span class="nav-text">自引用结构（二叉树）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E6%9F%A5%E6%89%BE-%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-text">表查找(哈希表)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89-typedef"><span class="nav-text">类型定义(typedef)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88"><span class="nav-text">联合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E5%AD%97%E6%AE%B5"><span class="nav-text">位字段</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c0laaaa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
