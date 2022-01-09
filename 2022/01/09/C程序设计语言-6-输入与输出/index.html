@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C语言,学习笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="《C程序设计语言》第七章输入与输出的阅读笔记 printf函数和scanf函数的参数转换表 文件输入输出 字符串相关函数，存储管理函数，命令执行函数等等库函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C程序设计语言_6_输入与输出">
+<meta property="og:url" content="https://c0laaaa.github.io/2022/01/09/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-6-%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA/index.html">
+<meta property="og:site_name" content="c0laaaa&#39;blogs">
+<meta property="og:description" content="《C程序设计语言》第七章输入与输出的阅读笔记 printf函数和scanf函数的参数转换表 文件输入输出 字符串相关函数，存储管理函数，命令执行函数等等库函数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-09T13:01:06.000Z">
+<meta property="article:modified_time" content="2022-01-09T13:19:52.308Z">
+<meta property="article:author" content="c0laaaa">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://c0laaaa.github.io/2022/01/09/C程序设计语言-6-输入与输出/"/>
+
+
+
+
+
+  <title>C程序设计语言_6_输入与输出 | c0laaaa'blogs</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">c0laaaa'blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">热爱生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://c0laaaa.github.io/2022/01/09/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-6-%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c0laaaa'blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C程序设计语言_6_输入与输出</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-09T21:01:06+08:00">
+                2022-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>《C程序设计语言》第七章输入与输出的阅读笔记</li>
+<li>printf函数和scanf函数的参数转换表</li>
+<li>文件输入输出</li>
+<li>字符串相关函数，存储管理函数，命令执行函数等等库函数</li>
+</ul>
+<hr>
+<span id="more"></span>
+
+<h1 id="C程序设计语言-6"><a href="#C程序设计语言-6" class="headerlink" title="C程序设计语言_6"></a>C程序设计语言_6</h1><h2 id="输入与输出"><a href="#输入与输出" class="headerlink" title="输入与输出"></a>输入与输出</h2><h3 id="标准输入-输出"><a href="#标准输入-输出" class="headerlink" title="标准输入/输出"></a>标准输入/输出</h3><p>最简单的输入机制是使用getchar函数从标准输入中一次读取一个字符：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getchar</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>getchar函数在每次被调用时返回下一个输入字符。若遇到文件结尾，则返回EOF。</p>
+<p>符号常量EOF在头文件&lt;stdio.h&gt;中定义，其值一般为-1，但程序中应该使用EOF来测试文件是否结束，这样才能保证程序同EOF的特定值无关。</p>
+<p>在许多环境中，可以使用符号&lt;来实现输入重定向，它将键盘输入替换为文本输入：</p>
+<p>如果程序prog中使用了函数getchar，则命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prog &lt; infile</span><br></pre></td></tr></table></figure>
+
+<p>使得程序prog从输入文件infile中读取字符。实际上，程序prog本身并不在意输入方式的改变，并且字符串”&lt; infile”也并不包含在argv的命令行参数中。</p>
+<p>同样的，输入可以通过管道机制来自于另一个程序，这种输入切换也是不可见的。</p>
+<p>比如在某些系统中，下列命令行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">otherprog | prog</span><br></pre></td></tr></table></figure>
+
+<p>将运行两个程序otherprog和prog，并将程序otherprog的标准输出通过管道重定向到程序prog的标准输入上。</p>
+<p>最简单的输出机制是使用putchar函数，一次将一个字符送到标准输出上。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">putchar</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在默认情况下，标准输出为屏幕显示。</p>
+<p>如果没有发生错误，则函数putchar将返回输出的字符；如果发生了错误，则返回EOF。</p>
+<p>同样的，可以使用符号&gt;来重定向输出到某个文件中：</p>
+<p>例如，如果程序prog调用了函数putchar，那么命令行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">porg &gt; outfile</span><br></pre></td></tr></table></figure>
+
+<p>将把程序prog的输出从标准输出设备重定向到文件中。</p>
+<p>如果系统支持管道，那么命令行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prog | anotherprog</span><br></pre></td></tr></table></figure>
+
+<p>将把程序prog的输出从标准输出通过管道定向到程序anotherprog的标准输入中。</p>
+<p>使用输入/输出库函数的每个源程序文件必须在引用这些函数之间包含下列语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>当文件名用一对尖括号&lt;和&gt;括起来的时候，预处理器将在由具体实现定义有关位置中查找指定的文件。（例如，在UNIX系统中，文件一般放在目录/usr/include中）。</p>
+<h3 id="格式化输出-–-printf函数"><a href="#格式化输出-–-printf函数" class="headerlink" title="格式化输出 – printf函数"></a>格式化输出 – printf函数</h3><p>输出函数printf将内部数值转换为字符的形式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printf</span><span class="params">(<span class="keyword">char</span> *format, arg1, arg2, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>函数printf在输出格式format的控制下，将其参数进行转换与格式化，并在标准输出设备上打印出来。它的返回值为打印的字符数。</p>
+<p>格式字符串包含两种类型的对象：普通字符和转换说明。</p>
+<p>在输出时，普通字符将原样不动地复制到输出流中，而转换说明并不直接输出到输出流，而是用于控制printf中参数的转换和打印，每个转换说明都由一个百分号字符(%)开始，并以一个转换字符结束。在字符%和转换字符中间可能一次包含下列组成部分：</p>
+<ul>
+<li>负号， 用于指定被转换的参数按照左对齐的形式输出。</li>
+<li>数字，用于指定最小字段宽度。转换后的参数将打印不小于最小字段宽度的字段。如果有必要，字段左边（如果使用左对齐的方式，则为右边）多余的字符位置用空格填充以保证最小字段宽度。</li>
+<li>小数点，用于将字段宽度和精度分开。</li>
+<li>数字，用于指定精度，就是指定字符串中要打印的最大字符数，浮点数小数点后的位数，整型最小输出的数字数目。</li>
+<li>字母h或l，字母h表示不讲整数作为short类型打印，字母l表示将整数作为long类型打印。</li>
+</ul>
+<p>下面列出了所有的转换字符</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>参数类型，输出形式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d, i</td>
+<td>int类型，十进制数</td>
+</tr>
+<tr>
+<td>o</td>
+<td>int类型，无符号八进制数（没有前导0）</td>
+</tr>
+<tr>
+<td>x, X</td>
+<td>int类型，无符号十六进制数（没有前导0x或0X）,10~15分别abcdef或ABCDEF表示</td>
+</tr>
+<tr>
+<td>u</td>
+<td>int类型，无符号十进制数</td>
+</tr>
+<tr>
+<td>c</td>
+<td>int类型，单个字符</td>
+</tr>
+<tr>
+<td>s</td>
+<td>char *类型，顺序打印字符串中的字符，直到遇到’\0’或已打印了由精度指定的字符数为止</td>
+</tr>
+<tr>
+<td>f</td>
+<td>double类型，十进制小数[-]m.dddddd，其中d的个数由精度指定（默认值为6）</td>
+</tr>
+<tr>
+<td>e, E</td>
+<td>double类型，[-]m.dddddd e+/-xx或[-]m.dddddd  E+/-xx，其中d的个数由精度指定（默认值为6）</td>
+</tr>
+<tr>
+<td>g, G</td>
+<td>double类型，如果指数小于-4或大于精度，则用%e或%E格式输出，否则用%f格式输出。尾部的0和小数点不打印</td>
+</tr>
+<tr>
+<td>p</td>
+<td>void *类型：指针（取决于具体实现）</td>
+</tr>
+<tr>
+<td>%</td>
+<td>不转换参数，打印一个百分号%</td>
+</tr>
+</tbody></table>
+<p>在转换说明中，宽度或精度可以用星号*表示，这时，宽度或精度的值通过转换下一参数（必须为int类型）来计算。例如，为了从字符串s中打印最多max个字符，可以使用下列语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.*s&quot;</span>, max, s);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>下表说明了在打印字符串”hello, world”(12个字符)时，根据不同的转换说明产生的不同结果。</p>
+<p>我们在每个字段的左边和右边加上冒号，这样可以清晰地表示出字段的宽度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">:%s:		:hello, world:</span><br><span class="line">:%10s:		:hello, world:</span><br><span class="line">:%.10s:		:hello, wor:</span><br><span class="line">:%-10s:		:hello, world:</span><br><span class="line">:%.15s:		:hello, world:</span><br><span class="line">:%-15s:		:hello, world   :</span><br><span class="line">:%15.10s:	:     hello, wor:</span><br><span class="line">:%-15.10s:	:hello, wor     :</span><br></pre></td></tr></table></figure>
+
+
+
+<p>函数sprintf执行的转换和函数printf相同，但它将输出保存到一个字符串中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sprintf</span><span class="params">(<span class="keyword">char</span> *<span class="built_in">string</span>, <span class="keyword">char</span> *format, arg1, arg2, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="变长参数表"><a href="#变长参数表" class="headerlink" title="变长参数表"></a>变长参数表</h3><p>函数printf的正确声明形式为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printf</span><span class="params">(<span class="keyword">char</span> *fmt, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>其中省略号表示参数表中的参数的数量和类型是可变的。</p>
+<p>省略号只能出现在参数表的尾部。</p>
+<p>下面我们编写一个简单版本的printf，minprintf函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">minprintf</span><span class="params">(<span class="keyword">char</span> *fmt, ...)</span></span>&#123;</span><br><span class="line">    va_list ap;     <span class="comment">/* 参数指针，依次引用各参数 */</span></span><br><span class="line">    <span class="keyword">char</span> *p, *val;</span><br><span class="line">    <span class="keyword">int</span> ival;</span><br><span class="line">    <span class="keyword">double</span> dval;</span><br><span class="line"></span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    <span class="keyword">for</span>(p = fmt; *p; p++)&#123;</span><br><span class="line">        <span class="comment">// 打印普通字符</span></span><br><span class="line">        <span class="keyword">if</span>(*p != <span class="string">&#x27;%&#x27;</span>)&#123;</span><br><span class="line">            <span class="built_in">putchar</span>(*p);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 指向%后面的字符</span></span><br><span class="line">        <span class="keyword">switch</span>(*++p)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line">                <span class="comment">// va_arg函数接收参数指针，和参数类型</span></span><br><span class="line">                <span class="comment">// 返回参数值</span></span><br><span class="line">                <span class="comment">// 将ap指向下一个参数</span></span><br><span class="line">                ival = va_arg(ap, <span class="keyword">int</span>);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, ival);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;f&#x27;</span>:</span><br><span class="line">                dval = va_arg(ap, <span class="keyword">double</span>);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%f&quot;</span>, dval);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:</span><br><span class="line">                <span class="comment">// 返回一个指向字符串的指针</span></span><br><span class="line">                <span class="keyword">for</span>(sval = va_arg(ap, <span class="keyword">char</span> *); *sval++; sval++)</span><br><span class="line">                    <span class="built_in">putchar</span>(*sval);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="built_in">putchar</span>(*p);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    va_end(ap);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="格式化输入-–-scanf函数"><a href="#格式化输入-–-scanf函数" class="headerlink" title="格式化输入 – scanf函数"></a>格式化输入 – scanf函数</h3><p>输入函数scanf对应于输出函数printf，它在与后者相反的方向上提供同样的转换功能。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">scanf</span><span class="params">(<span class="keyword">char</span> *format, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>scanf函数从标准输入中读取字符序列，按照format中的格式说明对字符序列进行解释，并把结果保存到其余参数中。</p>
+<p>可变参数列表中的参数必须是指针，用于指定经过格式转换后的相应输入保存的位置。</p>
+<p>当scanf函数扫描完其格式串，或者碰到某些输入无法与格式控制说明匹配的情况时，该函数将终止，同时，成功匹配并赋值的输入项的个数将作为函数值返回，所以，该函数的返回值可以用来确定已匹配的输入项的个数。</p>
+<p>如果到达文件结尾，该函数将返回EOF。</p>
+<p>下一次调用scanf函数将从上一次转换的最后一个字符的下一个字符开始继续搜索。</p>
+<p>另外还有一个输入函数sscnaf，它用于从一个字符串中读取字符序列：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sscanf</span><span class="params">(<span class="keyword">char</span> *<span class="built_in">string</span>, <span class="keyword">char</span> *format, arg1, arg2, ...)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>它按照格式参数format中规定的格式扫描字符串string，并把结果分别保存到arg1，arg2，…这些参数中。这些参数必须是指针。</p>
+<p>格式串通常都包含转换说明，用于控制输入的转换。格式串可能包含下列部分：</p>
+<ul>
+<li>空格或制表符，在处理过程中将被忽略。</li>
+<li>普通字符（不包含%），用于匹配输入流中下一个非空白字符。</li>
+<li>转换说明，依次由一个%，一个可选的赋值禁止字符*，一个可选的数值（指定最大字段宽度），一个可选的h，l或L字符（指定目标对象的宽度）以及一个转换字符组成。</li>
+</ul>
+<p>转换说明控制下一个输入字符的转换。一般来说，转换结果存放在相应的参数指向的变量中。</p>
+<p>但是，如果转换说明中有赋值禁止字符*，则跳过该输入字段，不进行赋值。</p>
+<p>输入字段定义为一个不包含空白符的字符串，其边界定义为到下一个空白符或到达指定的字段宽度。</p>
+<p>转换字符指定对输入字段的解释，对应的参数必须是指针。</p>
+<p>下面列出了转换字符：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>输入数据，参数类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d</td>
+<td>十进制整数，int*类型</td>
+</tr>
+<tr>
+<td>i</td>
+<td>整数，，可以是八进制（以0开头）或十六进制（以0x或0X开头），int*类型</td>
+</tr>
+<tr>
+<td>o</td>
+<td>八进制整数，可以以0开头，也可以不以0开头，int *类型</td>
+</tr>
+<tr>
+<td>x</td>
+<td>十六进制整数，可以以0x或0X开头，也可以不以它们开头，int*类型</td>
+</tr>
+<tr>
+<td>u</td>
+<td>无符号十进制整数，unsigned int*类型</td>
+</tr>
+<tr>
+<td>c</td>
+<td>字符，将接下来的多个输入字符（默认为1个）存放到指定位置，该转换规范通常不跳过空白符，char*类型</td>
+</tr>
+<tr>
+<td>s</td>
+<td>字符串（不加引号），char*类型，指向一个足以存放该字符串的字符数组。字符串的末尾将被添加一个结束符’\0’</td>
+</tr>
+<tr>
+<td>e, f, g</td>
+<td>浮点数，它可以包含正负号（可选），小数点（可选），以及指数部分（可选），float*类型</td>
+</tr>
+<tr>
+<td>%</td>
+<td>字符%，不进行任何赋值操作</td>
+</tr>
+</tbody></table>
+<p>转换说明d, i, o, u以及x的前面可加上字符h或l。前缀h表明参数表的相应参数是一个指向short类型而非int类型的指针，前缀l表明参数表的相应参数是一个指向long类型的指针。</p>
+<p>类似地，转换说明e, f和g的前面也可以加上前缀l，它表明参数表的相应参数是一个指向double类型而非float类型的指针。</p>
+<h3 id="文件访问"><a href="#文件访问" class="headerlink" title="文件访问"></a>文件访问</h3><p>在读写一个文件之前，必须通过库函数fopen来打开该文件。fopen用类似于x.c或y.c这样的外部名与操作系统进行某些必要的连接和通信，并返回一个随后可以用于文件读写操作的指针。</p>
+<p>该指针称为文件指针，它指向一个包含文件信息的结构，这些信息包括：缓冲区的位置，缓冲区中当前字符的位置，文件的读写状态，是否出错或是否已经到达文件结尾等等，用户不必关心这些细节。</p>
+<p>在程序中使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FILE *fp;</span><br></pre></td></tr></table></figure>
+
+<p>声明一个文件指针。</p>
+<p>函数fopen会返回一个文件指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">FILE *<span class="title">fopen</span><span class="params">(<span class="keyword">char</span> *name, <span class="keyword">char</span> *mode)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>fopen的第一个参数是一个字符串，它包含文件名，第二个参数是访问模式，也是一个字符串，用于指定文件的使用方式。</p>
+<p>允许的模式包括：读(“r”)，写(“w”)，以及追加(“a”)。某些系统还区分文本文件和二进制文件，对后者访问需要在模式字符串中增加字符”b”。</p>
+<ul>
+<li>打开一个不存在的文件用于写/追加，该文件将被创造。</li>
+<li>当以写方式打开一个已存在的文件时，该文件原来的内容将被覆盖。</li>
+<li>当以追加的方式打开一个已存在的文件时，该文件原来的内容将保留不变。</li>
+<li>读取一个不存在的文件/无权限的文件会导致错误，fopen函数将会返回NULL。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getc</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>getc函数返回fp指向的输入流中的下一个字符。如果到达文件尾或出现错误，该函数返回EOF。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">putc</span><span class="params">(<span class="keyword">int</span> c, FILE *fp)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>putc函数将字符c写入到fp指向的文件中，并返回写入的字符。如果发生错误，则返回OEOF。</p>
+<p>启动一个C语言程序时，操作系统环境负责打开3个文件，并将这3个文件的指针提供给该程序。这3个文件分别是标准输入，标准输出和标准错误，相应的文件指针分别是stdin，stdout，和stderr，它们在&lt;stdio.h&gt;中声明。</p>
+<p>stdio指向键盘，stdout和stderr指向显示器。stdin和stdout可以被重定向到文件或管道。</p>
+<p>getchar和putchar函数可以通过getc，putc，stdin及stdout定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> getchar() getc(stdin)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> putchar(c) putc((c), stdout)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>对于文件的格式化输入或输出，可以使用函数fscanf和fprintf。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fscanf</span><span class="params">(FILE *fp, <span class="keyword">char</span> *format, ...)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fprintf</span><span class="params">(FILE *fp, <span class="keyword">char</span> *format, ...)</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>cat程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	FILE *fp;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">filecopy</span><span class="params">(FILE *, FILE *)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(argc == <span class="number">1</span>)</span><br><span class="line">		filecopy(<span class="built_in">stdin</span>, <span class="built_in">stdout</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">while</span>(--argc &gt; <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">if</span>((fp = fopen(*++argv, <span class="string">&quot;r&quot;</span>)) == <span class="literal">NULL</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span> ((fp = fopen(*++argv, <span class="string">&quot;r&quot;</span>)) == <span class="literal">NULL</span>)&#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">&quot;cat: can&#x27;t open %s\n&quot;</span>, *argv);</span><br><span class="line">					<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					filecopy(fp, <span class="built_in">stdout</span>);</span><br><span class="line">					fclose(fp);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">filecopy</span><span class="params">(FILE *ifp, FILE *ofp)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> c;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>((c = getc(ifp)) != EOF) </span><br><span class="line">		putc(c, ofp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fclose</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>fclose函数执行和fopen函数相反的操作，它断开由fopen函数建立的文件指针和外部名之间的连接，并释放文件指针以供其他文件使用。同时，它将缓冲区中由putc函数正在收集的输出写到文件中。当程序正常终止时，程序会自动为每个打开的文件调用fclose函数。</p>
+<h3 id="错误处理-–-stderr和exit"><a href="#错误处理-–-stderr和exit" class="headerlink" title="错误处理 – stderr和exit"></a>错误处理 – stderr和exit</h3><p>添加了错误处理的cat程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">	FILE *fp;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">filecopy</span><span class="params">(FILE *, FILE *)</span></span>;</span><br><span class="line">	<span class="keyword">char</span> *prog = argv[<span class="number">0</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(argc == <span class="number">1</span>)</span><br><span class="line">		filecopy(<span class="built_in">stdin</span>, <span class="built_in">stdout</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">while</span>(--argc &gt; <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">if</span>((fp = fopen(*++argv, <span class="string">&quot;r&quot;</span>)) == <span class="literal">NULL</span>)&#123;</span><br><span class="line">				<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;%s: can&#x27;t open %s\n&quot;</span>, prog, *argv);</span><br><span class="line">				<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				filecopy(fp, <span class="built_in">stdout</span>);</span><br><span class="line">				fclose(fp);</span><br><span class="line">			&#125;</span><br><span class="line">	<span class="keyword">if</span>(ferror(<span class="built_in">stdout</span>))&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;%s: error writing stdout\n&quot;</span>, prog);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果流fp中出现错误，则函数ferror返回一个非0值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ferror</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>函数feof和ferro类似。如果指定的文件到达文件结尾，它将返回一个非0值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">feof</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="行输入和行输出"><a href="#行输入和行输出" class="headerlink" title="行输入和行输出"></a>行输入和行输出</h3><p>标准库提供了一个输入函数fgets：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *line, <span class="keyword">int</span> maxline, FIEL *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>fgets函数从fp指向的文件中读取下一个输入行（包括换行符*），并将它存放在字符数组line中，它最多可以读取maxline-1个字符。读取的行将以’\0’结尾保存到数组中。</p>
+<p>通常情况下，fgets返回line，但如果遇到了文件结尾或发生了错误，则返回NULL。</p>
+<p>输出函数fputs将一个字符串（不需要包含换行符）写入到一个文件中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputs</span><span class="params">(<span class="keyword">char</span> *line, FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果发生错误，该函数将返回EOF，否则返回一个非负值。</p>
+<p>库函数gets和puts的功能与fgets和fputs函数类似，但它们是对stdin和stdout进行操作。</p>
+<p><strong>gets函数在读取字符串时将删除结尾的换行符（’\n’），而puts函数将在写入字符串时将在结尾添加一个换行符。</strong></p>
+<p>下面是fgets和fputs函数的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">int</span> n, FILE *iop)</span></span>&#123;</span><br><span class="line">	<span class="keyword">register</span> <span class="keyword">int</span> c;</span><br><span class="line">	<span class="keyword">register</span> <span class="keyword">char</span> *cs;</span><br><span class="line">	</span><br><span class="line">	cs = s;</span><br><span class="line">	<span class="keyword">while</span>(--n &gt; <span class="number">0</span> &amp;&amp; (c = getc(iop)) != EOF)</span><br><span class="line">		<span class="keyword">if</span>((*cs++ = c) == <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	*cs = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">	returt (c == EOF &amp;&amp; cs == s) ? <span class="literal">NULL</span> : s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputs</span><span class="params">(<span class="keyword">char</span> *s, FILE *iop)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(c = *s++)</span><br><span class="line">        putc(c, iop);</span><br><span class="line">    <span class="keyword">return</span> ferror(iop) ? EOF : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h4><p>编写一个程序，比较两个文件并打印它们第一个不相同的行。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从命令行接收两个文件名，然后打印这两个文件的第一个不同行</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">	FILE* fp1, * fp2;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">fcomp</span><span class="params">(FILE*, FILE*)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 判断是否接受了两个文件名</span></span><br><span class="line">	<span class="keyword">if</span> (argc != <span class="number">3</span>) &#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;%s: need two file name\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 打开两个文件</span></span><br><span class="line">	<span class="keyword">if</span> ((fp1 = fopen(argv[<span class="number">1</span>], <span class="string">&quot;r&quot;</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;%s: can&#x27;t open the file %s&quot;</span>, argv[<span class="number">0</span>], argv[<span class="number">1</span>]);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> ((fp2 = fopen(argv[<span class="number">2</span>], <span class="string">&quot;r&quot;</span>)) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;%s: can&#x27;t open the file %s&quot;</span>, argv[<span class="number">0</span>], argv[<span class="number">2</span>]);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 比较两个文件的内容</span></span><br><span class="line">	fcomp(fp1, fp2);</span><br><span class="line">	</span><br><span class="line">	fclose(fp1);</span><br><span class="line">	fclose(fp2);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINE 100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fcomp</span><span class="params">(FILE* fp1, FILE* fp2)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> line1[MAXLINE], line2[MAXLINE];</span><br><span class="line">	<span class="keyword">char</span>* lp1, * lp2;</span><br><span class="line">	<span class="comment">// 每次同时从两个文件中读取一行</span></span><br><span class="line">	<span class="comment">// fgets函数需要3个参数，</span></span><br><span class="line">	<span class="comment">// 行存放字符串指针，最长长度限制，文件指针</span></span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		lp1 = fgets(line1, MAXLINE, fp1);</span><br><span class="line">		lp2 = fgets(line2, MAXLINE, fp2);</span><br><span class="line">		<span class="keyword">if</span> (lp1 == line1 &amp;&amp; lp2 == line2) &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">strcmp</span>(line1, line2) != <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;frist different in line \n%s\n&quot;</span>, line1);</span><br><span class="line">				lp1 = lp2 = <span class="literal">NULL</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (lp1 != line1 &amp;&amp; lp2 == line2)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;end of first line at line\n%s\n&quot;</span>, line2);</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (lp2 != line2 &amp;&amp; lp1 == line1)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;end of second line at line\n%s\n&quot;</span>, line1);</span><br><span class="line">	&#125; <span class="keyword">while</span> (lp1 == line1 &amp;&amp; lp2 == line2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>编写一个程序，以打印一个文件集合，每个文件从新的一页开始打印，并且打印每个文件相应的标题和页数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINE 100</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXPAGE 50</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXBOT 3        <span class="comment">// 底部空行</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXHDR 5        <span class="comment">// 头部信息</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fileprint</span><span class="params">(FILE *, <span class="keyword">char</span> *)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc == <span class="number">1</span>)</span><br><span class="line">        fileprint(<span class="built_in">stdin</span>, <span class="string">&quot; &quot;</span>);</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>((fp = fopen(argv[<span class="number">1</span>], <span class="string">&quot;r&quot;</span>)) != <span class="literal">NULL</span>)</span><br><span class="line">            fileprint(fp, argv[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s: can&#x27;t open the file %s&quot;</span>, argv[<span class="number">0</span>], argv[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fileprint</span><span class="params">(FILE *fp, <span class="keyword">char</span> *fname)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lineno, pageno = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> line[MAXLINE];</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">heading</span><span class="params">(<span class="keyword">char</span> *fname, <span class="keyword">int</span> pageno)</span></span>;</span><br><span class="line"></span><br><span class="line">    lineno = heading(fname, pageno++);</span><br><span class="line">    <span class="keyword">while</span>(fgets(line, MAXLINE, fp) != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">// 每次将lineno置为1的时候，就说明换页了</span></span><br><span class="line">        <span class="keyword">if</span>(lineno == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">&quot;\f&quot;</span>);</span><br><span class="line">            lineno = heading(fname, pageno++);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">fputs</span>(line, <span class="built_in">stdout</span>);</span><br><span class="line">        <span class="comment">// 如果lineno+1大于一页最大行数，就将lineno置为1</span></span><br><span class="line">        <span class="keyword">if</span>(++lineno &gt; MAXPAGE - MAXBOT)</span><br><span class="line">            lineno = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">&quot;\f&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">heading</span><span class="params">(<span class="keyword">char</span> *fname, <span class="keyword">int</span> pageno)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ln = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">&quot;\n\n&quot;</span>);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">&quot;%s page %d\n&quot;</span>, fname, pageno);</span><br><span class="line">    <span class="keyword">while</span>(ln++ &lt; MAXHDR);</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ln;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改之前编写过的模式查找程序，使它可以接收一个可选的文件名作为参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">findline</span><span class="params">(FILE *, <span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">char</span> *)</span></span>;</span><br><span class="line">        <span class="keyword">int</span> flag_n = <span class="number">0</span>, flag_x = <span class="number">0</span>;</span><br><span class="line">        FILE *fp;</span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(--argc &gt; <span class="number">0</span> &amp;&amp; *(*++argv) == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">                <span class="keyword">while</span>((c = *++(*argv)) != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">                        <span class="keyword">switch</span>(c)&#123;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&#x27;n&#x27;</span>:</span><br><span class="line">                                        flag_n = <span class="number">1</span>;</span><br><span class="line">                                        <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&#x27;x&#x27;</span>:</span><br><span class="line">                                        flag_x = <span class="number">1</span>;</span><br><span class="line">                                        <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">default</span>:</span><br><span class="line">                                        <span class="built_in">printf</span>(<span class="string">&quot;no %c option&quot;</span>, c);</span><br><span class="line">                                        argc = <span class="number">0</span>;</span><br><span class="line">                                        <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(argc != <span class="number">2</span> &amp;&amp; argc != <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="built_in">fputs</span>(<span class="string">&quot;Usage: find [-x] [-n] patten [filename]\n&quot;</span>, <span class="built_in">stderr</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(argc == <span class="number">2</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>((fp = fopen(argv[<span class="number">1</span>], <span class="string">&quot;r&quot;</span>)) == <span class="literal">NULL</span>)&#123;</span><br><span class="line">                        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;can&#x27;t open the file %s\n&quot;</span>, argv[<span class="number">1</span>]);</span><br><span class="line">                        <span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">                &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                fp = <span class="built_in">stdin</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> findline(fp, flag_n, flag_x, *argv);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXLINE 100</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findline</span><span class="params">(FILE *fp, <span class="keyword">int</span> n, <span class="keyword">int</span> x, <span class="keyword">char</span> *patten)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> lineno, found;</span><br><span class="line">        <span class="keyword">char</span> line[MAXLINE];</span><br><span class="line">        <span class="keyword">char</span> *lp;</span><br><span class="line"></span><br><span class="line">        lineno = <span class="number">0</span>;</span><br><span class="line">        found = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>((lp = fgets(line, MAXLINE, fp)) ==  line)&#123;</span><br><span class="line">                lineno++;</span><br><span class="line">                <span class="keyword">if</span>(((<span class="built_in">strstr</span>(line, patten)) != <span class="literal">NULL</span>) != x)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(n)</span><br><span class="line">                                <span class="built_in">printf</span>(<span class="string">&quot;%02d: &quot;</span>, lineno);</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, line);</span><br><span class="line">                        found++;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> found;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h3><h4 id="字符串操作函数"><a href="#字符串操作函数" class="headerlink" title="字符串操作函数"></a>字符串操作函数</h4><p>下面的函数都在头文件&lt;string.h&gt;中定义。</p>
+<p>s与t为char *类型，c与n为int类型。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将t指向的字符串连接到s指向的字符串的末尾</span></span><br><span class="line"><span class="built_in">strcat</span>(s, t);</span><br><span class="line"><span class="comment">// 将t指向的字符串中前n个字符连接到s指向的字符串的末尾</span></span><br><span class="line"><span class="built_in">strncat</span>(s, t);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据s指向的字符串小于，等于，或大于t指向的字符串的不同情况，分别返回负整数，0或正整数</span></span><br><span class="line"><span class="built_in">strcmp</span>(s, t);</span><br><span class="line"><span class="comment">// 同strcmp,但只在前n个字符中比较</span></span><br><span class="line"><span class="built_in">strncmp</span>(s, t, n);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将t指向的字符串复制到s指向的位置</span></span><br><span class="line"><span class="built_in">strcpy</span>(s, t);</span><br><span class="line"><span class="comment">// 将t指向的字符串中前n个字符复制到s指向的位置</span></span><br><span class="line"><span class="built_in">strncpy</span>(s, t, n);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回s指向的字符串长度</span></span><br><span class="line"><span class="built_in">strlen</span>(s);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在s指向的字符串中查找c，若找到，则返回指向它第一次出现的位置的指针，否则返回NULL</span></span><br><span class="line"><span class="built_in">strchr</span>(s, c);</span><br><span class="line"><span class="comment">// 在s指向的字符串中查找c，若找到，则返回指向它最后一次出现的位置的指针，否则返回NULL</span></span><br><span class="line"><span class="built_in">strrchr</span>(s, c):</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="字符类别测试和转化函数"><a href="#字符类别测试和转化函数" class="headerlink" title="字符类别测试和转化函数"></a>字符类别测试和转化函数</h4><p>下面的函数都在头文件&lt;ctype.h&gt;中定义。</p>
+<p>在下面各个函数中，c是一个可表示为unsigned char类型或EOF的int对象。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若c是字母，则返回一个非0值，否则返回0</span></span><br><span class="line"><span class="built_in">isalpha</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若c是大写字母，则返回一个非0值，否则返回0</span></span><br><span class="line"><span class="built_in">isupper</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若c是小写字母，则返回一个非0值，否则返回0</span></span><br><span class="line"><span class="built_in">islower</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若c是数字，则返回一个非0值，否则返回0</span></span><br><span class="line"><span class="built_in">isdigit</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若isalpha(c)或isdigit(c)，则返回一个非0值，否则返回0</span></span><br><span class="line"><span class="built_in">isalnum</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若c是空格，横向制表符，换行符，回车符，换页符或纵向制表符，则返回一个非0值，否则返回0</span></span><br><span class="line"><span class="built_in">isspace</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回c的大写形式</span></span><br><span class="line"><span class="built_in">toupper</span>(c);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回c的小写形式</span></span><br><span class="line"><span class="built_in">tolower</span>(c);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="ungetc函数"><a href="#ungetc函数" class="headerlink" title="ungetc函数"></a>ungetc函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ungetc</span><span class="params">(<span class="keyword">int</span> c, FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数将字符c写回到文件fp中，如果执行成功，则返回c，否则返回EOF。每个文件只能接收一个写回字符。</p>
+<h4 id="命令执行函数"><a href="#命令执行函数" class="headerlink" title="命令执行函数"></a>命令执行函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">system</span><span class="params">(<span class="keyword">char</span> *s)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>函数system执行包含在字符串s中的命令，然后继续执行当前程序。</p>
+<p>s的内容在很大程序上与所用的操作系统有关。</p>
+<p>比如在UNIX操作系统中，语句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system(<span class="string">&quot;date&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>将执行程序date，它在标准输出上打印当天的日期和时间。</p>
+<p>system函数返回一个整数的状态值，其值来自于执行的命令，并同具体系统有关。</p>
+<p>在UNIX系统中，返回的状态是exit的返回值。</p>
+<h4 id="存储管理函数"><a href="#存储管理函数" class="headerlink" title="存储管理函数"></a>存储管理函数</h4><p>函数malloc和calloc用于动态地分配存储块。</p>
+<p>函数malloc的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">malloc</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>当分配成功时，它返回一个指针，该指针执行n字节长度的未初始化的存储空间，否则返回NULL。</p>
+<p>函数calloc的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">calloc</span><span class="params">(<span class="keyword">size_t</span> n, <span class="keyword">size_t</span> size)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>当分配成功时，它返回一个指针，该指针指向的空闲空间足以容纳由n个指定长度的对象组成的数组。</p>
+<p>根据请求的对象类型，malloc或calloc函数返回的指针满足正确的对其要求。</p>
+<p>下面的例子进行了类型转换：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *ip;</span><br><span class="line">ip = (<span class="keyword">int</span> *) <span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<p>函数free的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">free</span><span class="params">(<span class="keyword">void</span> *p)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>free函数释放p指向的存储空间，其中，p是此前通过调用malloc或calloc函数得到的指针。</p>
+<p>存储空间的释放顺序没有什么限制，但是，如果释放一个不是通过调用malloc或calloc函数得到的指针所指向的存储空间，将是一个很严重的错误。</p>
+<p>使用已经释放的存储空间同样是错误的。</p>
+<p>下面是错误代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(p = head; p != <span class="literal">NULL</span>; p = p-&gt;next)</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br></pre></td></tr></table></figure>
+
+<p>正确的处理方法是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(p = head; p != <span class="literal">NULL</span>; p = q)&#123;</span><br><span class="line">	q = p-&gt;next;</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="随机发生函数"><a href="#随机发生函数" class="headerlink" title="随机发生函数"></a>随机发生函数</h4><p>函数rand()生成介于0和RAND_MAX之间的伪随机整数序列。</p>
+<p>其中RAND_MAX是在头文件&lt;stdlib.h&gt;中定义的符号常量。</p>
+<p>下面是一种生成大于等于0但小于1的随机浮点数的方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> frand() ((double) rand() / (RAND_MAX + 1.0))</span></span><br></pre></td></tr></table></figure>
+
+<p>函数srand(unsigned)设置rand函数的种子数。</p>
+<p>函数原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> next = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rand</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	next = next * <span class="number">1103515245</span> + <span class="number">12345</span>;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span>) (next/<span class="number">65536</span>) % <span class="number">32768</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">srand</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> seed)</span></span>&#123;</span><br><span class="line">    next = seed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag"># C语言</a>
+          
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/01/07/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-5-%E7%BB%93%E6%9E%84/" rel="next" title="C程序设计语言_5_结构">
+                <i class="fa fa-chevron-left"></i> C程序设计语言_5_结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-6"><span class="nav-text">C程序设计语言_6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="nav-text">输入与输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA"><span class="nav-text">标准输入&#x2F;输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA-%E2%80%93-printf%E5%87%BD%E6%95%B0"><span class="nav-text">格式化输出 – printf函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0%E8%A1%A8"><span class="nav-text">变长参数表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%85%A5-%E2%80%93-scanf%E5%87%BD%E6%95%B0"><span class="nav-text">格式化输入 – scanf函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86-%E2%80%93-stderr%E5%92%8Cexit"><span class="nav-text">错误处理 – stderr和exit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E8%A1%8C%E8%BE%93%E5%87%BA"><span class="nav-text">行输入和行输出</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0"><span class="nav-text">练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="nav-text">其他函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="nav-text">字符串操作函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%88%AB%E6%B5%8B%E8%AF%95%E5%92%8C%E8%BD%AC%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-text">字符类别测试和转化函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ungetc%E5%87%BD%E6%95%B0"><span class="nav-text">ungetc函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="nav-text">命令执行函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-text">存储管理函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%8F%91%E7%94%9F%E5%87%BD%E6%95%B0"><span class="nav-text">随机发生函数</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c0laaaa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
