@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="学习笔记,数据结构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="如何计算一个函数的执行时间 抽象数据结构 什么是时间复杂度，如何判断时间复杂度 最大子列和的四种算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构_1_概论">
+<meta property="og:url" content="https://c0laaaa.github.io/2022/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1-%E6%A6%82%E8%AE%BA/index.html">
+<meta property="og:site_name" content="c0laaaa&#39;blogs">
+<meta property="og:description" content="如何计算一个函数的执行时间 抽象数据结构 什么是时间复杂度，如何判断时间复杂度 最大子列和的四种算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/clip_image002.png">
+<meta property="article:published_time" content="2022-01-11T15:03:26.000Z">
+<meta property="article:modified_time" content="2022-01-11T15:07:34.651Z">
+<meta property="article:author" content="c0laaaa">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/clip_image002.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://c0laaaa.github.io/2022/01/11/数据结构-1-概论/"/>
+
+
+
+
+
+  <title>数据结构_1_概论 | c0laaaa'blogs</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">c0laaaa'blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">热爱生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://c0laaaa.github.io/2022/01/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1-%E6%A6%82%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c0laaaa'blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构_1_概论</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-11T23:03:26+08:00">
+                2022-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>如何计算一个函数的执行时间</li>
+<li>抽象数据结构</li>
+<li>什么是时间复杂度，如何判断时间复杂度</li>
+<li>最大子列和的四种算法</li>
+</ul>
+<hr>
+<span id="more"></span>
+
+<h1 id="数据结构（浙大版）-1"><a href="#数据结构（浙大版）-1" class="headerlink" title="数据结构（浙大版）_1"></a>数据结构（浙大版）_1</h1><h2 id="概论"><a href="#概论" class="headerlink" title="概论"></a>概论</h2><h3 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h3><h4 id="计算一个函数的执行时间"><a href="#计算一个函数的执行时间" class="headerlink" title="计算一个函数的执行时间"></a>计算一个函数的执行时间</h4><p>下面我们可以通过下面这个具体多项式函数值的计算，来比较秦九韶算法与直接法之间的效率差别：</p>
+<p><img src="https://typora-image-1304336820.cos.ap-shanghai.myqcloud.com/clip_image002.png" alt="img"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X 1.1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXK 1e7</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> a[MAXN];</span><br><span class="line"></span><br><span class="line"><span class="keyword">clock_t</span> start, stop;</span><br><span class="line"><span class="keyword">double</span> duration;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">double</span> a[], <span class="keyword">double</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">double</span> p = a[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        p += a[i] * <span class="built_in">pow</span>(x, i);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">double</span> a[], <span class="keyword">double</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">double</span> p = a[n];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = n; i &gt; <span class="number">0</span>; i--)</span><br><span class="line">        p = a[i<span class="number">-1</span>] + x*p;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">(<span class="keyword">double</span> (*f)(<span class="keyword">int</span>, <span class="keyword">double</span> *, <span class="keyword">double</span>), <span class="keyword">int</span> case_n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    start = clock();</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXK; i++)</span><br><span class="line">        (*f)(MAXN<span class="number">-1</span>, a, X);</span><br><span class="line"></span><br><span class="line">    stop = clock();</span><br><span class="line">    duration = ((<span class="keyword">double</span>) (stop - start)) / CLK_TCK;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ticks%d=%f\n&quot;</span>, case_n, (<span class="keyword">double</span>)(stop-start));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;duration%d=%6.2e\n&quot;</span>, case_n, duration);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXN; i++)</span><br><span class="line">        a[i] = (<span class="keyword">double</span>)i;</span><br><span class="line"></span><br><span class="line">    run(f1, <span class="number">1</span>);</span><br><span class="line">    run(f2, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>新的数据类型：</p>
+<p><code>clock_t</code>    用来存放时间计数单元数。</p>
+</li>
+<li><p>新的函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">clock_t</span> <span class="title">clock</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数返回从开启这个进程到程序中调用这个函数之间的CPU时钟计数单元数。错误返回-1。</p>
+</li>
+<li><p>新的宏定义：</p>
+<p><code>CLK_TCK / CLOCKS_PER_SEC</code>    一秒钟的时间里，CPU会产生的时钟计数单元数的数目。</p>
+</li>
+</ul>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>讨论数据对象的不同的组织方式，是为了得到处理这些数据对象的最高效的算法。</p>
+<p>我们在讨论数据结构这个概念的时候，关心的不仅仅是数据对象本身以及它们在计算机中的组织方式，还要关心与它们相关联的一个操作集，以及实现这些操作的最高效的算法。</p>
+<ul>
+<li>数据对象本身</li>
+<li>数据对象在计算机中的组织方式<ul>
+<li>数据对象集的逻辑结构</li>
+<li>数据对象的物理存储结构</li>
+</ul>
+</li>
+<li>与数据对象相关联的操作集</li>
+<li>实现操作集中的操作的最高效的算法</li>
+</ul>
+<h4 id="（待补）抽象数据类型"><a href="#（待补）抽象数据类型" class="headerlink" title="（待补）抽象数据类型"></a>（待补）抽象数据类型</h4><p>抽象的意思是指，我们描述数据类型的方法是不依赖于具体实现的，即数据对象集和操作集的描述与存放数据的机器无关，与数据存储的物理结构无关，与实现操作的算法和编程语言均无关。</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>一般而言，算法是一个有限指令集，它接受一些输入，产生输出，并一定在有限步骤之后终止。</p>
+<p>算法的每一条指令必须由充分明确的目标，不可以有歧义；必须在计算机能处理范围之内；其描述应不依赖于任何一种计算机语言以及具体的实现手段。</p>
+<p>算法不是程序，算法与程序一个重要不同之处，在于算法比程序抽象，强调表现做什么，而忽略细节性的怎么做。</p>
+<h4 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h4><p>具体衡量，比较算法优劣的指标主要由以下两个：</p>
+<ul>
+<li><p>空间复杂度S(n) </p>
+<p>根据算法写成的程序在执行时占用存储单元的长度。这个长度往往与输入数据的规模有关。</p>
+<p>空间复杂度过高的算法可能导致使用的内存超限，造成程序非正常中断。</p>
+</li>
+<li><p>时间复杂度T(n)</p>
+<p>根据算法写成的程序在执行时花费的时间的长度。这个长度也与输入数据的规模有关。</p>
+</li>
+</ul>
+<h5 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h5><p>在引子中，我们比较了两个用于计算多项式的算法的执行时间，一个是简单直接算法，一个是秦九韶算法。</p>
+<p>简单直接算法，执行了n次语句<code>p += a[i] * pow(x, i);</code>，每次涉及i次乘法和1次加法运算，于是全部计算涉及n次加法和*(1 + 2 + … + n) = （n<sup>2</sup>+n) / 2*次乘法。</p>
+<p>秦九韶算法执行了n次语句<code>p = a[i-1] + x*p</code>，全部计算只涉及n次加法和n次乘法。</p>
+<p>简单直接算法执行的时间的函数是T<sub>1</sub>(n) = C<sub>1</sub> * n<sup>2</sup>+C<sub>2</sub> * n，其中n是输入多项式的阶数，是个变量，C1是执行1/2次乘法需要的时间，C2是执行1次加法和1/2乘法需要的时间，C1和C2都是个固定常数。</p>
+<p>秦九韶算法执行的时间的函数是T<sub>2</sub>(n) = C * n，其中n是输入多项式的阶数，是个变量，C是执行1次加法和乘法需要的时间，是个固定常数。</p>
+<p>对于充分大的n，T<sub>1</sub>(n)总是比T<sub>2</sub>(n)小，也就是秦九韶算法比简单直接算法快，而且n越大越明显。</p>
+<p>为了研究T(n)随n变化的规律，引入了时间复杂度的概念。</p>
+<p>什么是时间复杂度，从数学的角度，算法中某个函数有n次基本操作重复执行，用T(n)表示，现在有某个辅助函数f(n)，使得当n趋于无穷大时，T(n) / f(n)的极限值为不等于零的常数，则称<strong>f(n)是T(n)的同数量级函数</strong>。我们可以用这样一个公式表示上面的这种关系T(n) = O(f(n))。O(f(n))称为算法的渐进时间复杂度，简称时间复杂度。</p>
+<p>时间复杂度O是总运算次数T(n)表达式中受n的变化影响最大的那一项。</p>
+<h5 id="时间复杂度例子"><a href="#时间复杂度例子" class="headerlink" title="时间复杂度例子"></a>时间复杂度例子</h5><ul>
+<li><p>O(1)</p>
+<p>算法的执行时间跟数据的规模无关，或者数据的规模是固定的，n并不会变化，或者n永远为1。</p>
+</li>
+<li><p>O(n^c)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i += c)</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j += c)</span><br><span class="line">		a = a + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>T(n) = n * n * 2 + n = 2 * n<sup>2</sup> + n，这里同数量级的最简单的函数是f(n) = n<sup>2</sup>，所以上面这个算法的时间复杂度是O(n^2)。</p>
+</li>
+<li><p>O(log<sub>c</sub> n)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i *= c)</span><br><span class="line">	a = a + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p> 设执行次数为x，i * c ^ x = n，c ^x = n / i，x = log<sub>c</sub>(n / i)。</p>
+<p>T(n) = log<sub>c</sub>(n / i)，这里同数量级的最简单的函数是f(n) = log<sub>c</sub>n，所以上面这个算法的时间复杂度是O(log<sub>c</sub>n)。</p>
+</li>
+</ul>
+<h3 id="实例-–-最大子列和"><a href="#实例-–-最大子列和" class="headerlink" title="实例 – 最大子列和"></a>实例 – 最大子列和</h3><p>给定n个整数的序列{a1, a2, …, an}，求下面函数的最大值。<br>$$<br>f(i, j) = max\left[0, \sum_{k=i}^{j}a_k \right]<br>$$<br>在这里，子列被定义为原始序列中连续的一段数字，我们要找的是具有最大和的一段连续子列，并且返回它的和。</p>
+<p>如果这个最大和是负数，我们取0作为最终答案。</p>
+<p>例如：给定序列：{-2, 11, -4, 13, -5, -2}，其最大子列为{11, -4, 13}，和为20。</p>
+<h4 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h4><p>直接穷举所有的子列和，从中找到最大值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MaxSubseqSum1</span><span class="params">(<span class="keyword">int</span> List[], <span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, k;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> ThisSum, MaxSum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; N; i++)		<span class="comment">/* i是子列左端位置 */</span></span><br><span class="line">		<span class="keyword">for</span>(j = i; j &lt; N; j++)&#123;	<span class="comment">/* j是子列右端位置 */</span></span><br><span class="line">			ThisSum = <span class="number">0</span>;		<span class="comment">/* ThisSum是从List[i]到List[j]的子列和 */</span></span><br><span class="line">			<span class="keyword">for</span>(k = i; k &lt;= j; k++)</span><br><span class="line">				ThisSum += List[k];</span><br><span class="line">			<span class="keyword">if</span>(ThisSum &gt; MaxSum)</span><br><span class="line">				MaxSum = ThisSum;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">return</span> MaxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最外层循环执行次数为</p>
+<p><em>1 + 1 + … +1 = N</em></p>
+<p>中间层循环执行次数为 </p>
+<p><em>N + N-1 + … + 1 = (N+1) *N / 2 = N<sup>2</sup>/2+N/2</em></p>
+<p>最内层循环执行次数为：</p>
+<p><em>(1 + 2 + … N) + (1 + 2 + … N-1) + … + 1</em></p>
+<p> <em>1 + (1 + 2) + (1 + 2 + 3) + … + (1 + 2 + … + N)</em></p>
+<p><em>f(N) = (N+1) * N / 2 = N*N + N / 2</em></p>
+<p><em>sum(f(N)) = ((N(N+1)(2N+1))/6 + N(N+1)/2) / 2 = N(N+1)(N+2)/6 = N<sup>3</sup>/6+3N<sup>2</sup>/6+2N/6</em> </p>
+<p>所以最高量级为N<sup>3</sup>，这个算法的时间复杂度为O(n<sup>3</sup>)。</p>
+<h4 id="算法2"><a href="#算法2" class="headerlink" title="算法2"></a>算法2</h4><p>在上面的算法上面改进，因为对于固定的i，当j增加1后，没必要重新从i在计算，因为之前都计算过这些值了，只需要计算新的到j+1的值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MaxSubseqSum2</span><span class="params">(<span class="keyword">int</span> List[], <span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, k;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> ThisSum, MaxSum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; N; i++)			<span class="comment">/* i是子列左端位置 */</span></span><br><span class="line">		<span class="keyword">for</span>(j = i; j &lt; N; j++)&#123;		<span class="comment">/* j是子列右端位置 */</span></span><br><span class="line">			ThisSum += List[j];		<span class="comment">/* ThisSum是从List[i]到List[j]的子列和 */</span></span><br><span class="line">			<span class="keyword">if</span>(ThisSum &gt; MaxSum)</span><br><span class="line">				MaxSum = ThisSum;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">return</span> MaxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最外层循环执行次数为</p>
+<p><em>1 + 1 + … +1 = N</em></p>
+<p>最内层循环执行次数为 </p>
+<p>*N + N-1 + … + 1 = (N+1) *N / 2 = N<sup>2</sup>/2+N/2</p>
+<p>所以最高量级为N<sup>2</sup>，这个算法的时间复杂度为O(n<sup>3</sup>)。</p>
+<h4 id="算法3"><a href="#算法3" class="headerlink" title="算法3"></a>算法3</h4><p>如果我们把原始序列一分为二，那么最大子列或者在左半边或者在右半边，或者横跨中分线的一段。</p>
+<ol>
+<li>将序列从中分为左右两个子序列</li>
+<li>递归求得两个子列的最大和S<sub>左</sub>和S<sub>右</sub></li>
+<li>从中分点分头向左，右两边扫描，找出跨过分界线的最大子列和S<sub>中</sub></li>
+<li>S<sub>max</sub>=max{S<sub>左</sub>, S<sub>中</sub>, S<sub>右</sub>}</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Max3</span><span class="params">(<span class="keyword">int</span> A, <span class="keyword">int</span> B, <span class="keyword">int</span> C)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> A &gt; B ? A &gt; C ? A : C : B &gt; C ? B : C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DivideAndConquer</span><span class="params">(<span class="keyword">int</span> List[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> MaxLeftSum, MaxRightSum;</span><br><span class="line">    <span class="keyword">int</span> MaxLeftBorderSum, MaxRightBorderSum;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> LeftBorderSum, RightBorderSum;</span><br><span class="line">    <span class="keyword">int</span> center, i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(left == right)&#123;                          <span class="comment">// 递归终止的条件，子列只有1个数字</span></span><br><span class="line">        <span class="keyword">if</span>(List[left] &gt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> List[left];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    center = (left + right) / <span class="number">2</span>;</span><br><span class="line">    MaxLeftSum = DivideAndConquer(List, left, center);</span><br><span class="line">    MaxRightSum = DivideAndConquer(List, center+<span class="number">1</span>, right);</span><br><span class="line"></span><br><span class="line">    MaxLeftBorderSum = <span class="number">0</span>;</span><br><span class="line">    LeftBorderSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = center; i &gt;= left; i--)&#123;</span><br><span class="line">        LeftBorderSum += List[i];</span><br><span class="line">        <span class="keyword">if</span>(LeftBorderSum &gt; MaxLeftBorderSum)</span><br><span class="line">            MaxLeftBorderSum = LeftBorderSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MaxRightBorderSum = <span class="number">0</span>;</span><br><span class="line">    RightBorderSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = center+<span class="number">1</span>; i &lt;= right; i--)&#123;</span><br><span class="line">        RightBorderSum += List[i];</span><br><span class="line">        <span class="keyword">if</span>(RightBorderSum &gt; MaxRightBorderSum)</span><br><span class="line">            MaxRightBorderSum = RightBorderSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Max3(MaxLeftSum, MaxRightSum, MaxLeftBorderSum+MaxRightBorderSum);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MaxSubseqSum3</span><span class="params">(<span class="keyword">int</span> List[], <span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DivideAndConquer(List, <span class="number">0</span>, N<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若记整体时间复杂度为T(N)，则函数DivideAndConquer中递归进行“分”的复杂度为2T(N/2)，因为我们解决了两个长度减半的子问题。求跨分界线的最大子列和时，有两个简单的for循环，所用步骤一共不超过N，所以可以在O(N)时间内完成。其他步骤都只需要常数O(1)时间。</p>
+<p>综上分析则有递推式:</p>
+<p>T(1) = O(1);</p>
+<p>T(N) = 2T(N/2) + O(N) </p>
+<p>​        = 2[2T((N/2)/2) + O(N/2)] + O(N) = 2<sup>2</sup>T(N/2<sup>2</sup>) + 2*O(N)</p>
+<p>​        = … = 2<sup>k</sup>T(N/2<sup>k</sup>) + k * O(N)</p>
+<p>当我们不断对分，直到N/2<sup>k</sup> = 1时，就是2<sup>k</sup>=N时，就得到了T(N) = N * T(1) + logN * O(N) = O(Nlog N)。</p>
+<h4 id="算法4"><a href="#算法4" class="headerlink" title="算法4"></a>算法4</h4><p>该算法的核心思想是基于下面的事实：如果整数序列{a1, a2, …, an}的最大和子列是{ai, ai+1, …, aj}，那么必定有在i到j中的这个区间里面，每一个从i开始的子列和都大于0。所以一旦发现当前子列和为负，那么就重新开始考察一个新的子列。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MaxSubseqSum4</span><span class="params">(<span class="keyword">int</span> List[], <span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">int</span> ThisSum, MaxSum;</span><br><span class="line"></span><br><span class="line">    ThisSum = MaxSum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; N; i++)&#123;</span><br><span class="line">        ThisSum += List[i];</span><br><span class="line">        <span class="keyword">if</span>(ThisSum &gt; MaxSum)</span><br><span class="line">            MaxSum = ThisSum;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(ThisSum &lt; <span class="number">0</span>)</span><br><span class="line">            ThisSum = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> MaxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个算法只有一个for循环，执行N次，算法复杂度为O(N)。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/01/09/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80-6-%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA/" rel="next" title="C程序设计语言_6_输入与输出">
+                <i class="fa fa-chevron-left"></i> C程序设计语言_6_输入与输出
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E6%B5%99%E5%A4%A7%E7%89%88%EF%BC%89-1"><span class="nav-text">数据结构（浙大版）_1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%AE%BA"><span class="nav-text">概论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%AD%90"><span class="nav-text">引子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4"><span class="nav-text">计算一个函数的执行时间</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%BE%85%E8%A1%A5%EF%BC%89%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">（待补）抽象数据类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">算法复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%BE%8B%E5%AD%90"><span class="nav-text">时间复杂度例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-%E2%80%93-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%88%97%E5%92%8C"><span class="nav-text">实例 – 最大子列和</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%951"><span class="nav-text">算法1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%952"><span class="nav-text">算法2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%953"><span class="nav-text">算法3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%954"><span class="nav-text">算法4</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c0laaaa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
